@@ -14,9 +14,9 @@
 
 thisStep="medusa_nextJob_snpEff.txt"
 nxtStep1="medusa_nextJob_checkProjectComplete.txt"
-pbsHome="/home/mrussell/medusa-pipe/jobScripts"
-constants="/home/mrussell/central-pipe/constants/constants.txt"
-constantsDir="/home/mrussell/central-pipe/constants"
+pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
+constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
+constantsDir="/home/tgenjetstream/central-pipe/constants"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`

@@ -23,9 +23,9 @@ nxtStep7="medusa_nextJob_samtoolsStats.txt"
 nxtStep8="medusa_nextJob_rnaMarkDup.txt"
 nxtStep9="medusa_nextJob_cuffQuant.txt"
 nxtStep10="medusa_nextJob_deSeq2.txt"
-pbsHome="/home/mrussell/medusa-pipe/jobScripts"
-constants="/home/mrussell/central-pipe/constants/constants.txt"
-constantsDir="/home/mrussell/central-pipe/constants"
+pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
+constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
+constantsDir="/home/tgenjetstream/central-pipe/constants"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`

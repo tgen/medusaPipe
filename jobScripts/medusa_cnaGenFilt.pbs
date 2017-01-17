@@ -3,7 +3,7 @@
 #PBS -S /bin/bash
 #PBS -N medusa_cnaGenFilt
 #PBS -l walltime=48:00:00
-#PBS -M mrussell@tgen.org
+#PBS -M jetstream@tgen.org
 #PBS -j oe
 #PBS -o /${D}/oeFiles/${PBS_JOBNAME}_${PBS_JOBID}.out 
 #PBS -e /${D}/oeFiles/${PBS_JOBNAME}_${PBS_JOBID}.err

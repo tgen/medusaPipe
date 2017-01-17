@@ -3,7 +3,7 @@
 #PBS -S /bin/bash
 #PBS -N medusa_picMltMtrcs
 #PBS -l walltime=32:00:00
-#PBS -M mrussell@tgen.org
+#PBS -M jetstream@tgen.org
 #PBS -m a
 #PBS -j oe
 #PBS -o /${D}/oeFiles/${PBS_JOBNAME}_${PBS_JOBID}.out 
@@ -21,7 +21,7 @@ cd ${DIR}
 echo "### Starting picard multi metrics"
 #perf stat java -Xmx15g -jar ${PICARDPATH}/CollectAlignmentSummaryMetrics.jar \
 	#OUTPUT=${BAMFILE}.picMultiMetrics \
-perf stat java -Djava.io.tmpdir=/scratch/mrussell/tmp/ -Xmx15g -jar ${PICARDPATH}/CollectMultipleMetrics.jar \
+perf stat java -Djava.io.tmpdir=/scratch/tgenjetstream/tmp/ -Xmx15g -jar ${PICARDPATH}/CollectMultipleMetrics.jar \
 	INPUT=${BAMFILE} \
 	REFERENCE_SEQUENCE=${REF} \
 	PROGRAM=CollectInsertSizeMetrics \
@@ -29,7 +29,7 @@ perf stat java -Djava.io.tmpdir=/scratch/mrussell/tmp/ -Xmx15g -jar ${PICARDPATH
 	PROGRAM=QualityScoreDistribution \
 	PROGRAM=MeanQualityByCycle \
 	OUTPUT=${BAMFILE}.picMultiMetrics \
-	TMP_DIR=/scratch/mrussell/tmp/ \
+	TMP_DIR=/scratch/tgenjetstream/tmp/ \
 	ASSUME_SORTED=true \
 	VALIDATION_STRINGENCY=SILENT > ${BAMFILE}.picMultiMetricsOut 2> ${BAMFILE}.picardMulti.perfOut
 if [ $? -eq 0 ] ; then

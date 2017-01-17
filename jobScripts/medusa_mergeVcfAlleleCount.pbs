@@ -3,7 +3,7 @@
 #PBS -S /bin/bash
 #PBS -N medusa_vcfMergerAC
 #PBS -l walltime=48:00:00
-#PBS -M mrussell@tgen.org
+#PBS -M jetstream@tgen.org
 #PBS -m a
 #PBS -j oe
 #PBS -o /${D}/oeFiles/${PBS_JOBNAME}_${PBS_JOBID}.out 
@@ -336,8 +336,8 @@ echo "Finished Adding RNA Calls to VCF"
         fi
 
 # add snpEFF annotations
-java -Xmx4G -jar ${SNPEFFPATH}/snpEff.jar -canon -c ${SNPEFFPATH}/snpEff.config -v -lof ${DBVERSION} ${MERGERDIR}/${BASENAME}.merge.sort.clean.f2t.ann.rna.dbnsfp.vcf > ${MERGERDIR}/${BASENAME}.merge.sort.clean.f2t.ann.rna.dbnsfp.se74lofcan.vcf
-java -Xmx4G -jar ${SNPEFFPATH}/snpEff.jar -c ${SNPEFFPATH}/snpEff.config -v -lof ${DBVERSION} ${MERGERDIR}/${BASENAME}.merge.sort.clean.f2t.ann.rna.dbnsfp.vcf > ${MERGERDIR}/${BASENAME}.merge.sort.clean.f2t.ann.rna.dbnsfp.se74lof.vcf
+java -Xmx4G -jar ${SNPEFFPATH}/snpEff.jar -canon -c ${SNPEFFPATH}/snpEff.config -v -noLog -lof ${DBVERSION} ${MERGERDIR}/${BASENAME}.merge.sort.clean.f2t.ann.rna.dbnsfp.vcf > ${MERGERDIR}/${BASENAME}.merge.sort.clean.f2t.ann.rna.dbnsfp.se74lofcan.vcf
+java -Xmx4G -jar ${SNPEFFPATH}/snpEff.jar -c ${SNPEFFPATH}/snpEff.config -v -noLog -lof ${DBVERSION} ${MERGERDIR}/${BASENAME}.merge.sort.clean.f2t.ann.rna.dbnsfp.vcf > ${MERGERDIR}/${BASENAME}.merge.sort.clean.f2t.ann.rna.dbnsfp.se74lof.vcf
 if [ $? -ne 0 ] ; then
 echo "### vcf merger failed at snpEff annotation stage"
 mv ${MERGERDIR}/${BASENAME}.vcfMergerACInQueue ${MERGERDIR}/${BASENAME}.vcfMergerACFail

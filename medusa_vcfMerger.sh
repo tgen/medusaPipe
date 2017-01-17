@@ -14,9 +14,9 @@
 
 thisStep="medusa_nextJob_vcfMerger.txt"
 nxtStep1="medusa_nextJob_mergeVcfAlleleCount.txt"
-pbsHome="/home/mrussell/medusa-pipe/jobScripts"
-constants="/home/mrussell/central-pipe/constants/constants.txt"
-constantsDir="/home/mrussell/central-pipe/constants"
+pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
+constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
+constantsDir="/home/tgenjetstream/central-pipe/constants"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -157,7 +157,15 @@ do
                 bedFile="/home/tgenref/pecan/annotations/exome_capture/agilent_v4_noUTR/Agilent_V4_noUTR_hs37d5_Targets_intersect_sorted_padded100.bed"
 	elif [[ "$kitName" == *E62 ]] ; then
 		bedFile="/home/tgenref/pecan/annotations/exome_capture/illumina_nextera_expanded/NexteraExpandedExome_hs37d5_Targets_PicardPadded100.bed"
-	fi
+	elif [[ "$kitName" == *SC2 ]] ; then
+                bedFile="/home/tgenref/annotations/dog/canfam3/vcfMergerBed/agilent_canine_exonV2_targets.padded100.bed"
+        elif [[ "$kitName" == *S6A ]] ; then
+                bedFile="/home/tgenref/pecan/annotations/exome_capture/StrAD/StrAD_targets_intersect_sorted_padded100.bed"
+        elif [[ "$kitName" == *S4U ]] ; then
+                bedFile="/home/tgenref/pecan/annotations/exome_capture/Agilent_SureSelect_V4_plusUTR/Agilent_SureSelect_V4_plusUTR_hs37d5_GRCh37.74_PaddedTargets_intersect_sorted_padded100.bed"
+	elif [[ "$kitName" == *ST2 ]] ; then
+                bedFile="/home/tgenref/pecan/annotations/exome_capture/Agilent_SureSelect_V6R2_StrexomeV2/Agilent_SureSelect_V6R2_StrexomeV2_hs37d5_GRCh37.74_PaddedTargets_intersect_sorted_padded100.bed"
+        fi
 	#bedFileGrep=$kitName"_CNABED"
         #bedFile=`grep "@@"$recipe"@@" $constants | grep @@"$bedFileGrep"= | cut -d= -f2`
         echo "### BED FILE= $bedFile"

@@ -17,9 +17,9 @@ nxtStep1="medusa_nextJob_postSailFish.txt"
 #nxtStep2="medusa_nextJob_cuffDiff.txt"
 #nxtStep3="medusa_nextJob_htSeq.txt"
 #nxtStep4="medusa_nextJob_picardRNAMetrics.txt"
-pbsHome="/home/mrussell/medusa-pipe/jobScripts"
-constants="/home/mrussell/central-pipe/constants/constants.txt"
-constantsDir="/home/mrussell/central-pipe/constants"
+pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
+constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
+constantsDir="/home/tgenjetstream/central-pipe/constants"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
