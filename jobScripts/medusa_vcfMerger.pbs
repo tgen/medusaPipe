@@ -128,6 +128,7 @@ perf stat ${VCFMERGER} --dirscript ${VCFMERGER_DIR} \
         --slksnv ${STRELKA_SNV_VCF_BN} \
         --slkindel ${STRELKA_INDEL_VCF_BN} \
         --mtcsnv ${MUTECT_SNV_VCF_BN} \
+	--force \
         --outprefix ${SEURAT_BASENAME} 2> ${MERGERDIR}/${SEURAT_BASENAME}.vcfMerger.perfOut
         if [ $? -ne 0 ] ; then
                 echo "### vcf merger failed at merge 3 vcfs stage"
