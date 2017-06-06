@@ -205,7 +205,8 @@ perf stat java -Xmx24g -jar ${GATK}/GenomeAnalysisTK.jar -R ${REF} \
 	--dbsnp ${DBSNP} \
 	--comp:NHLBI ${NHLBI} \
 	--comp:1000G ${KG} \
-	--comp:COSMIC ${COSMIC} 2> ${MERGERDIR}/${SEURAT_BASENAME}.annotateMerge.perfOut 
+	--comp:COSMIC ${COSMIC} \
+	--disable_auto_index_creation_and_locking_when_reading_rods 2> ${MERGERDIR}/${SEURAT_BASENAME}.annotateMerge.perfOut 
         if [ $? -ne 0 ] ; then
                 echo "### vcf merger failed at annotate merged vcf stage"
                 mv ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerInQueue ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerFail
