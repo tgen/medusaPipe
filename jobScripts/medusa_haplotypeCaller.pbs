@@ -33,6 +33,7 @@ perf stat java -Djava.io.tmpdir=/scratch/tgenjetstream/tmp/ -jar -Xmx32g ${GATKP
 ${BAMLIST} \
 -D ${KNOWN} \
 -mbq 10 \
+--disable_auto_index_creation_and_locking_when_reading_rods \
 -o ${TRK}_Step${STEP}.HC.vcf > ${TRK}_Step${STEP}.hcOut 2> ${TRK}_Step${STEP}.hapCal.perfOut
 if [ $? -eq 0 ] ; then
 	echo "${STEP} Completed" >> ${TRK}_hcStatus.txt
