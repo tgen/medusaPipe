@@ -24,10 +24,10 @@ echo "### TRACK: ${TRACK}"
 echo "### Starting allele count"
 perf stat ${ALCOUNTPATH}/bam_allele_counts_to_vcf.sh -a ${DNABAM} -b ${RNABAM} -v ${VCF} -r ${REF} > ${TRACK}.alleleCountOut 2> ${TRACK}.alCount.perfOut
 if [ $? -eq 0 ] ; then
-	mv ${VCF}.allele_counts.vcf ${OUT}
-	mv ${TRACK}.alleleCountOut ${TRACK}.alleleCountPass
+    mv ${VCF}.allele_counts.vcf ${OUT}
+    mv ${TRACK}.alleleCountOut ${TRACK}.alleleCountPass
 else
-	mv ${TRACK}.alleleCountOut ${TRACK}.alleleCountFail
+    mv ${TRACK}.alleleCountOut ${TRACK}.alleleCountFail
 fi
 rm -f ${TRACK}.alleleCountInQueue
 endTime=`date +%s`

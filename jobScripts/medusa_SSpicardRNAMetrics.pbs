@@ -21,26 +21,26 @@ echo "### PICARDPATH: ${PICARDPATH}"
 
 echo "### Starting first stranded picard rna metrics"
 perf stat java -Xmx15g -Djava.io.tmpdir=/scratch/tgenjetstream/tmp/ -jar ${PICARDPATH}/CollectRnaSeqMetrics.jar \
-	REF_FLAT=${REFFLAT} \
-	REFERENCE_SEQUENCE=${REF} \
-	RIBOSOMAL_INTERVALS=${RIBINTS} \
-	STRAND_SPECIFICITY=SECOND_READ_TRANSCRIPTION_STRAND \
-	INPUT=${BAMFILE} \
-	OUTPUT=${BAMFILE}.picRNAMetrics \
-	CHART_OUTPUT=${BAMFILE}.picRNAMetrics.pdf \
-	TMP_DIR=/scratch/tgenjetstream/tmp/ \
-	VALIDATION_STRINGENCY=SILENT > ${BAMFILE}.picRNAMetricsOut 2> ${BAMFILE}.picardRNA.perfOut
+    REF_FLAT=${REFFLAT} \
+    REFERENCE_SEQUENCE=${REF} \
+    RIBOSOMAL_INTERVALS=${RIBINTS} \
+    STRAND_SPECIFICITY=SECOND_READ_TRANSCRIPTION_STRAND \
+    INPUT=${BAMFILE} \
+    OUTPUT=${BAMFILE}.picRNAMetrics \
+    CHART_OUTPUT=${BAMFILE}.picRNAMetrics.pdf \
+    TMP_DIR=/scratch/tgenjetstream/tmp/ \
+    VALIDATION_STRINGENCY=SILENT > ${BAMFILE}.picRNAMetricsOut 2> ${BAMFILE}.picardRNA.perfOut
 if [ $? -eq 0 ] ; then
-	mv ${BAMFILE}.picRNAMetricsOut ${BAMFILE}.picRNAMetricsPass
+    mv ${BAMFILE}.picRNAMetricsOut ${BAMFILE}.picRNAMetricsPass
 else
-	mv ${BAMFILE}.picRNAMetricsOut ${BAMFILE}.picRNAMetricsFail
+    mv ${BAMFILE}.picRNAMetricsOut ${BAMFILE}.picRNAMetricsFail
 fi
 rm -f ${BAMFILE}.picRNAMetricsInQueue
 #a little organizing
 if [ -d ${RUNDIR}/stats/ ] ; then
-	echo "moving files into stats folder"
-	mv ${BAMFILE}.picRNAMetrics ${RUNDIR}/stats/
-	mv ${BAMFILE}.picRNAMetrics.pdf ${RUNDIR}/stats/
+    echo "moving files into stats folder"
+    mv ${BAMFILE}.picRNAMetrics ${RUNDIR}/stats/
+    mv ${BAMFILE}.picRNAMetrics.pdf ${RUNDIR}/stats/
 fi
 endTime=`date +%s`
 elapsed=$(( $endTime - $beginTime ))

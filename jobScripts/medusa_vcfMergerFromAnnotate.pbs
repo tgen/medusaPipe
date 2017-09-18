@@ -78,30 +78,30 @@ echo "The first genotype column header is: ${FIRST_GENOTYPE_COLUMN}"
 #echo "The fraction letter in the first genotype column is: ${FRACTION_LETTER}"
 echo "Filtering Mutect calls for ${MUTECT_BASENAME}"
 if [ "${FIRST_GENOTYPE_COLUMN}" == "${TUMOR}" ] 
-	#if [ "${FRACTION_LETTER}" == "T" ]
-	then
-	# Filter the MUTECT calls
-	echo "Found expected genotype order - Proceeding with filtering"
-	cat ${MUTECT_VCF} | java -jar ${SNPSIFT}/SnpSift.jar filter "(( FILTER = 'PASS') & ( GEN[1].FA <= 0.02 ) & ( GEN[0].FA >= 0.05 ))" > ${MERGERDIR}/${MUTECT_BASENAME}_mutect_snv_filt.vcf
-	#elif [ "${FRACTION_LETTER}" == "C" ]
+    #if [ "${FRACTION_LETTER}" == "T" ]
+    then
+    # Filter the MUTECT calls
+    echo "Found expected genotype order - Proceeding with filtering"
+    cat ${MUTECT_VCF} | java -jar ${SNPSIFT}/SnpSift.jar filter "(( FILTER = 'PASS') & ( GEN[1].FA <= 0.02 ) & ( GEN[0].FA >= 0.05 ))" > ${MERGERDIR}/${MUTECT_BASENAME}_mutect_snv_filt.vcf
+    #elif [ "${FRACTION_LETTER}" == "C" ]
 elif [ "${FIRST_GENOTYPE_COLUMN}" == "${CONTROL}" ] 
-	then
-	# Reorder the genotype columns and then filter
-	echo "Found the wrong genotype order - Reordering genotype columns and then Proceeding with filtering"
-	awk '{ FS = "\t" ; OFS = "\t" ; print $1, $2, $3, $4, $5, $6, $7, $8, $9, $11, $10}' ${MUTECT_VCF} | java -jar ${SNPSIFT}/SnpSift.jar filter "(( FILTER = 'PASS') & ( GEN[1].FA <= 0.02 ) & ( GEN[0].FA >= 0.05 ))" > ${MERGERDIR}/${MUTECT_BASENAME}_mutect_snv_filt.vcf
+    then
+    # Reorder the genotype columns and then filter
+    echo "Found the wrong genotype order - Reordering genotype columns and then Proceeding with filtering"
+    awk '{ FS = "\t" ; OFS = "\t" ; print $1, $2, $3, $4, $5, $6, $7, $8, $9, $11, $10}' ${MUTECT_VCF} | java -jar ${SNPSIFT}/SnpSift.jar filter "(( FILTER = 'PASS') & ( GEN[1].FA <= 0.02 ) & ( GEN[0].FA >= 0.05 ))" > ${MERGERDIR}/${MUTECT_BASENAME}_mutect_snv_filt.vcf
 else
-	#This should not happen
-	echo "ERROR - The mutect vcf did not contain the tumor or the control listed first.  Something is wrong here."
-	#echo "ERROR - PLEASE LOOK WE DID NOT FIND A T or C, what the hell!"
+    #This should not happen
+    echo "ERROR - The mutect vcf did not contain the tumor or the control listed first.  Something is wrong here."
+    #echo "ERROR - PLEASE LOOK WE DID NOT FIND A T or C, what the hell!"
         # Filter the MUTECT calls
         #echo "Found expected genotype order - Proceeding with filtering"
         #cat ${MUTECT_VCF} | java -jar ${SNPSIFT}/SnpSift.jar filter "(( FILTER = 'PASS') & ( GEN[1].FA <= 0.02 ) & ( GEN[0].FA >= 0.05 ))" > ${MERGERDIR}/${MUTECT_BASENAME}_mutect_snv_filt.vcf
-	#for controls listed first
-	#echo "Found the wrong genotype order - Reordering genotype columns and then Proceeding with filtering"
-	#awk '{ FS = "\t" ; OFS = "\t" ; print $1, $2, $3, $4, $5, $6, $7, $8, $9, $11, $10}' ${MUTECT_VCF} | java -jar ${SNPSIFT}/SnpSift.jar filter "(( FILTER = 'PASS') & ( GEN[1].FA <= 0.02 ) & ( GEN[0].FA >= 0.05 ))" > ${MERGERDIR}/${MUTECT_BASENAME}_mutect_snv_filt.vcf
+    #for controls listed first
+    #echo "Found the wrong genotype order - Reordering genotype columns and then Proceeding with filtering"
+    #awk '{ FS = "\t" ; OFS = "\t" ; print $1, $2, $3, $4, $5, $6, $7, $8, $9, $11, $10}' ${MUTECT_VCF} | java -jar ${SNPSIFT}/SnpSift.jar filter "(( FILTER = 'PASS') & ( GEN[1].FA <= 0.02 ) & ( GEN[0].FA >= 0.05 ))" > ${MERGERDIR}/${MUTECT_BASENAME}_mutect_snv_filt.vcf
 
 fi
-	
+
 MUTECT_SNV_VCF=${MERGERDIR}/${MUTECT_BASENAME}_mutect_snv_filt.vcf
 
 #get the strelka vcfs into the MERGERDIR
@@ -149,15 +149,15 @@ echo "..."
  echo "..."
 
 #perf stat java -jar ${SNPSIFT}/SnpSift.jar rmInfo ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.vcf \
-#	SEURAT_DNA_ALT_ALLELE_FORWARD_FRACTION \
-#	SEURAT_DNA_ALT_ALLELE_FORWARD \
-#	SEURAT_DNA_ALT_ALLELE_REVERSE_FRACTION \
-#	SEURAT_DNA_ALT_ALLELE_REVERSE \
-#	SEURAT_DNA_ALT_ALLELE_TOTAL_FRACTION \
-#	SEURAT_DNA_ALT_ALLELE_TOTAL \
-#	SEURAT_DNA_REF_ALLELE_FORWARD \
-#	SEURAT_DNA_REF_ALLELE_REVERSE \
-#	SEURAT_DNA_REF_ALLELE_TOTAL > ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.vcf 2> ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerRmInfoKeys.perfOut
+#    SEURAT_DNA_ALT_ALLELE_FORWARD_FRACTION \
+#    SEURAT_DNA_ALT_ALLELE_FORWARD \
+#    SEURAT_DNA_ALT_ALLELE_REVERSE_FRACTION \
+#    SEURAT_DNA_ALT_ALLELE_REVERSE \
+#    SEURAT_DNA_ALT_ALLELE_TOTAL_FRACTION \
+#    SEURAT_DNA_ALT_ALLELE_TOTAL \
+#    SEURAT_DNA_REF_ALLELE_FORWARD \
+#    SEURAT_DNA_REF_ALLELE_REVERSE \
+#    SEURAT_DNA_REF_ALLELE_TOTAL > ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.vcf 2> ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerRmInfoKeys.perfOut
  #       if [ $? -ne 0 ] ; then
  #               echo "### vcf merger failed at remove unwanted info keys stage"
   #              mv ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerInQueue ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerFail
@@ -173,20 +173,20 @@ echo "..."
 #then
 #if [ "${ASSAYID}" == "Exome" ] ; then
 #
-#	perf stat cat ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.vcf | java -jar ${SNPSIFT}/SnpSift.jar intervals ${BEDFILE} > ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.vcf 2> ${MERGERDIR}/${SEURAT_BASENAME}.vcftargetRegions.perfOut              
-#	if [ $? -ne 0 ] ; then
+#    perf stat cat ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.vcf | java -jar ${SNPSIFT}/SnpSift.jar intervals ${BEDFILE} > ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.vcf 2> ${MERGERDIR}/${SEURAT_BASENAME}.vcftargetRegions.perfOut
+#    if [ $? -ne 0 ] ; then
 #                echo "### vcf merger failed filtering to target regions"
-#        	mv ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerInQueue ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerFail
+#            mv ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerInQueue ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerFail
 #                exit
 #        fi
-#else	
-#	echo "This is not an exome, skipping filtering to target regions"
-#	cp ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.vcf ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.vcf
+#else
+#    echo "This is not an exome, skipping filtering to target regions"
+#    cp ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.vcf ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.vcf
 #fi
 
 #elif [ "${EXOME_TYPE}" == "S5U" ]
 #then
-#	cat ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.vcf | java -jar ${SNPSIFT} intervals ${S5U_BED} > ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.vcf
+#    cat ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.vcf | java -jar ${SNPSIFT} intervals ${S5U_BED} > ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.vcf
 #fi
 
 #echo "Finished Filtering Calls to Targets"
@@ -198,14 +198,14 @@ echo "..."
 #grep -v "SEURAT_TYPE=somatic_deletion" ${SEURAT_BASENAME}.merge.sort.clean.f2t.vcf | grep -v "SEURAT_TYPE=somatic_insertion" > ${SEURAT_BASENAME}.merge.sort.clean.f2t2.vcf
 
 perf stat java -Xmx24g -jar ${GATK}/GenomeAnalysisTK.jar -R ${REF} \
-	-T VariantAnnotator \
-	-nt 4 \
-	-o ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.vcf \
-	--variant ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.vcf \
-	--dbsnp ${DBSNP} \
-	--comp:NHLBI ${NHLBI} \
-	--comp:1000G ${KG} \
-	--comp:COSMIC ${COSMIC} 2> ${MERGERDIR}/${SEURAT_BASENAME}.annotateMerge.perfOut 
+    -T VariantAnnotator \
+    -nt 4 \
+    -o ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.vcf \
+    --variant ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.vcf \
+    --dbsnp ${DBSNP} \
+    --comp:NHLBI ${NHLBI} \
+    --comp:1000G ${KG} \
+    --comp:COSMIC ${COSMIC} 2> ${MERGERDIR}/${SEURAT_BASENAME}.annotateMerge.perfOut
         if [ $? -ne 0 ] ; then
                 echo "### vcf merger failed at annotate merged vcf stage"
                 mv ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerInQueue ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerFail
@@ -217,48 +217,48 @@ echo "Finished Annotating Merged VCF"
 
 ##### Determine if you need to run RNA allele counts or not
 if [ -z "${RNABAM}" ] ; then
-	echo "allele count was not requested for this pair"
-#	cat ${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.vcf > ${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.rna.vcf
-	## add dbNSFP annotaions
-	perf stat java -jar ${SNPSIFT}/SnpSift.jar dbnsfp \
-		-v ${DBNSFP} \
-		-a \
-		-f Interpro_domain,Polyphen2_HVAR_pred,GERP++_NR,GERP++_RS,LRT_score,MutationTaster_score,MutationAssessor_score,FATHMM_score,Polyphen2_HVAR_score,SIFT_score,Polyphen2_HDIV_score \
-		${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.vcf > ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.vcf 2> ${MERGERDIR}/${SEURAT_BASENAME}.dbnsfpannote.perfOut
-	if [ $? -ne 0 ] ; then
+    echo "allele count was not requested for this pair"
+#    cat ${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.vcf > ${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.rna.vcf
+    ## add dbNSFP annotaions
+    perf stat java -jar ${SNPSIFT}/SnpSift.jar dbnsfp \
+        -v ${DBNSFP} \
+        -a \
+        -f Interpro_domain,Polyphen2_HVAR_pred,GERP++_NR,GERP++_RS,LRT_score,MutationTaster_score,MutationAssessor_score,FATHMM_score,Polyphen2_HVAR_score,SIFT_score,Polyphen2_HDIV_score \
+        ${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.vcf > ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.vcf 2> ${MERGERDIR}/${SEURAT_BASENAME}.dbnsfpannote.perfOut
+    if [ $? -ne 0 ] ; then
                 echo "### vcf merger failed at annotate with dbNSFP stage"
                 mv ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerInQueue ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerFail
                 exit
         fi
 
-	# add snpEFF annotations
-	java -Xmx4G -jar ${SNPEFFPATH}/snpEff.jar -canon -c ${SNPEFFPATH}/snpEff.config -v -lof ${DBVERSION} ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.vcf > ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.se74lofcan.vcf
-	java -Xmx4G -jar ${SNPEFFPATH}/snpEff.jar -c ${SNPEFFPATH}/snpEff.config -v -lof ${DBVERSION} ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.vcf > ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.se74lof.vcf
+    # add snpEFF annotations
+    java -Xmx4G -jar ${SNPEFFPATH}/snpEff.jar -canon -c ${SNPEFFPATH}/snpEff.config -v -lof ${DBVERSION} ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.vcf > ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.se74lofcan.vcf
+    java -Xmx4G -jar ${SNPEFFPATH}/snpEff.jar -c ${SNPEFFPATH}/snpEff.config -v -lof ${DBVERSION} ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.vcf > ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.se74lof.vcf
         if [ $? -ne 0 ] ; then
                 echo "### vcf merger failed at snpEff annotation stage"
                 mv ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerInQueue ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerFail
                 exit
         fi
-	
-	# Make final call list venn
-	${POST_MERGE_VENN} --vcf ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.se74lofcan.vcf --outprefix  ${MERGERDIR}/${SEURAT_BASENAME}_finalVenn  --maintitle ${SEURAT_BASENAME} --
-	if [ $? -ne 0 ] ; then
+
+    # Make final call list venn
+    ${POST_MERGE_VENN} --vcf ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.se74lofcan.vcf --outprefix  ${MERGERDIR}/${SEURAT_BASENAME}_finalVenn  --maintitle ${SEURAT_BASENAME} --
+    if [ $? -ne 0 ] ; then
                 echo "### vcf merger failed at venn diagram stage"
                 mv ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerInQueue ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerFail
                 exit
         fi
-	
-	##clean up final vcfs to save back
-	mv ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.se74lofcan.vcf ${MERGERDIR}/${SEURAT_BASENAME}.merged.canonicalOnly.final.vcf
-	mv ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.se74lof.vcf ${MERGERDIR}/${SEURAT_BASENAME}.merged.allTranscripts.final.vcf
-	rm ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.vcf
-	rm ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.vcf
-	rm ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.vcf.idx
-	rm ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.vcf
-	rm ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.vcf
+
+    ##clean up final vcfs to save back
+    mv ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.se74lofcan.vcf ${MERGERDIR}/${SEURAT_BASENAME}.merged.canonicalOnly.final.vcf
+    mv ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.se74lof.vcf ${MERGERDIR}/${SEURAT_BASENAME}.merged.allTranscripts.final.vcf
+    rm ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.vcf
+    rm ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.vcf
+    rm ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.vcf.idx
+    rm ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.vcf
+    rm ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.vcf
 else
-	echo "need to run allele count script and finalize for this DNAPAIR"	
-	touch ${RUNDIR}/${NXT1}
+    echo "need to run allele count script and finalize for this DNAPAIR"
+    touch ${RUNDIR}/${NXT1}
 fi
 
 rm ${MERGERDIR}/${STRELKA_SNV_VCF_BN}

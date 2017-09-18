@@ -33,11 +33,11 @@ DIR=$(dirname "${SAM}")
 echo "### Now running htseq on SAM"
 perf stat htseq-count -q --stranded=reverse --mode=union ${SAM} ${GTF} 2> ${SAM}.htseq.perfOut > ${DIR}/${anotherName}.htSeqCounts
 if [ $? -eq 0 ] ; then
-	touch ${SAM}.htSeqPass	
-	#touch ${RUNDIR}/${NXT1}
-	echo "Deleted by htSeq to save on space at $time" > ${SAM}
+    touch ${SAM}.htSeqPass
+    #touch ${RUNDIR}/${NXT1}
+    echo "Deleted by htSeq to save on space at $time" > ${SAM}
 else
-	touch ${SAM}.htSeqFail
+    touch ${SAM}.htSeqFail
 fi
 rm -f ${SAM}.htSeqInQueue
 time=`date +%d-%m-%Y-%H-%M`

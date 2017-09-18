@@ -33,20 +33,20 @@ echo "### params is $params"
 
 perf stat ${CUFFQUANTPATH}/cuffquant ${PARAMS} --frag-bias-correct ${REF} --library-type fr-secondstrand --mask-file ${CUFFLINKMASK} ${CUFFLINKGTF} ${BAM} 2> ${DIRNAME}.cuffQuant.perfOut > ${DIRNAME}.cuffQuantOut 2>&1
 if [ $? -eq 0 ] ; then
-	newName=`basename ${BAM}`
-	newName=${newName/.proj.Aligned.out.sorted.md.bam}
-	mv ${DIRNAME}.cuffQuantOut ${DIRNAME}.cuffQuantPass	
-	mv ${DIRNAME}/abundances.cxb ${DIRNAME}/$newName.cuffQuant.abundances.cxb
-	#mv ${DIRNAME}/transcripts.gtf ${DIRNAME}/$newName.transcripts.gtf
-	#mv ${DIRNAME}/skipped.gtf ${DIRNAME}/$newName.skipped.gtf
-	#mv ${DIRNAME}/genes.fpkm_tracking ${DIRNAME}/$newName.genes.fpkm_tracking
-	#mv ${DIRNAME}/isoforms.fpkm_tracking ${DIRNAME}/$newName.isoforms.fpkm_tracking
-	#mv ${DIR}/transcripts.expr ${DIR}/${NEWNAME}_transcripts.expr
-	#mv ${DIR}/genes.expr ${DIR}/${NEWNAME}_genes.expr
-	#mv ${DIR}/isoforms.fpkm_tracking ${DIR}/${NEWNAME}_isoforms.fpkm_tracking
-	#touch ${RUNDIR}/${NXT1}
+    newName=`basename ${BAM}`
+    newName=${newName/.proj.Aligned.out.sorted.md.bam}
+    mv ${DIRNAME}.cuffQuantOut ${DIRNAME}.cuffQuantPass
+    mv ${DIRNAME}/abundances.cxb ${DIRNAME}/$newName.cuffQuant.abundances.cxb
+    #mv ${DIRNAME}/transcripts.gtf ${DIRNAME}/$newName.transcripts.gtf
+    #mv ${DIRNAME}/skipped.gtf ${DIRNAME}/$newName.skipped.gtf
+    #mv ${DIRNAME}/genes.fpkm_tracking ${DIRNAME}/$newName.genes.fpkm_tracking
+    #mv ${DIRNAME}/isoforms.fpkm_tracking ${DIRNAME}/$newName.isoforms.fpkm_tracking
+    #mv ${DIR}/transcripts.expr ${DIR}/${NEWNAME}_transcripts.expr
+    #mv ${DIR}/genes.expr ${DIR}/${NEWNAME}_genes.expr
+    #mv ${DIR}/isoforms.fpkm_tracking ${DIR}/${NEWNAME}_isoforms.fpkm_tracking
+    #touch ${RUNDIR}/${NXT1}
 else
-	mv ${DIRNAME}.cuffQuantOut ${DIRNAME}.cuffQuantFail
+    mv ${DIRNAME}.cuffQuantOut ${DIRNAME}.cuffQuantFail
 fi
 rm -f ${DIRNAME}.cuffQuantInQueue
 endTime=`date +%s`

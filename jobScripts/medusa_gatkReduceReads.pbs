@@ -26,10 +26,10 @@ perf stat java -Djava.io.tmpdir=/scratch/tgenjetstream/tmp/ -jar -Xmx32g ${GATKP
 -I ${BAMFILE} \
 -o ${OUTPUTBAM} > ${BAMFILE}.rrOut 2> ${BAMFILE}.reduceReads.perfOut
 if [ $? -eq 0 ] ; then
-	mv ${BAMFILE}.rrOut ${BAMFILE}.rrPass
-	touch ${RUNDIR}/${NXT1}
-else	
-	mv ${BAMFILE}.rrOut ${BAMFILE}.rrFail
+    mv ${BAMFILE}.rrOut ${BAMFILE}.rrPass
+    touch ${RUNDIR}/${NXT1}
+else
+    mv ${BAMFILE}.rrOut ${BAMFILE}.rrFail
 fi
 rm -f ${BAMFILE}.rrInQueue
 

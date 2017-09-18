@@ -32,10 +32,10 @@ echo "### Picard sort is done, now starting htseq"
 perf stat htseq-count -q --format=bam --stranded=no --mode=union ${BAM} ${GTF} 2> ${SAM}.htseq.perfOut > ${DIR}/${anotherName}.htSeqCounts
 if [ $? -eq 0 ] ; then
  
-	touch ${SAM}.htSeqPass	
-	#touch ${RUNDIR}/${NXT1}
+    touch ${SAM}.htSeqPass
+    #touch ${RUNDIR}/${NXT1}
 else
-	mv ${SAM}.htSeqOut ${SAM}.htSeqFail
+    mv ${SAM}.htSeqOut ${SAM}.htSeqFail
 fi
 rm -f ${SAM}.htSeqInQueue
 time=`date +%d-%m-%Y-%H-%M`

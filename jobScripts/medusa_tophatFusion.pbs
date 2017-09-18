@@ -50,55 +50,55 @@ cd ${DIR}
 #r1Trimmed=0
 #r2Trimmed=0
 #if [[ ${PRE1} != 0 || ${POS1} != 0 ]] ; then
-#	r1Trimmed=1
-#	echo "### we need trimming first on ${FASTQ1}"
-#	/home/tgenjetstream/bin/DPtrimFastq.pl ${FASTQ1} ${PRE1} ${POS1} | gzip > $trimmedRead1 &
-#	f1id=$! #throw in background capture pid
+#    r1Trimmed=1
+#    echo "### we need trimming first on ${FASTQ1}"
+#    /home/tgenjetstream/bin/DPtrimFastq.pl ${FASTQ1} ${PRE1} ${POS1} | gzip > $trimmedRead1 &
+#    f1id=$! #throw in background capture pid
 #else
-#	echo "### no trimming needed on ${FASTQ1}"
-#	ln -s ${FASTQ1} $trimmedRead1
-#	touch ${FASTQ1}.trimPass
+#    echo "### no trimming needed on ${FASTQ1}"
+#    ln -s ${FASTQ1} $trimmedRead1
+#    touch ${FASTQ1}.trimPass
 #fi
 #if [[ ${PRE2} != 0 || ${POS2} != 0 ]] ; then
-#	r2Trimmed=1
-#	echo "### we need trimming first on ${FASTQ2}"
-#	/home/tgenjetstream/bin/DPtrimFastq.pl ${FASTQ2} ${PRE2} ${POS2} | gzip > $trimmedRead2
-#	if [ $? -eq 0 ] ; then
-#		echo "### trim finished OK"
-		#juggling files
-		#mv ${FASTQ2} ${FASTQ2}.untrimmed
-		#mv ${FASTQ2}.trimmed ${FASTQ2}
-#		touch ${FASTQ2}.trimPass
-#	else
-#		echo "### trim failed"
-#		touch ${FASTQ2}.trimFail
-#	fi
+#    r2Trimmed=1
+#    echo "### we need trimming first on ${FASTQ2}"
+#    /home/tgenjetstream/bin/DPtrimFastq.pl ${FASTQ2} ${PRE2} ${POS2} | gzip > $trimmedRead2
+#    if [ $? -eq 0 ] ; then
+#        echo "### trim finished OK"
+        #juggling files
+        #mv ${FASTQ2} ${FASTQ2}.untrimmed
+        #mv ${FASTQ2}.trimmed ${FASTQ2}
+#        touch ${FASTQ2}.trimPass
+#    else
+#        echo "### trim failed"
+#        touch ${FASTQ2}.trimFail
+#    fi
 #else
-#	echo "### no trimming needed on ${FASTQ2}"
-#	ln -s ${FASTQ2} $trimmedRead2
-#	touch ${FASTQ2}.trimPass
+#    echo "### no trimming needed on ${FASTQ2}"
+#    ln -s ${FASTQ2} $trimmedRead2
+#    touch ${FASTQ2}.trimPass
 #fi
 
 #if [[ ${PRE1} != 0 || ${POS1} != 0 ]] ; then
-#	wait $f1id #better wait for  trimming job on read 1 to end
-#	if [ $? -eq 0 ] ; then
-#		echo "### trim finished OK"
-		#juggling files
-		#mv ${FASTQ1} ${FASTQ1}.untrimmed
-		#mv ${FASTQ1}.trimmed ${FASTQ1}
-#		touch ${FASTQ1}.trimPass
-#	else
-#		echo "### trim failed"
-#		touch ${FASTQ1}.trimFail
-#	fi
+#    wait $f1id #better wait for  trimming job on read 1 to end
+#    if [ $? -eq 0 ] ; then
+#        echo "### trim finished OK"
+        #juggling files
+        #mv ${FASTQ1} ${FASTQ1}.untrimmed
+        #mv ${FASTQ1}.trimmed ${FASTQ1}
+#        touch ${FASTQ1}.trimPass
+#    else
+#        echo "### trim failed"
+#        touch ${FASTQ1}.trimFail
+#    fi
 #fi
 
 #now set names
 #if [ $r1Trimmed -eq 1 ] ; then
-#	FASTQ1=$trimmedRead1
+#    FASTQ1=$trimmedRead1
 #fi
 #if [ $r2Trimmed -eq 1 ] ; then
-#	FASTQ2=$trimmedRead2
+#    FASTQ2=$trimmedRead2
 #fi
 #end of setting names
 #
@@ -153,44 +153,44 @@ echo "###End of getting insert size section"
 
 #setting path
 PATH=${BOWTIE1PATH}:$PATH
-	#--b2-very-fast \
+    #--b2-very-fast \
 perf stat ${THFUSIONPATH}/tophat2 \
-	-p 16 \
-	-N 3 \
-	--read-edit-dist 3 \
-	--fusion-search \
-	--bowtie1 \
-	--no-coverage-search \
-	-r ${INNERDIST} \
-	--mate-std-dev ${STDEV} \
-	--fusion-min-dist 100000 \
-	--max-intron-length 100000 \
-	--keep-fasta-order \
-	--fusion-anchor-length 20 \
-	--fusion-ignore-chromosomes MT \
-	-o ${DIR} \
-	${INDEXBASE} ${FASTQ1} ${FASTQ2} > ${DIR}.thFusionOut 2> ${DIR}.thFusion.perfOut
+    -p 16 \
+    -N 3 \
+    --read-edit-dist 3 \
+    --fusion-search \
+    --bowtie1 \
+    --no-coverage-search \
+    -r ${INNERDIST} \
+    --mate-std-dev ${STDEV} \
+    --fusion-min-dist 100000 \
+    --max-intron-length 100000 \
+    --keep-fasta-order \
+    --fusion-anchor-length 20 \
+    --fusion-ignore-chromosomes MT \
+    -o ${DIR} \
+    ${INDEXBASE} ${FASTQ1} ${FASTQ2} > ${DIR}.thFusionOut 2> ${DIR}.thFusion.perfOut
 if [ $? -eq 0 ] ; then
-	echo "success."
-	echo "renaming..."
-	mv ${DIR}/accepted_hits.bam ${DIR}/$anotherName.accepted_hits.bam
-	mv ${DIR}/unmapped.bam ${DIR}/$anotherName.unmapped.bam
-	mv ${DIR}/junctions.bed ${DIR}/$anotherName.junctions.bed
-	mv ${DIR}/insertions.bed ${DIR}/$anotherName.insertions.bed
-	mv ${DIR}/deletions.bed ${DIR}/$anotherName.deletions.bed
-	mv ${DIR}/fusions.out ${DIR}/$anotherName.fusions.out
-	mv ${DIR}/$tempBamPrefix.bam ${DIR}/$tempBamPrefix.bam.2MilReads
-	echo "renaming done"
-	echo "Now making bam index and flagstat for ${DIR}/accepted_hits.bam"
-	${SAMTOOLSPATH}/samtools index ${DIR}/$anotherName.accepted_hits.bam
-	${SAMTOOLSPATH}/samtools flagstat ${DIR}/$anotherName.accepted_hits.bam > ${DIR}/$anotherName.accepted_hits.bam.samStats
-	echo "bam indexing and flagstat finished"
+    echo "success."
+    echo "renaming..."
+    mv ${DIR}/accepted_hits.bam ${DIR}/$anotherName.accepted_hits.bam
+    mv ${DIR}/unmapped.bam ${DIR}/$anotherName.unmapped.bam
+    mv ${DIR}/junctions.bed ${DIR}/$anotherName.junctions.bed
+    mv ${DIR}/insertions.bed ${DIR}/$anotherName.insertions.bed
+    mv ${DIR}/deletions.bed ${DIR}/$anotherName.deletions.bed
+    mv ${DIR}/fusions.out ${DIR}/$anotherName.fusions.out
+    mv ${DIR}/$tempBamPrefix.bam ${DIR}/$tempBamPrefix.bam.2MilReads
+    echo "renaming done"
+    echo "Now making bam index and flagstat for ${DIR}/accepted_hits.bam"
+    ${SAMTOOLSPATH}/samtools index ${DIR}/$anotherName.accepted_hits.bam
+    ${SAMTOOLSPATH}/samtools flagstat ${DIR}/$anotherName.accepted_hits.bam > ${DIR}/$anotherName.accepted_hits.bam.samStats
+    echo "bam indexing and flagstat finished"
 
 
-	mv ${DIR}.thFusionOut ${DIR}.thFusionPass	
-	touch ${RUNDIR}/${NXT1}
+    mv ${DIR}.thFusionOut ${DIR}.thFusionPass
+    touch ${RUNDIR}/${NXT1}
 else
-	mv ${DIR}.thFusionOut ${DIR}.thFusionFail
+    mv ${DIR}.thFusionOut ${DIR}.thFusionFail
 fi
 rm -f ${DIR}.thFusionInQueue
 endTime=`date +%s`

@@ -37,19 +37,19 @@ echo "Running cuffLinks for first stranded RNA capture"
 #perf stat ${CUFFLINKSPATH}/cufflinks ${PARAMS} 2> ${DIRNAME}.cuffLink.perfOut > ${DIRNAME}.cuffLinkOut 2>&1
 perf stat ${CUFFLINKSPATH}/cufflinks ${PARAMS} --library-type fr-secondstrand --frag-bias-correct ${REF} --GTF ${CUFFLINKGTF} -M ${CUFFLINKMASK} ${BAM} 2> ${DIRNAME}.cuffLink.perfOut > ${DIRNAME}.cuffLinkOut 2>&1
 if [ $? -eq 0 ] ; then
-	newName=`basename ${BAM}`
-	newName=${newName/.proj.Aligned.out.sorted.md.bam}
+    newName=`basename ${BAM}`
+    newName=${newName/.proj.Aligned.out.sorted.md.bam}
         mv ${DIRNAME}.cuffLinkOut ${DIRNAME}.cuffLinkPass
         mv ${DIRNAME}/transcripts.gtf ${DIRNAME}/$newName.cufflinks.transcripts.gtf
         mv ${DIRNAME}/skipped.gtf ${DIRNAME}/$newName.cufflinks.skipped.gtf
         mv ${DIRNAME}/genes.fpkm_tracking ${DIRNAME}/$newName.cufflinks.genes.fpkm_tracking
         mv ${DIRNAME}/isoforms.fpkm_tracking ${DIRNAME}/$newName.cufflinks.isoforms.fpkm_tracking
-	#mv ${DIR}/transcripts.expr ${DIR}/${NEWNAME}_transcripts.expr
-	#mv ${DIR}/genes.expr ${DIR}/${NEWNAME}_genes.expr
-	#mv ${DIR}/isoforms.fpkm_tracking ${DIR}/${NEWNAME}_isoforms.fpkm_tracking
-	#touch ${RUNDIR}/${NXT1}
+    #mv ${DIR}/transcripts.expr ${DIR}/${NEWNAME}_transcripts.expr
+    #mv ${DIR}/genes.expr ${DIR}/${NEWNAME}_genes.expr
+    #mv ${DIR}/isoforms.fpkm_tracking ${DIR}/${NEWNAME}_isoforms.fpkm_tracking
+    #touch ${RUNDIR}/${NXT1}
 else
-	mv ${DIRNAME}.cuffLinkOut ${DIRNAME}.cuffLinkFail
+    mv ${DIRNAME}.cuffLinkOut ${DIRNAME}.cuffLinkFail
 fi
 rm -f ${DIRNAME}.cuffLinkInQueue
 endTime=`date +%s`
