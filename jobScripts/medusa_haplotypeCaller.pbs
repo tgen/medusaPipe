@@ -42,7 +42,7 @@ if [ $? -eq 0 ] ; then
 else
     mv ${TRK}_Step${STEP}.hcOut ${TRK}_Step${STEP}.hcFail
     rm -f ${TRK}_Step${STEP}.hcInQueue
-    exit
+    exit 1
 fi
 
 vcfList=""

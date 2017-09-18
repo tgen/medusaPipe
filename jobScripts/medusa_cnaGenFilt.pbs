@@ -69,7 +69,7 @@ if [ $? -ne 0 ] ; then
     echo "### CNA failed at run_ngsCNA.sh"
     touch ${TRACKNAME}.cnaGenFiltFail
     rm -f ${TRACKNAME}.cnaGenFiltInQueue
-    exit
+    exit 1
 else
     echo "### Renaming cnaStats files"
     nFileName=`basename ${NORMALDAT}`
@@ -92,7 +92,7 @@ if [ $? -ne 0 ] ; then
     echo "### CNA failed at plotCGH.R"
     touch ${TRACKNAME}.cnaGenFiltFail
     rm -f ${TRACKNAME}.cnaGenFiltInQueue
-    exit
+    exit 1
 fi
 echo "### End plotCGH.R"
 
@@ -103,7 +103,7 @@ if [ -e ${OFILE}.hets.tsv ] ; then
         echo "### CNA failed at plotCGHwithHets.R"
         touch ${TRACKNAME}.cnaGenFiltFail
         rm -f ${TRACKNAME}.cnaGenFiltInQueue
-        exit
+        exit 1
     fi
     echo "### End running plots with hets"
 fi
@@ -118,7 +118,7 @@ if [ $? -ne 0 ] ; then
     echo "### CNA failed at annotSeg.pl"
     touch ${TRACKNAME}.cnaGenFiltFail
     rm -f ${TRACKNAME}.cnaGenFiltInQueue
-    exit
+    exit 1
 fi
 echo "### End running annotSeg.pl"
 

@@ -67,7 +67,7 @@ if [ $? -ne 0 ] ; then
     echo "### CNA failed at run_ngsCNA.sh"
     touch ${TRACKNAME}.cnaGenUnfiFail
     rm -f ${TRACKNAME}.cnaGenUnfiInQueue
-    exit
+    exit 1
 else
     echo "### Renaming cnaStats files"
     nFileName=`basename ${NORMALDAT}`

@@ -44,7 +44,7 @@ else
     (( mins=$elapsed%3600/60 ))
     echo "RUNTIME:VQSR:$hours:$mins" > ${VCF}.vqsr.totalTime
     echo "VQSR finished at $time."
-    exit
+    exit 1
 fi
 echo "### Dynamically set maxGaussian to $maxGaussian and percent bad variant to $badVariant because assay type was ${ASSAY}"
 
@@ -66,7 +66,7 @@ if [ $? -ne 0 ] ; then
     mv ${VCF}.vqsrOut ${VCF}.vqsrFail
     echo "### vqsr failed at variantrecalibrator stage"
     rm -f ${VCF}.vqsrInQueue
-    exit
+    exit 1
 fi
 perf stat java -jar -Xmx4g ${GATKPATH}/GenomeAnalysisTK.jar \
 -R ${REF} \

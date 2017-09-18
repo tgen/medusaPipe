@@ -49,7 +49,7 @@ cd ${WORKDIR}
         echo "### JIR failed at RealignerTargetCreator stage"
         mv ${TRK}.jointIROut ${TRK}.jointIRFail
         rm -f ${TRK}.jointIRInQueue
-        exit
+        exit 1
 
     fi
 #fi

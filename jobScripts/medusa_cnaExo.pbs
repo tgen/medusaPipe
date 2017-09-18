@@ -64,7 +64,7 @@ if [ $? -ne 0 ] ; then
     echo "### CNA failed at run_ngsCNA.sh"
     touch ${TRACKNAME}.cnaExomeFail
     rm -f ${TRACKNAME}.cnaExomeInQueue
-    exit
+    exit 1
 else
     echo "### Renaming cnaStats files"
     nFileName=`basename ${NORMALDAT}`
@@ -82,7 +82,7 @@ if [ $? -ne 0 ] ; then
     echo "### CNA failed at runDNAcopyExome.R"
     touch ${TRACKNAME}.cnaExomeFail
     rm -f ${TRACKNAME}.cnaExomeInQueue
-    exit
+    exit 1
 fi
 
 echo "### End runDNAcopyExome.R"
@@ -97,7 +97,7 @@ if [ -f ${OFILE}.hets.tsv ] ; then
         echo "### CNA failed at plotCGHwithHets.R"
         touch ${TRACKNAME}.cnaExomeFail
         rm -f ${TRACKNAME}.cnaExomeInQueue
-        exit
+        exit 1
     fi
 
     echo "### End running plots with hets"
@@ -113,7 +113,7 @@ if [ $? -ne 0 ] ; then
     echo "### CNA failed at annotSeg.pl"
     touch ${TRACKNAME}.cnaExomeFail
     rm -f ${TRACKNAME}.cnaExomeInQueue
-    exit
+    exit 1
 fi
 echo "### End annotSeg.pl"
 

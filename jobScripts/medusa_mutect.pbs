@@ -57,7 +57,7 @@ if [ $? -eq 0 ] ; then
 else
     mv ${OUTPUT}_Step${STEP}.mutectOut ${OUTPUT}_Step${STEP}.mutectFail
     rm -f ${OUTPUT}_Step${STEP}.mutectInQueue
-    exit
+    exit 1
 fi
 
 #vcfList=""

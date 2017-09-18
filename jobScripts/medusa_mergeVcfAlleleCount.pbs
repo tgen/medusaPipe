@@ -125,7 +125,7 @@ ${SAMTOOLS}/samtools mpileup -B -d10000000 -Q5 -f ${REF} -l ${MERGERDIR}/${BASEN
 if [ $? -ne 0 ] ; then
     echo "### vcf merger allele count failed at mpileup stage"
     mv ${MERGERDIR}/${BASENAME}.vcfMergerACInQueue ${MERGERDIR}/${BASENAME}.vcfMergerACFail
-    exit
+    exit 1
 fi
 
 # Create vcf file header
@@ -177,7 +177,7 @@ perf stat java -jar ${VARSCAN}/VarScan.v2.3.7.jar mpileup2cns ${MERGERDIR}/${BAS
 if [ $? -ne 0 ] ; then
         echo "### vcf merger allele count failed at calc RNA genotypes stage"
         mv ${MERGERDIR}/${BASENAME}.vcfMergerACInQueue ${MERGERDIR}/${BASENAME}.vcfMergerACFail
-        exit
+        exit 1
 fi
 
 echo "Finished Generating RNA Genotypes"
@@ -190,7 +190,7 @@ perf stat java -jar ${SNPSIFT}/SnpSift.jar extractFields varscan.vcf CHROM POS R
 if [ $? -ne 0 ] ; then
         echo "### vcf merger allele count failed at converting to a table stage"
         mv ${MERGERDIR}/${BASENAME}.vcfMergerACInQueue ${MERGERDIR}/${BASENAME}.vcfMergerACFail
-        exit
+        exit 1
 fi
 
 cat ${MERGERDIR}/${BASENAME}.RNA.calls.varscan.pre.table | cut -f7 | sed -e 's/^$/./g' > ${MERGERDIR}/${BASENAME}.RNA.calls.varscan.pre2.table
@@ -304,7 +304,7 @@ ${VCFSORTER} ${DICT} ${MERGERDIR}/${BASENAME}.RNA.calls.vcf > ${MERGERDIR}/${BAS
 if [ $? -ne 0 ] ; then
         echo "### vcf merger allele count failed at vcfsorter stage"
         mv ${MERGERDIR}/${BASENAME}.vcfMergerACInQueue ${MERGERDIR}/${BASENAME}.vcfMergerACFail
-        exit
+        exit 1
 fi
 
 # add RNA values to merged calls
@@ -312,7 +312,7 @@ java -jar ${SNPSIFT}/SnpSift.jar annotate ${MERGERDIR}/${BASENAME}.RNA.calls.sor
 if [ $? -ne 0 ] ; then
         echo "### vcf merger allele count failed at add RNA values stage"
         mv ${MERGERDIR}/${BASENAME}.vcfMergerACInQueue ${MERGERDIR}/${BASENAME}.vcfMergerACFail
-        exit
+        exit 1
 fi
 echo "Finished Adding RNA Calls to VCF"
 
@@ -332,7 +332,7 @@ echo "Finished Adding RNA Calls to VCF"
         if [ $? -ne 0 ] ; then
                 echo "### vcf merger failed at annotate with dbNSFP stage"
                 mv ${MERGERDIR}/${BASENAME}.vcfMergerACInQueue ${MERGERDIR}/${BASENAME}.vcfMergerACFail
-                exit
+                exit 1
         fi
 
 # add snpEFF annotations
@@ -341,7 +341,7 @@ java -Xmx4G -jar ${SNPEFFPATH}/snpEff.jar -c ${SNPEFFPATH}/snpEff.config -v -noL
 if [ $? -ne 0 ] ; then
 echo "### vcf merger failed at snpEff annotation stage"
 mv ${MERGERDIR}/${BASENAME}.vcfMergerACInQueue ${MERGERDIR}/${BASENAME}.vcfMergerACFail
-exit
+exit 1
 fi
 
 # Make final call list venn
@@ -350,7 +350,7 @@ ${POST_MERGE_VENN} --vcf ${MERGERDIR}/${BASENAME}.merge.sort.clean.f2t.ann.rna.d
 if [ $? -ne 0 ] ; then
 echo "### vcf merger failed at venn diagram stage"
 mv ${MERGERDIR}/${BASENAME}.vcfMergerACInQueue ${MERGERDIR}/${BASENAME}.vcfMergerACFail
-exit
+exit 1
 fi
 
 ##clean up final vcfs to save back

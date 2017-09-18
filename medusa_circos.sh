@@ -24,7 +24,7 @@ echo "Starting $0 at $time"
 if [ "$1" == "" ] ; then
     echo "### Please provide runfolder as the only parameter"
     echo "### Exiting!!!"
-    exit
+    exit 1
 fi
 runDir=$1
 projName=`basename $runDir | awk -F'_ps20' '{print $1}'`
@@ -32,7 +32,7 @@ configFile=$runDir/$projName.config
 if [ ! -e $configFile ] ; then
     echo "### Config file not found at $configFile!!!"
     echo "### Exiting!!!"
-    exit
+    exit 1
 else
     echo "### Config file found."
 fi
@@ -89,7 +89,7 @@ do
         if [ ! -e $seuratTrackName.seurat.vcf.snpEffPass ] ; then
                 echo "### Seurat snpEffPass doesnt exist yet: $seuratTrackName.seurat.vcf.snpEffPass"
                 ((qsubFails++))
-                exit
+                exit 1
         fi
     if [ $assayID == "Exome"  ] ; then
         cnvsTSV="$runDir/cna/${usableName}_exo/${usableName}_exo.cna.tsv"
@@ -109,7 +109,7 @@ do
         echo "$seuratTrackName.seurat.vcf.snpEffPass"
         echo "$cnvsPass"
         echo "$runDir/trn/$usableName/$usableName.trnPass"
-        exit
+        exit 1
     fi
 
     echo "seurat vcf: $seuratVcf"

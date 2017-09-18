@@ -59,7 +59,7 @@ if [ $? -eq 0 ] ; then
 else
     mv ${TRK}_Step${STEP}.seuratOut ${TRK}_Step${STEP}.seuratFail
     rm -f ${TRK}_Step${STEP}.seuratInQueue
-    exit
+    exit 1
 fi
 vcfList=""
 #here we make a look to create the list of vcfs based on STEPCOUNT

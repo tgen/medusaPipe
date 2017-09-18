@@ -27,7 +27,7 @@ echo "Starting $0 at $time"
 if [ "$1" == "" ] ; then
     echo "### Please provide runfolder as the only parameter"
     echo "### Exiting!!!"
-    exit
+    exit 1
 fi
 runDir=$1
 projName=`basename $runDir | awk -F'_ps20' '{print $1}'`
@@ -35,7 +35,7 @@ configFile=$runDir/$projName.config
 if [ ! -e $configFile ] ; then
     echo "### Config file not found at $configFile!!!"
     echo "### Exiting!!!"
-    exit
+    exit 1
 else
     echo "### Config file found."
 fi

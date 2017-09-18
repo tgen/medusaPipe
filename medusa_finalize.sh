@@ -26,7 +26,7 @@ echo "Starting $0 at $time"
 if [ "$1" == "" ] ; then
     echo "### Please provide runfolder as the only parameter"
     echo "### Exiting!!!"
-    exit
+    exit 1
 fi
 runDir=$1
 projName=`basename $runDir | awk -F'_ps20' '{print $1}'`
@@ -34,7 +34,7 @@ configFile=$runDir/$projName.config
 if [ ! -e $configFile ] ; then
     echo "### Config file not found at $configFile!!!"
     echo "### Exiting!!!"
-    exit
+    exit 1
 else
     echo "### Config file found."
 fi
@@ -60,7 +60,7 @@ if [ ! -e $runDir/project.finished ] ; then
 fi
 if [ $missingStuff -ne 0 ] ; then
     echo "Exiting!!!"
-    exit
+    exit 1
 fi
 
 alreadyDone=0
@@ -110,7 +110,7 @@ if [ $alreadyDone -eq 0 ] ; then
                 echo "###ERROR: THERE IS NOT JIRBAM OR MD BAM FOR THIS SAMPLE: $samName"
                 touch $runDir/finalizeFail
                 rm $runDir/finalizeInQueue
-                exit
+                exit 1
             fi
 
         elif [ "$assayID" == "RNA" ] ; then

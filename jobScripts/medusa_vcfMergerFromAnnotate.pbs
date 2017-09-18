@@ -133,7 +133,7 @@ MUTECT_SNV_VCF_BN=`basename $MUTECT_SNV_VCF`
 #        if [ $? -ne 0 ] ; then
 #                echo "### vcf merger failed at merge 3 vcfs stage"
 #                mv ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerInQueue ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerFail
-#                exit
+#                exit 1
 #        fi
 
 echo "Finished Merging successfully"
@@ -161,7 +161,7 @@ echo "..."
  #       if [ $? -ne 0 ] ; then
  #               echo "### vcf merger failed at remove unwanted info keys stage"
   #              mv ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerInQueue ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerFail
-   #             exit
+   #             exit 1
     #    fi
 echo "Finished Removing Unwanted INFO keys"
 
@@ -177,7 +177,7 @@ echo "..."
 #    if [ $? -ne 0 ] ; then
 #                echo "### vcf merger failed filtering to target regions"
 #            mv ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerInQueue ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerFail
-#                exit
+#                exit 1
 #        fi
 #else
 #    echo "This is not an exome, skipping filtering to target regions"
@@ -209,7 +209,7 @@ perf stat java -Xmx24g -jar ${GATK}/GenomeAnalysisTK.jar -R ${REF} \
         if [ $? -ne 0 ] ; then
                 echo "### vcf merger failed at annotate merged vcf stage"
                 mv ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerInQueue ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerFail
-                exit
+                exit 1
         fi
 
 echo "Finished Annotating Merged VCF"
@@ -228,7 +228,7 @@ if [ -z "${RNABAM}" ] ; then
     if [ $? -ne 0 ] ; then
                 echo "### vcf merger failed at annotate with dbNSFP stage"
                 mv ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerInQueue ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerFail
-                exit
+                exit 1
         fi
 
     # add snpEFF annotations
@@ -237,7 +237,7 @@ if [ -z "${RNABAM}" ] ; then
         if [ $? -ne 0 ] ; then
                 echo "### vcf merger failed at snpEff annotation stage"
                 mv ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerInQueue ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerFail
-                exit
+                exit 1
         fi
 
     # Make final call list venn
@@ -245,7 +245,7 @@ if [ -z "${RNABAM}" ] ; then
     if [ $? -ne 0 ] ; then
                 echo "### vcf merger failed at venn diagram stage"
                 mv ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerInQueue ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerFail
-                exit
+                exit 1
         fi
 
     ##clean up final vcfs to save back

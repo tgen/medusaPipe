@@ -28,7 +28,7 @@ echo "Starting $0 at $time"
 if [ "$1" == "" ] ; then
     echo "### Please provide runfolder as the only parameter"
     echo "### Exiting!!!"
-    exit
+    exit 1
 fi
 runDir=$1
 qsubFails=0
@@ -39,7 +39,7 @@ echo "### confFile: $configFile"
 if [ ! -e $configFile ] ; then
     echo "### Config file not found at $configFile!!!"
     echo "### Exiting!!!"
-    exit
+    exit 1
 else
     echo "### Config file found."
 fi
@@ -55,7 +55,7 @@ incFastq=`grep "@@"$recipe"@@" $constants | grep @@INCFASTQ= | cut -d= -f2`
 if [[ "$incFastq" != "yes" && "$incFastq" != "no" ]] ; then
     echo "### Valid values for INCFASTQ is either yes or no. You have: $incFastq"
     echo "### Exiting!!!"
-    exit
+    exit 1
 else
     echo "### Inc fastq is good: $incFastq"
 fi 
@@ -89,7 +89,7 @@ do
                                                 cat ~/mailtmp-$$.txt | mail -s "Medusa pipeline ERROR: Your project $projName has an ERROR" "jetstream@tgen.org"
                                                 cat ~/mailtmp-$$.txt | mail -s "Medusa pipeline ERROR: Your project $projName has an ERROR" "${email}"
                                                 mv ~/mailtmp-$$.txt $runDir/checkConfig.wrongFQextension
-                                                exit
+                                                exit 1
                                         fi
 
                     #r2File=${thisFq/_R1/_R2}
@@ -100,7 +100,7 @@ do
                                                 cat ~/mailtmp-$$.txt | mail -s "Pegasus pipeline ERROR: Your project $projName has an ERROR" "jetstream@tgen.org"
                                                 cat ~/mailtmp-$$.txt | mail -s "Pegasus pipeline ERROR: Your project $projName has an ERROR" "${email}"
                                                 mv ~/mailtmp-$$.txt $runDir/checkConfig.copyFastqFail
-                                                exit
+                                                exit 1
                                         fi
 
                     targetName="$runDir/$kitName/$samName/$samName"`printf "_%03d" "$i"`"_R1.fastq.gz"

@@ -24,7 +24,7 @@ echo "### ~~Running on $myhostname~~"
 findCount=`ps -e | awk '$4=="find"' | wc -l`
 if [ $findCount -ge 3 ] ; then
     echo "Too many finds on $myhostname ($findCount) already, quitting for $myhostname!!!"
-    exit
+    exit 1
 else
     echo "Find count is low on $myhostname ($findCount)."
 fi

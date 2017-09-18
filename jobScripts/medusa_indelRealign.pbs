@@ -30,7 +30,7 @@ perf stat java -Xmx4g -Djava.io.tmpdir=/scratch/tgenjetstream/tmp/ \
 if [ $? -ne 0 ] ; then
     mv ${BAMFILE}.indelRealignOut ${BAMFILE}.indelRealignFail
     rm -f ${BAMFILE}.indelRealignInQueue
-    exit
+    exit 1
 fi
 echo "### Starting step 2, indel realignment"
 perf stat java -Xmx44g -Djava.io.tmpdir=/scratch/tgenjetstream/tmp/ \

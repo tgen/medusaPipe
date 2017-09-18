@@ -24,7 +24,7 @@ echo "Starting $0 at $time"
 if [ "$1" == "" ] ; then
     echo "### Please provide runfolder as the only parameter"
     echo "### Exiting!!!"
-    exit
+    exit 1
 fi
 runDir=$1
 projName=`basename $runDir | awk -F'_ps20' '{print $1}'`
@@ -32,7 +32,7 @@ configFile=$runDir/$projName.config
 if [ ! -e $configFile ] ; then
     echo "### Config file not found at $configFile!!!"
     echo "### Exiting!!!"
-    exit
+    exit 1
 else
     echo "### Config file found."
 fi
@@ -177,7 +177,7 @@ do
     if [ ! -e $seuratTrackName.seurat.vcf.snpEffPass ] ; then
         echo "### Seurat snpEffPass doesnt exist yet: $seuratTrackName.seurat.vcf.snpEffPass"
         ((qsubFails++))
-        exit
+        exit 1
     fi
     echo "checking for strelka snpeff vcfs"
     strelkaTrackName="$runDir/strelka/$usableName"
@@ -185,7 +185,7 @@ do
     if [[ ! -e $vcfPre.strelka.all.somatic.snvs.vcf.snpEffPass || ! -e $vcfPre.strelka.passed.somatic.snvs.vcf.snpEffPass || ! -e $vcfPre.strelka.passed.somatic.indels.vcf.snpEffPass || ! -e $vcfPre.strelka.all.somatic.indels.vcf.snpEffPass ]] ; then
         echo "### strelka snpEff doesn't exist for one of the 4 strelka vcfs"
         ((qsubFails++))
-                exit
+                exit 1
     fi
     echo "now checking for mutect vcfs"
     mutectTrackName="$runDir/mutect/$usableName/$usableName"
