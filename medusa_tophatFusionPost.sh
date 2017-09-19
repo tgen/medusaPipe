@@ -14,9 +14,9 @@
 
 thisStep="medusa_nextJob_tophatFusionPost.txt"
 nxtStep1="medusa_nextJob_checkProjectComplete.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -116,7 +116,7 @@ do
     fi
     #end linking stuff
 
-    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,THFUSION2VCFPATH=$thFusion2vcfPath,TOPHAT2PATH=$tophat2Path,RUNDIR=$runDir,DIR=$topHatFDir,INDEXBASE=$indexbase,NXT1=$nxtStep1,REF=$thFusionRef,D=$d $pbsHome/medusa_tophatFusionPost.pbs
+    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,THFUSION2VCFPATH=$thFusion2vcfPath,TOPHAT2PATH=$tophat2Path,RUNDIR=$runDir,DIR=$topHatFDir,INDEXBASE=$indexbase,NXT1=$nxtStep1,REF=$thFusionRef,D=$d $pbsHome/medusa_tophatFusionPost.sh
     if [ $? -eq 0 ] ; then
         touch $topHatFDir.thFPostInQueue
     else

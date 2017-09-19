@@ -14,9 +14,9 @@
 
 thisStep="medusa_nextJob_samtoolsStats.txt"
 nxtStep1="medusa_nextJob_postSamStats.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -84,7 +84,7 @@ do
                 echo "### Samtools stats already passed, in queue, or failed for $mdBam"
             else
                 echo "### Submitting for samtools stats: $mdBam"
-                sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SAMTOOLSPATH=$samtoolsPath,RUNDIR=$runDir,REF=$ref,BAMFILE=$mdBam,DIR=$pcDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_samtoolsStats.pbs
+                sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SAMTOOLSPATH=$samtoolsPath,RUNDIR=$runDir,REF=$ref,BAMFILE=$mdBam,DIR=$pcDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_samtoolsStats.sh
                 if [ $? -eq 0 ] ; then
                     touch $mdBam.samtoolsStatsInQueue
                 else
@@ -104,7 +104,7 @@ do
                     echo "### Samtools stats already passed, in queue, or failed for $jrBam"
                 else
                     echo "### Submitting for samtools stats: $jrBam"
-                    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SAMTOOLSPATH=$samtoolsPath,RUNDIR=$runDir,REF=$ref,BAMFILE=$jrBam,DIR=$pcDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_samtoolsStats.pbs
+                    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SAMTOOLSPATH=$samtoolsPath,RUNDIR=$runDir,REF=$ref,BAMFILE=$jrBam,DIR=$pcDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_samtoolsStats.sh
                     if [ $? -eq 0 ] ; then
                         touch $jrBam.samtoolsStatsInQueue
                     else
@@ -151,7 +151,7 @@ do
             echo "### Samtools stats already passed, in queue, or failed for $rnaBam"
         else
                     echo "### Submitting for samtools stats: $rnaBam"
-                    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SAMTOOLSPATH=$samtoolsPath,RUNDIR=$runDir,REF=$ref,BAMFILE=$rnaBam,DIR=$pcDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_samtoolsStats.pbs
+                    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SAMTOOLSPATH=$samtoolsPath,RUNDIR=$runDir,REF=$ref,BAMFILE=$rnaBam,DIR=$pcDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_samtoolsStats.sh
                     if [ $? -eq 0 ] ; then
                         touch $rnaBam.samtoolsStatsInQueue
                     else

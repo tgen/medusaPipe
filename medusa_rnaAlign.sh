@@ -23,9 +23,9 @@ nxtStep7="medusa_nextJob_samtoolsStats.txt"
 nxtStep8="medusa_nextJob_rnaMarkDup.txt"
 nxtStep9="medusa_nextJob_cuffQuant.txt"
 nxtStep10="medusa_nextJob_deSeq2.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -127,7 +127,7 @@ do
         echo "read 1 name: $read1Name"
         echo "read 2 name: $read2Name"
         echo "submitting $ownDir to queue for tophat align..."
-        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,REFPRETOPHAT=$refPreTophat,DNAALIGNER=$dnaAligner,FAI=$faiFile,BOWTIE2PATH=$bowtie2Path,TOPHAT2PATH=$tophat2Path,PICARDPATH=$picardPath,SAMTOOLSPATH=$samtoolsPath,BWAPATH=$bwaPath,RGID=$rgID,SAMPLE=$samName,REF=$ref,FASTQ1=$read1Name,FASTQ2=$read2Name,DIR=$ownDir,INDEXBASE=$indexbase,USEGTF=$usegtf,TRANSINDEX=$transIndex,NXT1=$nxtStep1,NXT2=$nxtStep2,NXT3=$nxtStep3,NXT4=$nxtStep4,NXT6=$nxtStep6,NXT7=$nxtStep7,NXT8=$nxtStep8,NXT9=$nxtStep9,NXT10=$nxtStep10,RUNDIR=$runDir,D=$d $pbsHome/medusa_tophat.pbs
+        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,REFPRETOPHAT=$refPreTophat,DNAALIGNER=$dnaAligner,FAI=$faiFile,BOWTIE2PATH=$bowtie2Path,TOPHAT2PATH=$tophat2Path,PICARDPATH=$picardPath,SAMTOOLSPATH=$samtoolsPath,BWAPATH=$bwaPath,RGID=$rgID,SAMPLE=$samName,REF=$ref,FASTQ1=$read1Name,FASTQ2=$read2Name,DIR=$ownDir,INDEXBASE=$indexbase,USEGTF=$usegtf,TRANSINDEX=$transIndex,NXT1=$nxtStep1,NXT2=$nxtStep2,NXT3=$nxtStep3,NXT4=$nxtStep4,NXT6=$nxtStep6,NXT7=$nxtStep7,NXT8=$nxtStep8,NXT9=$nxtStep9,NXT10=$nxtStep10,RUNDIR=$runDir,D=$d $pbsHome/medusa_tophat.sh
         if [ $? -eq 0 ] ; then
             touch $ownDir.thInQueue
         else
@@ -175,7 +175,7 @@ do
         echo "### submitting $ownDir to queue for STAR aligner... "
         if [[ $rnaStrand == "FIRST" || $rnaStrand == "SECOND" ]] ; then
             echo "##running stranded STAR case"
-            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SAMTOOLSPATH=$samtoolsPath,STARPATH=$starPath,STARREF=$starRef,STARGTF=$starGTF,FASTQ1=$read1Name,FASTQ2=$read2Name,DIR=$ownDir,NXT1=$nxtStep1,NXT2=$nxtStep2,NXT3=$nxtStep3,NXT4=$nxtStep4,NXT5=$nxtStep5,NXT6=$nxtStep6,NXT7=$nxtStep7,NXT8=$nxtStep8,NXT9=$nxtStep9,NXT10=$nxtStep10,RUNDIR=$runDir,RNASTRAND=$rnaStrand,D=$d $pbsHome/medusa_strandedStar.pbs
+            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SAMTOOLSPATH=$samtoolsPath,STARPATH=$starPath,STARREF=$starRef,STARGTF=$starGTF,FASTQ1=$read1Name,FASTQ2=$read2Name,DIR=$ownDir,NXT1=$nxtStep1,NXT2=$nxtStep2,NXT3=$nxtStep3,NXT4=$nxtStep4,NXT5=$nxtStep5,NXT6=$nxtStep6,NXT7=$nxtStep7,NXT8=$nxtStep8,NXT9=$nxtStep9,NXT10=$nxtStep10,RUNDIR=$runDir,RNASTRAND=$rnaStrand,D=$d $pbsHome/medusa_strandedStar.sh
             if [ $? -eq 0 ] ; then
                 touch $ownDir.starInQueue
             else
@@ -184,7 +184,7 @@ do
             sleep 2
         else
             echo "##running unstranded STAR case"
-            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SAMTOOLSPATH=$samtoolsPath,STARPATH=$starPath,STARREF=$starRef,STARGTF=$starGTF,FASTQ1=$read1Name,FASTQ2=$read2Name,DIR=$ownDir,NXT1=$nxtStep1,NXT2=$nxtStep2,NXT3=$nxtStep3,NXT4=$nxtStep4,NXT5=$nxtStep5,NXT6=$nxtStep6,NXT7=$nxtStep7,NXT8=$nxtStep8,NXT9=$nxtStep9,NXT10=$nxtStep10,RUNDIR=$runDir,RNASTRAND=$rnaStrand,D=$d $pbsHome/medusa_star.pbs
+            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SAMTOOLSPATH=$samtoolsPath,STARPATH=$starPath,STARREF=$starRef,STARGTF=$starGTF,FASTQ1=$read1Name,FASTQ2=$read2Name,DIR=$ownDir,NXT1=$nxtStep1,NXT2=$nxtStep2,NXT3=$nxtStep3,NXT4=$nxtStep4,NXT5=$nxtStep5,NXT6=$nxtStep6,NXT7=$nxtStep7,NXT8=$nxtStep8,NXT9=$nxtStep9,NXT10=$nxtStep10,RUNDIR=$runDir,RNASTRAND=$rnaStrand,D=$d $pbsHome/medusa_star.sh
             if [ $? -eq 0 ] ; then
                 touch $ownDir.starInQueue
             else

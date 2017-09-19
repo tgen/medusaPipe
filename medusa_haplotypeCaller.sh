@@ -14,9 +14,9 @@
 
 thisStep="medusa_nextJob_haplotypeCaller.txt"
 nxtStep1="medusa_nextJob_snpEff.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -129,7 +129,7 @@ do
 
         #if [[ $recipe == "choc01"  ]] ; then
                  #       echo Starting Haplotype caller Step${STEP}
-                  #      sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,GATKPATH=$gatkPath,STEPCOUNT=$STEP_COUNT,TRK=$trackName,KNOWN=$snps,BAMLIST="'$sampleList'",TRK=$trackName,CHRLIST=$chrList,REF=$ref,STEP="chr${STEP}",NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_haplotypeCaller.pbs
+                  #      sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,GATKPATH=$gatkPath,STEPCOUNT=$STEP_COUNT,TRK=$trackName,KNOWN=$snps,BAMLIST="'$sampleList'",TRK=$trackName,CHRLIST=$chrList,REF=$ref,STEP="chr${STEP}",NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_haplotypeCaller.sh
                    #     if [ $? -eq 0 ] ; then
                     #            touch ${trackName}_Step${STEP}.hcInQueue
                      #   else
@@ -138,7 +138,7 @@ do
 
         #else
             echo Starting Haplotype caller Step${STEP}
-            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,GATKPATH=$gatkPath,STEPCOUNT=$STEP_COUNT,TRK=$trackName,KNOWN=$snps,BAMLIST="'$sampleList'",TRK=$trackName,CHRLIST=$chrList,REF=$ref,STEP=${STEP},NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_haplotypeCaller.pbs
+            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,GATKPATH=$gatkPath,STEPCOUNT=$STEP_COUNT,TRK=$trackName,KNOWN=$snps,BAMLIST="'$sampleList'",TRK=$trackName,CHRLIST=$chrList,REF=$ref,STEP=${STEP},NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_haplotypeCaller.sh
             if [ $? -eq 0 ] ; then
                 touch ${trackName}_Step${STEP}.hcInQueue
             else
@@ -183,7 +183,7 @@ do
                     fi
 
                     echo Starting Haplotype caller for Step${STEP}
-                    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,GATKPATH=$gatkPath,TRK=$mdBam,KNOWN=$snps,BAMLIST=$mdBam,CHRLIST=$chrList,REF=$ref,STEP=${STEP},NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_haplotypeCallerSingle.pbs
+                    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,GATKPATH=$gatkPath,TRK=$mdBam,KNOWN=$snps,BAMLIST=$mdBam,CHRLIST=$chrList,REF=$ref,STEP=${STEP},NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_haplotypeCallerSingle.sh
                     if [ $? -eq 0 ] ; then
                         touch ${mdBam}_Step${STEP}.hcInQueue
                     else

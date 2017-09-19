@@ -21,9 +21,9 @@ nxtStep2="medusa_nextJob_vcfMerger.txt"
 #nxtStep5="medusa_nextJob_deSeq.txt"
 #nxtStep6="medusa_nextJob_checkProjectComplete.txt"
 #nxtStep7="medusa_nextJob_samtoolsStats.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -149,7 +149,7 @@ do
         fi
 
         echo Starting MuTect Step${STEP}
-        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SNPS=$snps,RUNDIR=$runDir,STEPCOUNT=$STEP_COUNT,COSMIC_VCF=$cosmicVcf,GATKPATH=$gatkPath,CHRLIST=$chrList,OUTPUT=$wd,STEP=${STEP},MUTECTPATH=$mutectPath,WD=$wd,REF=$ref,NXT1=$nxtStep1,NXT2=$nxtStep2,NORMAL=$normalBamFile,TUMOR=$tumorBamFile,D=$d $pbsHome/medusa_mutect.pbs
+        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SNPS=$snps,RUNDIR=$runDir,STEPCOUNT=$STEP_COUNT,COSMIC_VCF=$cosmicVcf,GATKPATH=$gatkPath,CHRLIST=$chrList,OUTPUT=$wd,STEP=${STEP},MUTECTPATH=$mutectPath,WD=$wd,REF=$ref,NXT1=$nxtStep1,NXT2=$nxtStep2,NORMAL=$normalBamFile,TUMOR=$tumorBamFile,D=$d $pbsHome/medusa_mutect.sh
         if [ $? -eq 0 ] ; then
             touch ${wd}_Step${STEP}.mutectInQueue
         else

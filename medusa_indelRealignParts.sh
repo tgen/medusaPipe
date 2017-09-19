@@ -14,9 +14,9 @@
 
 thisStep="medusa_nextJob_indelRealignParts.txt"
 nxtStep1="medusa_nextJob_recalibrateParts.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -113,7 +113,7 @@ do
                                 continue
                             fi
                             echo "### Submitting to indel realign to create $bamMiniName"
-                            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,GATKPATH=$gatkPath,INTS=$irIntMiniFile,IRBAMFILE=$irBamMiniFile,D=$d,INDELS=$indels,REF=$ref,BAMFILE=$bamMiniName,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_indelRealign.pbs
+                            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,GATKPATH=$gatkPath,INTS=$irIntMiniFile,IRBAMFILE=$irBamMiniFile,D=$d,INDELS=$indels,REF=$ref,BAMFILE=$bamMiniName,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_indelRealign.sh
                             if [ $? -eq 0 ] ; then
                                 touch $bamMiniName.indelRealignInQueue
                             else

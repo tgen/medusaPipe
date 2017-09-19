@@ -11,22 +11,21 @@
 # installing this Software you are agreeing to the terms of the LICENSE 
 # file distributed with this software.
 #####################################################################
-source ~/.bashrc
+
 time=`date +%d-%m-%Y-%H-%M`
-echo "Starting $0 at $time"
-scriptsHome="/home/tgenjetstream/medusa-pipe"
-logs="/scratch/tgenjetstream/medusaPipe/logs"
-topProjDir="/scratch/tgenjetstream/centralPipe/projects"
+echo "$time Starting $0"
+
+set -u
+
+scriptsHome="${JETSTREAM_HOME}/medusaPipe/"
+topProjDir="${JETSTREAM_DATA}/projects"
 myhostname=`hostname`
 
-echo "### ~~Running on $myhostname~~"
 
 findCount=`ps -e | awk '$4=="find"' | wc -l`
 if [ $findCount -ge 3 ] ; then
     echo "Too many finds on $myhostname ($findCount) already, quitting for $myhostname!!!"
     exit 1
-else
-    echo "Find count is low on $myhostname ($findCount)."
 fi
 
 for messageFile in `find $topProjDir -maxdepth 2 -name [m-M]edusa_nextJob_*txt`
@@ -56,9 +55,9 @@ do
         sleep 1
         ;;
     medusa_nextJob_digarPost.txt)       echo "### Will run digarPost for $projDir"
-                nohup $scriptsHome/medusa_digarPost.sh $projDir >> $projDir/logs/medusa_digarPostLOG.txt 2>&1 &
-                sleep 1
-                ;;
+        nohup $scriptsHome/medusa_digarPost.sh $projDir >> $projDir/logs/medusa_digarPostLOG.txt 2>&1 &
+        sleep 1
+        ;;
     medusa_nextJob_dnaAlignParts.txt)    echo "### Will run dnaAlign in parts for $projDir"
         nohup $scriptsHome/medusa_dnaAlignParts.sh $projDir >> $projDir/logs/medusa_dnaAlignPartsLOG.txt 2>&1 &
         sleep 1
@@ -127,22 +126,10 @@ do
         nohup $scriptsHome/medusa_trn.sh $projDir >> $projDir/logs/medusa_trnLOG.txt 2>&1 &
         sleep 1
         ;;
-    #medusa_nextJob_mergeSeuratVcfs.txt)    echo "### Will run merge seurat vcfs for $projDir"
-    #    nohup $scriptsHome/medusa_mergeSeuratVcfs.sh $projDir >> $projDir/logs/medusa_mergeSeuratVcfsLOG.txt 2>&1 &
-    #    sleep 1
-    #    ;;
-    #medusa_nextJob_unifiedGenotyper.txt)    echo "### Will run unified genotyper for $projDir"
-    #    nohup $scriptsHome/medusa_unifiedGenotyper.sh $projDir >> $projDir/logs/medusa_unifiedGenotyperLOG.txt 2>&1 &
-    #    sleep 1
-    #    ;;
     medusa_nextJob_haplotypeCaller.txt)    echo "### Will run haplotype caller for $projDir"
         nohup $scriptsHome/medusa_haplotypeCaller.sh $projDir >> $projDir/logs/medusa_haplotypeCallerLOG.txt 2>&1 &
         sleep 1
         ;;
-    #medusa_nextJob_vqsr.txt)    echo "### Will run VQSR for $projDir"
-    #    nohup $scriptsHome/medusa_vqsr.sh $projDir >> $projDir/logs/medusa_vqsrLOG.txt 2>&1 &
-    #    sleep 1
-    #    ;;
     medusa_nextJob_snpEff.txt)    echo "### Will run snpEff for $projDir"
         nohup $scriptsHome/medusa_snpEff.sh $projDir >> $projDir/logs/medusa_snpEffLOG.txt 2>&1 &
         sleep 1
@@ -236,13 +223,13 @@ do
         sleep 1
         ;;
     medusa_nextJob_vcfMerger.txt)    echo "### Will run vcf Merger for $projDir"
-                nohup $scriptsHome/medusa_vcfMerger.sh $projDir >> $projDir/logs/medusa_vcfMergerLOG.txt 2>&1 &
-                sleep 1
-                ;;
-        medusa_nextJob_mergeVcfAlleleCount.txt)       echo "### Will run merge vcf allele count for $projDir"
-                nohup $scriptsHome/medusa_mergeVcfAlleleCount.sh $projDir >> $projDir/logs/medusa_vcfMergerACLOG.txt 2>&1 &
-                sleep 1
-                ;;
+        nohup $scriptsHome/medusa_vcfMerger.sh $projDir >> $projDir/logs/medusa_vcfMergerLOG.txt 2>&1 &
+        sleep 1
+        ;;
+    medusa_nextJob_mergeVcfAlleleCount.txt)       echo "### Will run merge vcf allele count for $projDir"
+        nohup $scriptsHome/medusa_mergeVcfAlleleCount.sh $projDir >> $projDir/logs/medusa_vcfMergerACLOG.txt 2>&1 &
+        sleep 1
+        ;;
     medusa_nextJob_alleleCount.txt)    echo "### Will run alleleCount for $projDir"
         nohup $scriptsHome/medusa_alleleCount.sh $projDir >> $projDir/logs/medusa_alleleCountLOG.txt 2>&1 &
         sleep 1
@@ -252,5 +239,3 @@ do
         ;;
     esac
 done
-
-echo "**********DONE************"

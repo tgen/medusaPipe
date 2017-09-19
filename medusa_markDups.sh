@@ -21,9 +21,9 @@ nxtStep4="medusa_nextJob_samtoolsStats.txt"
 nxtStep5="medusa_nextJob_picardHSMetrics.txt"
 nxtStep6="medusa_nextJob_picardGcBiasMetrics.txt"
 nxtStep7="medusa_nextJob_snpSniff.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -89,7 +89,7 @@ do
         continue
     fi
     echo "### Submitting to queue to mark duplicates: $bamName"
-    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PICARDPATH=$picardPath,BAMFILE=$bamName,NXT1=$nxtStep1,NXT2=$nxtStep2,NXT3=$nxtStep3,NXT4=$nxtStep4,NXT5=$nxtStep5,NXT6=$nxtStep6,NXT7=$nxtStep7,RUNDIR=$runDir,OUTPUTBAM=$mdBamFile,D=$d $pbsHome/medusa_markDups.pbs
+    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PICARDPATH=$picardPath,BAMFILE=$bamName,NXT1=$nxtStep1,NXT2=$nxtStep2,NXT3=$nxtStep3,NXT4=$nxtStep4,NXT5=$nxtStep5,NXT6=$nxtStep6,NXT7=$nxtStep7,RUNDIR=$runDir,OUTPUTBAM=$mdBamFile,D=$d $pbsHome/medusa_markDups.sh
     if [ $? -eq 0 ] ; then
         touch $bamName.mdInQueue
     else

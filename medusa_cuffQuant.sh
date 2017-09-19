@@ -14,9 +14,9 @@
 
 thisStep="medusa_nextJob_cuffQuant.txt"
 nxtStep1="medusa_nextJob_postCuffQuant.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -99,7 +99,7 @@ do
         fi
 
         echo "### Submitting $topHatDir to queue for cuff quant..."
-        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PARAMS=${params},DIRNAME=$topHatDir,CUFFQUANTPATH=$cuffQuantPath,REF=$ref,BAM=$accHitsBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_cuffQuant.pbs
+        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PARAMS=${params},DIRNAME=$topHatDir,CUFFQUANTPATH=$cuffQuantPath,REF=$ref,BAM=$accHitsBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_cuffQuant.sh
         if [ $? -eq 0 ] ; then
             touch $topHatDir.cuffQuantInQueue
         else
@@ -123,7 +123,7 @@ do
         echo "### Submitting $starDir to queue for cuff quant..."
         if [ $rnaStrand == "FIRST" ] ; then
                         echo "##running stranded cuffQuant case"
-            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PARAMS=$params,DIRNAME=$starDir,CUFFQUANTPATH=$cuffQuantPath,REF=$ref,BAM=$starBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_firstStrandedCuffQuant.pbs
+            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PARAMS=$params,DIRNAME=$starDir,CUFFQUANTPATH=$cuffQuantPath,REF=$ref,BAM=$starBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_firstStrandedCuffQuant.sh
             if [ $? -eq 0 ] ; then
                 touch $starDir.cuffQuantInQueue
             else
@@ -132,7 +132,7 @@ do
             sleep 2
                 elif [ $rnaStrand == "SECOND" ] ; then
                         echo "##running second stranded cuffQuant case"
-                        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PARAMS=$params,DIRNAME=$starDir,CUFFQUANTPATH=$cuffQuantPath,REF=$ref,BAM=$starBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_secondStrandedCuffQuant.pbs
+                        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PARAMS=$params,DIRNAME=$starDir,CUFFQUANTPATH=$cuffQuantPath,REF=$ref,BAM=$starBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_secondStrandedCuffQuant.sh
                         if [ $? -eq 0 ] ; then
                                 touch $starDir.cuffQuantInQueue
                         else
@@ -141,7 +141,7 @@ do
                         sleep 2
         else
             echo "##running unstranded cuffQuant case"
-            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PARAMS=$params,DIRNAME=$starDir,CUFFQUANTPATH=$cuffQuantPath,REF=$ref,BAM=$starBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_cuffQuant.pbs
+            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PARAMS=$params,DIRNAME=$starDir,CUFFQUANTPATH=$cuffQuantPath,REF=$ref,BAM=$starBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_cuffQuant.sh
             if [ $? -eq 0 ] ; then
                 touch $starDir.cuffQuantInQueue
             else

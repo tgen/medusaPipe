@@ -14,9 +14,9 @@
 
 thisStep="medusa_nextJob_detectFusion.txt"
 nxtStep1="medusa_nextJob_tophatFusionPost.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -133,7 +133,7 @@ do
         echo "### Submitting $ownDir to queue for tophat fusion..."
         if [[ $rnaStrand == "FIRST" ]] ; then
                         echo "##running stranded tophatfusion case"
-            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,FAI=$faiFile,PICARDPATH=$picardPath,REFPRETOPHAT=$ref,BWAPATH=$bwaPath,BOWTIE1PATH=$bowtie1Path,INDEXBASE=$indexBase,TOPHAT2PATH=$tophat2Path,THFUSIONPATH=$thfPath,SAMTOOLSPATH=$samtoolsPath,REF=$ref,FASTQ1=$read1Name,FASTQ2=$read2Name,DIR=$ownDir,INDEXBASE=$indexbase,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d,PRE1=$pre1,POS1=$pos1,PRE2=$pre2,POS2=$pos2 $pbsHome/medusa_firstStrandedtophatFusion.pbs
+            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,FAI=$faiFile,PICARDPATH=$picardPath,REFPRETOPHAT=$ref,BWAPATH=$bwaPath,BOWTIE1PATH=$bowtie1Path,INDEXBASE=$indexBase,TOPHAT2PATH=$tophat2Path,THFUSIONPATH=$thfPath,SAMTOOLSPATH=$samtoolsPath,REF=$ref,FASTQ1=$read1Name,FASTQ2=$read2Name,DIR=$ownDir,INDEXBASE=$indexbase,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d,PRE1=$pre1,POS1=$pos1,PRE2=$pre2,POS2=$pos2 $pbsHome/medusa_firstStrandedtophatFusion.sh
             if [ $? -eq 0 ] ; then
                 touch $ownDir.thFusionInQueue
             else
@@ -143,7 +143,7 @@ do
 
         elif [[ $rnaStrand == "SECOND" ]] ; then
                         echo "##running second  stranded tophatfusion case"
-                        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,FAI=$faiFile,PICARDPATH=$picardPath,REFPRETOPHAT=$ref,BWAPATH=$bwaPath,BOWTIE1PATH=$bowtie1Path,INDEXBASE=$indexBase,TOPHAT2PATH=$tophat2Path,THFUSIONPATH=$thfPath,SAMTOOLSPATH=$samtoolsPath,REF=$ref,FASTQ1=$read1Name,FASTQ2=$read2Name,DIR=$ownDir,INDEXBASE=$indexbase,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d,PRE1=$pre1,POS1=$pos1,PRE2=$pre2,POS2=$pos2 $pbsHome/medusa_secondStrandedtophatFusion.pbs
+                        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,FAI=$faiFile,PICARDPATH=$picardPath,REFPRETOPHAT=$ref,BWAPATH=$bwaPath,BOWTIE1PATH=$bowtie1Path,INDEXBASE=$indexBase,TOPHAT2PATH=$tophat2Path,THFUSIONPATH=$thfPath,SAMTOOLSPATH=$samtoolsPath,REF=$ref,FASTQ1=$read1Name,FASTQ2=$read2Name,DIR=$ownDir,INDEXBASE=$indexbase,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d,PRE1=$pre1,POS1=$pos1,PRE2=$pre2,POS2=$pos2 $pbsHome/medusa_secondStrandedtophatFusion.sh
                         if [ $? -eq 0 ] ; then
                                 touch $ownDir.thFusionInQueue
                         else
@@ -152,7 +152,7 @@ do
                         sleep 2
         else
             echo "###running unstranded tophatfusion case"
-            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,FAI=$faiFile,PICARDPATH=$picardPath,REFPRETOPHAT=$ref,BWAPATH=$bwaPath,BOWTIE1PATH=$bowtie1Path,INDEXBASE=$indexBase,TOPHAT2PATH=$tophat2Path,THFUSIONPATH=$thfPath,SAMTOOLSPATH=$samtoolsPath,REF=$ref,FASTQ1=$read1Name,FASTQ2=$read2Name,DIR=$ownDir,INDEXBASE=$indexbase,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d,PRE1=$pre1,POS1=$pos1,PRE2=$pre2,POS2=$pos2 $pbsHome/medusa_tophatFusion.pbs
+            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,FAI=$faiFile,PICARDPATH=$picardPath,REFPRETOPHAT=$ref,BWAPATH=$bwaPath,BOWTIE1PATH=$bowtie1Path,INDEXBASE=$indexBase,TOPHAT2PATH=$tophat2Path,THFUSIONPATH=$thfPath,SAMTOOLSPATH=$samtoolsPath,REF=$ref,FASTQ1=$read1Name,FASTQ2=$read2Name,DIR=$ownDir,INDEXBASE=$indexbase,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d,PRE1=$pre1,POS1=$pos1,PRE2=$pre2,POS2=$pos2 $pbsHome/medusa_tophatFusion.sh
             if [ $? -eq 0 ] ; then
                 touch $ownDir.thFusionInQueue
             else
@@ -206,7 +206,7 @@ do
         echo "### Read 2 name: $read2Name"
 
         echo "### Submitting $ownDir to queue for soap fuse..."
-        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SAMPLE=$samName,SLFILE=$ownDir/soapFuse.sampleList,SPCONFIG=$spConfig,SOAPFUSEPATH=$soapFusePath,SAMTOOLSPATH=$samtoolsPath,REF=$ref,FASTQ1=$read1Name,FASTQ2=$read2Name,DIR=$ownDir,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/pecan_soapFuse.pbs
+        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SAMPLE=$samName,SLFILE=$ownDir/soapFuse.sampleList,SPCONFIG=$spConfig,SOAPFUSEPATH=$soapFusePath,SAMTOOLSPATH=$samtoolsPath,REF=$ref,FASTQ1=$read1Name,FASTQ2=$read2Name,DIR=$ownDir,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/pecan_soapFuse.sh
         if [ $? -eq 0 ] ; then
             touch $ownDir.soapFuseInQueue
         else

@@ -14,9 +14,9 @@
 
 thisStep="medusa_nextJob_digar.txt"
 nxtStep1="medusa_nextJob_digarPost.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 |  cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -141,8 +141,8 @@ do
                 fi
 
                 echo "### Submitting $digarDir to queue for digar..."
-                echo "sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,FASTQ1=$read1Name,FASTQ2=$read2Name,SAMNAME=$samName,TRINITYPATH=$trinityPath,DIGARPATH=$digarPath,ANN=$digarAnn,SAMTOOLSPATH=$samtoolsPath,BWAPATH=$bwaPath,GENENAME=$geneName,DIGARDIR=$digarDir,REF=$ref,BAM=$starBam,GTF=$gtf,RUNDIR=$runDir,D=$d $pbsHome/medusa_digar.pbs"
-                sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,FASTQ1=$read1Name,FASTQ2=$read2Name,LISTOFGENES=$listOfGenes,SAMNAME=$samName,TRINITYPATH=$trinityPath,DIGARPATH=$digarPath,ANN=$digarAnn,SAMTOOLSPATH=$samtoolsPath,BWAPATH=$bwaPath,GENENAME=$geneName,DIGARDIR=$digarDir,REF=$ref,NXT1=$nxtStep1,BAM=$starBam,GTF=$gtf,RUNDIR=$runDir,D=$d $pbsHome/medusa_digar.pbs
+                echo "sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,FASTQ1=$read1Name,FASTQ2=$read2Name,SAMNAME=$samName,TRINITYPATH=$trinityPath,DIGARPATH=$digarPath,ANN=$digarAnn,SAMTOOLSPATH=$samtoolsPath,BWAPATH=$bwaPath,GENENAME=$geneName,DIGARDIR=$digarDir,REF=$ref,BAM=$starBam,GTF=$gtf,RUNDIR=$runDir,D=$d $pbsHome/medusa_digar.sh"
+                sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,FASTQ1=$read1Name,FASTQ2=$read2Name,LISTOFGENES=$listOfGenes,SAMNAME=$samName,TRINITYPATH=$trinityPath,DIGARPATH=$digarPath,ANN=$digarAnn,SAMTOOLSPATH=$samtoolsPath,BWAPATH=$bwaPath,GENENAME=$geneName,DIGARDIR=$digarDir,REF=$ref,NXT1=$nxtStep1,BAM=$starBam,GTF=$gtf,RUNDIR=$runDir,D=$d $pbsHome/medusa_digar.sh
                 if [ $? -eq 0 ] ; then
                     touch ${digarDir}/$samName.$geneName.digarInQueue
                 else

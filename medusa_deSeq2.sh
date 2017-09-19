@@ -14,9 +14,9 @@
 
 thisStep="medusa_nextJob_deSeq2.txt"
 nxtStep1="medusa_nextJob_postDeSeq2.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -147,7 +147,7 @@ do
         fi
 
         echo "### Submitting $normlList2-VS-$tumorList2 to queue for deSeq..."
-        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,DESEQ2PATH=$deseq2Path,RUNDIR=$runDir,DIRNAME=$deSeqDir,GTF=$gtf,NORMLIST="'"$normlList"'",TUMORLIST="'"$tumorList"'",REF=$ref,NXT1=$nxtStep1,D=$d $pbsHome/medusa_deSeq2.pbs
+        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,DESEQ2PATH=$deseq2Path,RUNDIR=$runDir,DIRNAME=$deSeqDir,GTF=$gtf,NORMLIST="'"$normlList"'",TUMORLIST="'"$tumorList"'",REF=$ref,NXT1=$nxtStep1,D=$d $pbsHome/medusa_deSeq2.sh
         if [ $? -eq 0 ] ; then
             touch $deSeqDir.deSeq2InQueue
         else
@@ -222,7 +222,7 @@ do
             mkdir -p $deSeqDir
         fi
         echo "### Submitting $normlList2-VS-$tumorList2 to queue for deSeq..."
-        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,DESEQ2PATH=$deseq2Path,RUNDIR=$runDir,DIRNAME=$deSeqDir,GTF=$gtf,NORMLIST="'"$normlList"'",TUMORLIST="'"$tumorList"'",REF=$ref,NXT1=$nxtStep1,D=$d $pbsHome/medusa_deSeq2.pbs
+        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,DESEQ2PATH=$deseq2Path,RUNDIR=$runDir,DIRNAME=$deSeqDir,GTF=$gtf,NORMLIST="'"$normlList"'",TUMORLIST="'"$tumorList"'",REF=$ref,NXT1=$nxtStep1,D=$d $pbsHome/medusa_deSeq2.sh
         if [ $? -eq 0 ] ; then
             touch $deSeqDir.deSeq2InQueue
         else

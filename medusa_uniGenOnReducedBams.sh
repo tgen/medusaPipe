@@ -14,9 +14,9 @@
 
 thisStep="medusa_nextJob_uniGenReducedBams.txt"
 nxtStep1="medusa_nextJob_postUniGenRedBams.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -112,7 +112,7 @@ do
         continue
     fi
     echo "### Submitting $usableName to queue for joint Uni Gen on Reduced Bams..."
-    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,GATKPATH=$gatkPath,TRK=$trackName,KNOWN=$snps,BAMLIST="'$sampleList'",REF=$ref,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_unifiedGenotyper.pbs
+    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,GATKPATH=$gatkPath,TRK=$trackName,KNOWN=$snps,BAMLIST="'$sampleList'",REF=$ref,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_unifiedGenotyper.sh
     if [ $? -eq 0 ] ; then
         touch $trackName.ugInQueue
     else
@@ -147,7 +147,7 @@ done
 #                    echo "### Uni Gen on Reduced Bams already passed, in queue, or failed for $mdBam"
 #                else
 #                    echo "### Submitting for single bam Uni Gen on Reduced Bams: $mdBam"
-#                    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,GATKPATH=$gatkPath,TRK=$mdBam,KNOWN=$snps,BAMLIST=$mdBam,REF=$ref,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_unifiedGenotyperSingle.pbs
+#                    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,GATKPATH=$gatkPath,TRK=$mdBam,KNOWN=$snps,BAMLIST=$mdBam,REF=$ref,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_unifiedGenotyperSingle.sh
 #                    if [ $? -eq 0 ] ; then
 #                        touch $mdBam.ugInQueue
 #                    else

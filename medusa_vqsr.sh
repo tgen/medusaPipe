@@ -14,9 +14,9 @@
 
 thisStep="medusa_nextJob_vqsr.txt"
 nxtStep1="medusa_nextJob_snpEff.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -86,7 +86,7 @@ do
         continue
     fi
     echo "### Submitting $trackName.UG.vcf for VQSR..."
-    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,HAPMAP=$hapmap,RSCRIPT=$trackName.UG.vcf.plots.R,OMNI=$omni,RECAL=$trackName.UG.vcf.recal,TRANCHES=$trackName.UG.vcf.tranches,ASSAY=$assayID,GATKPATH=$gatkPath,KNOWN=$snps,VCF=$trackName.UG.vcf,REF=$ref,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_vqsr.pbs
+    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,HAPMAP=$hapmap,RSCRIPT=$trackName.UG.vcf.plots.R,OMNI=$omni,RECAL=$trackName.UG.vcf.recal,TRANCHES=$trackName.UG.vcf.tranches,ASSAY=$assayID,GATKPATH=$gatkPath,KNOWN=$snps,VCF=$trackName.UG.vcf,REF=$ref,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_vqsr.sh
     if [ $? -eq 0 ] ; then
         touch $trackName.UG.vcf.vqsrInQueue
     else
@@ -114,7 +114,7 @@ do
 #                continue
 #            fi
 #            echo "### Submitting $eachSampleVcf for VQSR..."
-#            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,HAPMAP=$hapmap,RSCRIPT=$eachSampleVcf.plots.R,OMNI=$omni,RECAL=$eachSampleVcf.recal,TRANCHES=$eachSampleVcf.tranches,ASSAY=$assayID,GATKPATH=$gatkPath,KNOWN=$snps,VCF=$eachSampleVcf,REF=$ref,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_vqsr.pbs
+#            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,HAPMAP=$hapmap,RSCRIPT=$eachSampleVcf.plots.R,OMNI=$omni,RECAL=$eachSampleVcf.recal,TRANCHES=$eachSampleVcf.tranches,ASSAY=$assayID,GATKPATH=$gatkPath,KNOWN=$snps,VCF=$eachSampleVcf,REF=$ref,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_vqsr.sh
 #            if [ $? -eq 0 ] ; then
 #                touch $eachSampleVcf.vqsrInQueue
 #            else
@@ -152,7 +152,7 @@ do
                     echo "### Unified genotyper already passed, in queue, or failed for $mdVcf"
                 else
                     echo "### Submitting for single bam unified genotyper: $mdVcf"
-                    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,HAPMAP=$hapmap,RSCRIPT=$mdVcf.plots.R,OMNI=$omni,RECAL=$mdVcf.recal,TRANCHES=$mdVcf.tranches,ASSAY=$assayID,GATKPATH=$gatkPath,KNOWN=$snps,VCF=$mdVcf,REF=$ref,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_vqsr.pbs
+                    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,HAPMAP=$hapmap,RSCRIPT=$mdVcf.plots.R,OMNI=$omni,RECAL=$mdVcf.recal,TRANCHES=$mdVcf.tranches,ASSAY=$assayID,GATKPATH=$gatkPath,KNOWN=$snps,VCF=$mdVcf,REF=$ref,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_vqsr.sh
                     if [ $? -eq 0 ] ; then
                         touch $mdVcf.vqsrInQueue
                     else

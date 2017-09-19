@@ -14,9 +14,9 @@
 
 thisStep="medusa_nextJob_mergeVcfAlleleCount.txt "
 nxtStep1="medusa_nextJob_postmergeVcfAlleleCount.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -120,7 +120,7 @@ do
             continue
         else
             echo "### Submitting vcf to queue for vcf merger allele count..."
-            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SNPEFFPATH=$snpeffPath,SNPSIFT=$snpSift,DBNSFP=$DBNSFP,SAMTOOLS=$samTools,VARSCAN=$varScan,REF=$ref,DICT=$refDict,COSMIC=$COSMIC,KG=$KG,NHLBI=$NHLBI,SNPS=$snps,INDELS=$indels,GATK=$gatkPath,VCFMERGER=$VCFMERGER,BASENAME=$usableName,VCFMERGER_DIR=$VCFMERGER_DIR,VCFSORTER=$VCFSORTER,RNA_VCF_HEADER=$RNA_VCF_HEADER,POST_MERGE_VENN=$POST_MERGE_VENN,DBSNP=$dbsnp,DBVERSION=$snpeffdb,MERGERDIR=$mergerDir,RNABAM=$rnaBam,ASSAYID=$assayID,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_mergeVcfAlleleCount.pbs
+            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SNPEFFPATH=$snpeffPath,SNPSIFT=$snpSift,DBNSFP=$DBNSFP,SAMTOOLS=$samTools,VARSCAN=$varScan,REF=$ref,DICT=$refDict,COSMIC=$COSMIC,KG=$KG,NHLBI=$NHLBI,SNPS=$snps,INDELS=$indels,GATK=$gatkPath,VCFMERGER=$VCFMERGER,BASENAME=$usableName,VCFMERGER_DIR=$VCFMERGER_DIR,VCFSORTER=$VCFSORTER,RNA_VCF_HEADER=$RNA_VCF_HEADER,POST_MERGE_VENN=$POST_MERGE_VENN,DBSNP=$dbsnp,DBVERSION=$snpeffdb,MERGERDIR=$mergerDir,RNABAM=$rnaBam,ASSAYID=$assayID,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_mergeVcfAlleleCount.sh
             if [ $? -eq 0 ] ; then
                 touch ${mergerDir}/${usableName}.vcfMergerACInQueue
             else

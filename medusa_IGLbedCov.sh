@@ -14,9 +14,9 @@
 
 thisStep="medusa_nextJob_IGLbedCov.txt"
 nxtStep1="medusa_nextJob_postPIGLbedCov.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -113,7 +113,7 @@ do
         mkdir $runDir/stats
     fi
     echo "### Submitting $rnaBam to queue for picard RNA Metrics..."
-    sbatch -n 1 -N 1 --cpus-per-task $nCores -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,DIR=$ownDir,SAMPLE=$samName,CHRLISTBED=$chrListBed,REF=$ref,IGLLISTBED=$iglListBed,BEDTOOLSPATH=$bedtoolsPath,SAMTOOLSPATH=$samtoolsPath,BAMFILE=$rnaBam,RUNDIR=$runDir,D=$d $pbsHome/medusa_IGLbedCov.pbs
+    sbatch -n 1 -N 1 --cpus-per-task $nCores -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,DIR=$ownDir,SAMPLE=$samName,CHRLISTBED=$chrListBed,REF=$ref,IGLLISTBED=$iglListBed,BEDTOOLSPATH=$bedtoolsPath,SAMTOOLSPATH=$samtoolsPath,BAMFILE=$rnaBam,RUNDIR=$runDir,D=$d $pbsHome/medusa_IGLbedCov.sh
     if [ $? -eq 0 ] ; then
         touch $rnaBam.IGLbedCovInQueue
     else

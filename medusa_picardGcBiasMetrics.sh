@@ -14,9 +14,9 @@
 
 thisStep="medusa_nextJob_picardGcBiasMetrics.txt"
 nxtStep1="medusa_nextJob_postPicGcBiasMetrics.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -82,7 +82,7 @@ do
         #        echo "### Picard GC Bias summary metric already passed, in queue, or failed for $inBam"
         #    else
         #        echo "### Submitting for picard AS Metrics: $inBam"
-        #        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PICARDPATH=$picardPath,RUNDIR=$runDir,REF=$ref,BAMFILE=$inBam,DIR=$pcDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_picardGcBiasMetrics.pbs
+        #        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PICARDPATH=$picardPath,RUNDIR=$runDir,REF=$ref,BAMFILE=$inBam,DIR=$pcDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_picardGcBiasMetrics.sh
         #        if [ $? -eq 0 ] ; then
         #            touch $inBam.picGcBiasMetricsInQueue
         #        else
@@ -100,7 +100,7 @@ do
                 echo "### Picard GC Bias summary metric already passed, in queue, or failed for $mdBam"
             else
                 echo "### Submitting for picard GC Bias Metrics: $mdBam"
-                sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PICARDPATH=$picardPath,RUNDIR=$runDir,REF=$ref,BAMFILE=$mdBam,DIR=$pcDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_picardGcBiasMetrics.pbs
+                sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PICARDPATH=$picardPath,RUNDIR=$runDir,REF=$ref,BAMFILE=$mdBam,DIR=$pcDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_picardGcBiasMetrics.sh
                 if [ $? -eq 0 ] ; then
                     touch $mdBam.picGcBiasMetricsInQueue
                 else
@@ -120,7 +120,7 @@ do
                     echo "### Picard GC Bias summary metric already passed, in queue, or failed for $jrBam"
                 else
                     echo "### Submitting for picard GC Bias Metrics: $jrBam"
-                    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PICARDPATH=$picardPath,RUNDIR=$runDir,REF=$ref,BAMFILE=$jrBam,DIR=$pcDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_picardGcBiasMetrics.pbs
+                    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PICARDPATH=$picardPath,RUNDIR=$runDir,REF=$ref,BAMFILE=$jrBam,DIR=$pcDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_picardGcBiasMetrics.sh
                     if [ $? -eq 0 ] ; then
                         touch $jrBam.picGcBiasMetricsInQueue
                     else

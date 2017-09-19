@@ -13,7 +13,7 @@ echo "### GATK: ${GATKPATH}"
 
 echo "### Starting indel realigning of file ${BAMFILE}"
 echo "### Starting step 1, target creator"
-perf stat java -Xmx4g -Djava.io.tmpdir=/scratch/tgenjetstream/tmp/ \
+perf stat java -Xmx4g -Djava.io.tmpdir=${TMPDIR} \
     -jar ${GATKPATH}/GenomeAnalysisTK.jar \
     -I ${BAMFILE} \
     -R ${REF} \
@@ -29,7 +29,7 @@ if [ $? -ne 0 ] ; then
     exit 1
 fi
 echo "### Starting step 2, indel realignment"
-perf stat java -Xmx44g -Djava.io.tmpdir=/scratch/tgenjetstream/tmp/ \
+perf stat java -Xmx44g -Djava.io.tmpdir=${TMPDIR} \
     -jar ${GATKPATH}/GenomeAnalysisTK.jar \
     -I ${BAMFILE} \
     -R ${REF} \

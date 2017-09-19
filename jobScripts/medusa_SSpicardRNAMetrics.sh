@@ -16,7 +16,7 @@ echo "### BAMFILE: ${BAMFILE}"
 echo "### PICARDPATH: ${PICARDPATH}"
 
 echo "### Starting first stranded picard rna metrics"
-perf stat java -Xmx15g -Djava.io.tmpdir=/scratch/tgenjetstream/tmp/ -jar ${PICARDPATH}/CollectRnaSeqMetrics.jar \
+perf stat java -Xmx15g -Djava.io.tmpdir=${TMPDIR} -jar ${PICARDPATH}/CollectRnaSeqMetrics.jar \
     REF_FLAT=${REFFLAT} \
     REFERENCE_SEQUENCE=${REF} \
     RIBOSOMAL_INTERVALS=${RIBINTS} \
@@ -24,7 +24,7 @@ perf stat java -Xmx15g -Djava.io.tmpdir=/scratch/tgenjetstream/tmp/ -jar ${PICAR
     INPUT=${BAMFILE} \
     OUTPUT=${BAMFILE}.picRNAMetrics \
     CHART_OUTPUT=${BAMFILE}.picRNAMetrics.pdf \
-    TMP_DIR=/scratch/tgenjetstream/tmp/ \
+    TMP_DIR=${TMPDIR} \
     VALIDATION_STRINGENCY=SILENT > ${BAMFILE}.picRNAMetricsOut 2> ${BAMFILE}.picardRNA.perfOut
 if [ $? -eq 0 ] ; then
     mv ${BAMFILE}.picRNAMetricsOut ${BAMFILE}.picRNAMetricsPass

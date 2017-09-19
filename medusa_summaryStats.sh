@@ -15,9 +15,9 @@
 thisStep="medusa_nextJob_summaryStats.txt"
 #nxtStep1="medusa_nextJob_saveToIsilon.txt"
 nxtStep1="medusa_nextJob_finalize.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -79,7 +79,7 @@ if [ -e $runDir/summaryStatsInQueue ] ; then
 fi
 if [ $alreadyDone -eq 0 ] ; then
     echo "submitting $runDir to queue for Summary stats"
-    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SUMSTATSPATH=$sumStatsPath,RUNDIR=$runDir,EMAIL=$email,NXT1=$nxtStep1,D=$d $pbsHome/medusa_summaryStats.pbs
+    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SUMSTATSPATH=$sumStatsPath,RUNDIR=$runDir,EMAIL=$email,NXT1=$nxtStep1,D=$d $pbsHome/medusa_summaryStats.sh
     if [ $? -eq 0 ] ; then
         touch $runDir/summaryStatsInQueue
     else

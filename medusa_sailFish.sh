@@ -17,9 +17,9 @@ nxtStep1="medusa_nextJob_postSailFish.txt"
 #nxtStep2="medusa_nextJob_cuffDiff.txt"
 #nxtStep3="medusa_nextJob_htSeq.txt"
 #nxtStep4="medusa_nextJob_picardRNAMetrics.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -132,7 +132,7 @@ do
     echo "### sail fish path is: $sailFishPath"
 #    if [[ $rnaStrand == "FIRST" || $rnaStrand == "SECOND" ]] ; then
 #            echo "##running stranded sailFish case"
-#        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SAILFISHPATH=$sailFishPath,SAMPLE=$samName,RNASTRAND=$rnaStrand,SAILFISHGTF=$sailFishGTF,CCDSGTF=$ccdsGTF,SAILFISHINDEXDIR=$sailFishIndexDir,SAILFISHCCDSINDEX=$sailFishCCDSIndex,FASTQ1=$read1Name,FASTQ2=$read2Name,DIR=$ownDir,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_strandedSailFish.pbs
+#        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SAILFISHPATH=$sailFishPath,SAMPLE=$samName,RNASTRAND=$rnaStrand,SAILFISHGTF=$sailFishGTF,CCDSGTF=$ccdsGTF,SAILFISHINDEXDIR=$sailFishIndexDir,SAILFISHCCDSINDEX=$sailFishCCDSIndex,FASTQ1=$read1Name,FASTQ2=$read2Name,DIR=$ownDir,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_strandedSailFish.sh
 #        if [ $? -eq 0 ] ; then
 #            touch $ownDir.sailFishInQueue
 #        else
@@ -141,7 +141,7 @@ do
 #        sleep 2
 #    else
         echo "##running unstranded Sail Fish case"
-        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SAILFISHPATH=$sailFishPath,SAMPLE=$samName,SAILFISHGTF=$sailFishGTF,CCDSGTF=$ccdsGTF,SAILFISHINDEXDIR=$sailFishIndexDir,SAILFISHCCDSINDEX=$sailFishCCDSIndex,FASTQ1=$read1Name,FASTQ2=$read2Name,DIR=$ownDir,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_sailFish.pbs
+        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SAILFISHPATH=$sailFishPath,SAMPLE=$samName,SAILFISHGTF=$sailFishGTF,CCDSGTF=$ccdsGTF,SAILFISHINDEXDIR=$sailFishIndexDir,SAILFISHCCDSINDEX=$sailFishCCDSIndex,FASTQ1=$read1Name,FASTQ2=$read2Name,DIR=$ownDir,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_sailFish.sh
         if [ $? -eq 0 ] ; then
             touch $ownDir.sailFishInQueue
         else

@@ -14,7 +14,7 @@
 
 thisStep="medusa_nextJob_splitFastqs.txt"
 nxtStep1="medusa_nextJob_dnaAlignParts.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -79,7 +79,7 @@ do
                         else
                             echo "### Submitting to split: $targetName"
                             prefix="$samName"`printf "_%03d" "$i"`"_R1.split.fastq.gz"
-                            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PF=$prefix,DIR=$splitDir,D=$d,FQ=$targetName,NXT1=$nxtStep1,RUNDIR=$runDir $pbsHome/medusa_splitFastq.pbs
+                            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PF=$prefix,DIR=$splitDir,D=$d,FQ=$targetName,NXT1=$nxtStep1,RUNDIR=$runDir $pbsHome/medusa_splitFastq.sh
                             if [ $? -eq 0 ] ; then
                                 touch $targetName.fastqSplitInQueue
                             else
@@ -92,7 +92,7 @@ do
                         else
                             echo "### Submitting to split: $targR2Name"
                             prefix="$samName"`printf "_%03d" "$i"`"_R2.split.fastq.gz"
-                            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PF=$prefix,DIR=$splitDir,D=$d,FQ=$targR2Name,NXT1=$nxtStep1,RUNDIR=$runDir $pbsHome/medusa_splitFastq.pbs
+                            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PF=$prefix,DIR=$splitDir,D=$d,FQ=$targR2Name,NXT1=$nxtStep1,RUNDIR=$runDir $pbsHome/medusa_splitFastq.sh
                             if [ $? -eq 0 ] ; then
                                 touch $targR2Name.fastqSplitInQueue
                             else

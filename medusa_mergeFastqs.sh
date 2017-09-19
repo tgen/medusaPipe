@@ -16,9 +16,9 @@ thisStep="medusa_nextJob_mergeFastqs.txt"
 nxtStep1="medusa_nextJob_rnaAlign.txt"
 nxtStep2="medusa_nextJob_detectFusion.txt"
 nxtStep3="medusa_nextJob_sailFish.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -130,7 +130,7 @@ do
                             echo "### Already passed, inQueue, or failed"
                         else
                             echo "### Ready to submit for read 1..."
-                            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,CNT=$read1Count,RUNDIR=$runDir,NTX1=$nxtStep1,NXT2=$nxtStep2,NXT3=$nxtStep3,FASTQLIST="$fastqList1",MERGEDFASTQ=$targetName,D=$d $pbsHome/medusa_mergeFastqs.pbs
+                            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,CNT=$read1Count,RUNDIR=$runDir,NTX1=$nxtStep1,NXT2=$nxtStep2,NXT3=$nxtStep3,FASTQLIST="$fastqList1",MERGEDFASTQ=$targetName,D=$d $pbsHome/medusa_mergeFastqs.sh
                             if [ $? -eq 0 ] ; then
                                 touch $targetName.mergeFastqInQueue
                             else
@@ -142,7 +142,7 @@ do
                             echo "### Already passed, inQueue, or failed"
                         else
                             echo "### Ready to submit for read 2..."
-                            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,CNT=$read1Count,RUNDIR=$runDir,NXT1=$nxtStep1,NXT2=$nxtStep2,NXT3=$nxtStep3,FASTQLIST="$fastqList2",MERGEDFASTQ=$targR2Name,D=$d $pbsHome/medusa_mergeFastqs.pbs
+                            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,CNT=$read1Count,RUNDIR=$runDir,NXT1=$nxtStep1,NXT2=$nxtStep2,NXT3=$nxtStep3,FASTQLIST="$fastqList2",MERGEDFASTQ=$targR2Name,D=$d $pbsHome/medusa_mergeFastqs.sh
                             if [ $? -eq 0 ] ; then
                                 touch $targR2Name.mergeFastqInQueue
                             else

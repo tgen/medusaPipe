@@ -14,9 +14,9 @@
 
 thisStep="medusa_nextJob_cna.txt"
 nxtStep1="medusa_nextJob_postCna.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 time=`date +%d-%m-%Y-%H-%M`
 echo "Starting $0 at $time"
@@ -140,7 +140,7 @@ do
                     echo "CNA gen filt plot already in queue, passed, or failed"
                 else
                     echo "### Submitting to queue with $trackName"
-                    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,TRACKNAME=$trackName,MYPATH=$cnaDir/$outName1,CNAPATH=$cnaPath,MERGEDVCF=$vcfFile,NORMALSAMPLE=$pair1SamName,TUMORSAMPLE=$pair2SamName,NORMALDAT=$normalDatFile,TUMORDAT=$tumorDatFile,OFILE=$outName1,ASSAY=$assay,GTF=$gtf,NXT1=$nxtStep1,REF=$ref,RUNDIR=$runDir,D=$d $pbsHome/medusa_cnaGenFilt.pbs
+                    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,TRACKNAME=$trackName,MYPATH=$cnaDir/$outName1,CNAPATH=$cnaPath,MERGEDVCF=$vcfFile,NORMALSAMPLE=$pair1SamName,TUMORSAMPLE=$pair2SamName,NORMALDAT=$normalDatFile,TUMORDAT=$tumorDatFile,OFILE=$outName1,ASSAY=$assay,GTF=$gtf,NXT1=$nxtStep1,REF=$ref,RUNDIR=$runDir,D=$d $pbsHome/medusa_cnaGenFilt.sh
                     if [ $? -eq 0 ] ; then
                         touch $trackName.cnaGenFiltInQueue
                         sleep 1
@@ -158,7 +158,7 @@ do
                     echo "CNA gen filt plot already in queue, passed, or failed"
                 else
                     echo "### Submitting to queue with $trackName"
-                    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,TRACKNAME=$trackName,MYPATH=$cnaDir/$outName2,CNAPATH=$cnaPath,MERGEDVCF=$vcfFile,NORMALSAMPLE=$pair1SamName,TUMORSAMPLE=$pair2SamName,NORMALDAT=$normalDatFile,TUMORDAT=$tumorDatFile,OFILE=$outName2,ASSAY=$assay,GTF=$gtf,NXT1=$nxtStep1,REF=$ref,RUNDIR=$runDir,D=$d $pbsHome/medusa_cnaGenUnfi.pbs
+                    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,TRACKNAME=$trackName,MYPATH=$cnaDir/$outName2,CNAPATH=$cnaPath,MERGEDVCF=$vcfFile,NORMALSAMPLE=$pair1SamName,TUMORSAMPLE=$pair2SamName,NORMALDAT=$normalDatFile,TUMORDAT=$tumorDatFile,OFILE=$outName2,ASSAY=$assay,GTF=$gtf,NXT1=$nxtStep1,REF=$ref,RUNDIR=$runDir,D=$d $pbsHome/medusa_cnaGenUnfi.sh
                     if [ $? -eq 0 ] ; then
                         touch $trackName.cnaGenUnfiInQueue
                         sleep 1
@@ -192,7 +192,7 @@ do
                 echo "CNA gen filt plot already in queue, passed, or failed"
             else
                 echo "### Submitting to queue with $trackName"
-                sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,NHETDEPTH=$nHetDepth,THETDEPTH=$tHetDepth,TRACKNAME=$trackName,MYPATH=$cnaDir/$outName3,CNAPATH=$cnaPath,MERGEDVCF=$vcfFile,NORMALSAMPLE=$pair1SamName,TUMORSAMPLE=$pair2SamName,CNAEXOMETARGET=$bedFile,NORMALDAT=$normalDatFile,TUMORDAT=$tumorDatFile,OFILE=$outName3,ASSAY=$assay,GTF=$gtf,NXT1=$nxtStep1,REF=$ref,RUNDIR=$runDir,D=$d $pbsHome/medusa_cnaExo.pbs
+                sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,NHETDEPTH=$nHetDepth,THETDEPTH=$tHetDepth,TRACKNAME=$trackName,MYPATH=$cnaDir/$outName3,CNAPATH=$cnaPath,MERGEDVCF=$vcfFile,NORMALSAMPLE=$pair1SamName,TUMORSAMPLE=$pair2SamName,CNAEXOMETARGET=$bedFile,NORMALDAT=$normalDatFile,TUMORDAT=$tumorDatFile,OFILE=$outName3,ASSAY=$assay,GTF=$gtf,NXT1=$nxtStep1,REF=$ref,RUNDIR=$runDir,D=$d $pbsHome/medusa_cnaExo.sh
                 if [ $? -eq 0 ] ; then
                     touch $trackName.cnaExomeInQueue
                     sleep 1

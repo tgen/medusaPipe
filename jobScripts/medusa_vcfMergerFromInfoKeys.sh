@@ -118,20 +118,6 @@ STRELKA_SNV_VCF_BN=`basename $STRELKA_SNV_VCF`
 STRELKA_INDEL_VCF_BN=`basename $STRELKA_INDEL_VCF`
 MUTECT_SNV_VCF_BN=`basename $MUTECT_SNV_VCF`
 
-#perf stat /home/jkeats/local/merge3vcfs_v20140803/pecan.merge.3vcfs.main.sh --dirscript ${VCFMERGER_DIR} \
-#perf stat ${VCFMERGER} --dirscript ${VCFMERGER_DIR} \
-#        --seusnv ${SEURAT_SNV_PATH_BN} \
-#        --seuindel ${SEURAT_INDEL_PATH_BN} \
-#        --slksnv ${STRELKA_SNV_VCF_BN} \
-#        --slkindel ${STRELKA_INDEL_VCF_BN} \
-#        --mtcsnv ${MUTECT_SNV_VCF_BN} \
-#        --outprefix ${SEURAT_BASENAME} 2> ${MERGERDIR}/${SEURAT_BASENAME}.vcfMerger.perfOut
-#        if [ $? -ne 0 ] ; then
-#                echo "### vcf merger failed at merge 3 vcfs stage"
-#                mv ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerInQueue ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerFail
-#                exit 1
-#        fi
-
 echo "Finished Merging successfully"
 
 # Sort the Merged VCF for GATK compatibility

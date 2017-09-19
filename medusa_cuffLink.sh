@@ -14,9 +14,9 @@
 
 thisStep="medusa_nextJob_cuffLink.txt"
 nxtStep1="medusa_nextJob_postCuffLinks.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -93,7 +93,7 @@ do
         fi
 
         echo "### Submitting $topHatDir to queue for cuff links..."
-        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PARAMS=${params},DIRNAME=$topHatDir,CUFFLINKSPATH=$cufflinksPath,REF=$ref,BAM=$accHitsBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_cuffLink.pbs
+        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PARAMS=${params},DIRNAME=$topHatDir,CUFFLINKSPATH=$cufflinksPath,REF=$ref,BAM=$accHitsBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_cuffLink.sh
         if [ $? -eq 0 ] ; then
             touch $topHatDir.cuffLinkInQueue
         else
@@ -117,7 +117,7 @@ do
         echo "### Submitting $starDir to queue for cuff links..."
         if [[ $rnaStrand == "FIRST" ]] ; then
                         echo "##running stranded cufflinks case"
-            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PARAMS=$params,DIRNAME=$starDir,CUFFLINKSPATH=$cufflinksPath,REF=$ref,BAM=$starBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_firstStrandedCuffLink.pbs
+            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PARAMS=$params,DIRNAME=$starDir,CUFFLINKSPATH=$cufflinksPath,REF=$ref,BAM=$starBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_firstStrandedCuffLink.sh
             if [ $? -eq 0 ] ; then
                             touch $starDir.cuffLinkInQueue
                     else
@@ -126,7 +126,7 @@ do
                     sleep 2
         elif [[ $rnaStrand == "SECOND" ]] ; then
                         echo "##running second stranded cufflinks case"
-                        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PARAMS=$params,DIRNAME=$starDir,CUFFLINKSPATH=$cufflinksPath,REF=$ref,BAM=$starBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_secondStrandedCuffLink.pbs
+                        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PARAMS=$params,DIRNAME=$starDir,CUFFLINKSPATH=$cufflinksPath,REF=$ref,BAM=$starBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_secondStrandedCuffLink.sh
                         if [ $? -eq 0 ] ; then
                                 touch $starDir.cuffLinkInQueue
                         else
@@ -136,7 +136,7 @@ do
 
         else
             echo "running unstranded cufflinks case"
-            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PARAMS=$params,DIRNAME=$starDir,CUFFLINKSPATH=$cufflinksPath,REF=$ref,BAM=$starBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_cuffLink.pbs
+            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PARAMS=$params,DIRNAME=$starDir,CUFFLINKSPATH=$cufflinksPath,REF=$ref,BAM=$starBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_cuffLink.sh
             if [ $? -eq 0 ] ; then
                 touch $starDir.cuffLinkInQueue
             else

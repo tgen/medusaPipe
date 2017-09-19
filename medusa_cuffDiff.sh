@@ -14,9 +14,9 @@
 
 thisStep="medusa_nextJob_cuffDiff.txt"
 nxtStep1="medusa_nextJob_postCuffDiff.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -136,7 +136,7 @@ do
         fi
 
         echo "### Submitting $cdName to queue for cuff diff..."
-        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,CUFFDIFF2VCFPATH=$cuffdiff2vcfPath,PROCESSCDLISTPATH=$processcdlistPath,CUFFDIFFPATH=$cuffdiffPath,RUNDIR=$runDir,DIRNAME=$cdDir,GTF=$gtf,BAM1="'"$normlList"'",BAM2="'"$tumorList"'",REF=$ref,MASK=$gtfmask,REF=$ref,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_cuffDiff.pbs
+        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,CUFFDIFF2VCFPATH=$cuffdiff2vcfPath,PROCESSCDLISTPATH=$processcdlistPath,CUFFDIFFPATH=$cuffdiffPath,RUNDIR=$runDir,DIRNAME=$cdDir,GTF=$gtf,BAM1="'"$normlList"'",BAM2="'"$tumorList"'",REF=$ref,MASK=$gtfmask,REF=$ref,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_cuffDiff.sh
         if [ $? -eq 0 ] ; then
             touch $cdDir.cuffDiffInQueue
         else
@@ -202,7 +202,7 @@ do
         echo "### Submitting $cdName to queue for cuff diff..."
         if [ $rnaTumorStrand == "FIRST" ] ; then
                         echo "##running stranded cuffDiff case"
-            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,CUFFDIFF2VCFPATH=$cuffdiff2vcfPath,PROCESSCDLISTPATH=$processcdlistPath,CUFFDIFFPATH=$cuffdiffPath,RUNDIR=$runDir,DIRNAME=$cdDir,GTF=$gtf,BAM1="'"$normlList"'",BAM2="'"$tumorList"'",REF=$ref,MASK=$gtfmask,REF=$ref,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_firstStrandedCuffDiff.pbs
+            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,CUFFDIFF2VCFPATH=$cuffdiff2vcfPath,PROCESSCDLISTPATH=$processcdlistPath,CUFFDIFFPATH=$cuffdiffPath,RUNDIR=$runDir,DIRNAME=$cdDir,GTF=$gtf,BAM1="'"$normlList"'",BAM2="'"$tumorList"'",REF=$ref,MASK=$gtfmask,REF=$ref,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_firstStrandedCuffDiff.sh
             if [ $? -eq 0 ] ; then
                 touch $cdDir.cuffDiffInQueue
             else
@@ -211,7 +211,7 @@ do
             sleep 2
                 elif [ $rnaTumorStrand == "SECOND" ] ; then
                         echo "##running second stranded cuffDiff case"
-                        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,CUFFDIFF2VCFPATH=$cuffdiff2vcfPath,PROCESSCDLISTPATH=$processcdlistPath,CUFFDIFFPATH=$cuffdiffPath,RUNDIR=$runDir,DIRNAME=$cdDir,GTF=$gtf,BAM1="'"$normlList"'",BAM2="'"$tumorList"'",REF=$ref,MASK=$gtfmask,REF=$ref,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_secondStrandedCuffDiff.pbs
+                        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,CUFFDIFF2VCFPATH=$cuffdiff2vcfPath,PROCESSCDLISTPATH=$processcdlistPath,CUFFDIFFPATH=$cuffdiffPath,RUNDIR=$runDir,DIRNAME=$cdDir,GTF=$gtf,BAM1="'"$normlList"'",BAM2="'"$tumorList"'",REF=$ref,MASK=$gtfmask,REF=$ref,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_secondStrandedCuffDiff.sh
                         if [ $? -eq 0 ] ; then
                                 touch $cdDir.cuffDiffInQueue
                         else
@@ -220,7 +220,7 @@ do
                         sleep 2
         else
             echo "running unstranded cuffDiff case"
-            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,CUFFDIFF2VCFPATH=$cuffdiff2vcfPath,PROCESSCDLISTPATH=$processcdlistPath,CUFFDIFFPATH=$cuffdiffPath,RUNDIR=$runDir,DIRNAME=$cdDir,GTF=$gtf,BAM1="'"$normlList"'",BAM2="'"$tumorList"'",REF=$ref,MASK=$gtfmask,REF=$ref,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_cuffDiff.pbs
+            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,CUFFDIFF2VCFPATH=$cuffdiff2vcfPath,PROCESSCDLISTPATH=$processcdlistPath,CUFFDIFFPATH=$cuffdiffPath,RUNDIR=$runDir,DIRNAME=$cdDir,GTF=$gtf,BAM1="'"$normlList"'",BAM2="'"$tumorList"'",REF=$ref,MASK=$gtfmask,REF=$ref,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_cuffDiff.sh
             if [ $? -eq 0 ] ; then
                 touch $cdDir.cuffDiffInQueue
             else

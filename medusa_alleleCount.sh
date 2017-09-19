@@ -14,9 +14,9 @@
 
 thisStep="medusa_nextJob_alleleCount.txt"
 nxtStep1="medusa_nextJob_postAlleleCount.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
@@ -140,7 +140,7 @@ do
         continue
     fi
     echo "### Submitting to queue for allele count..."
-    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,OUT=$outFile,ALCOUNTPATH=$alPath,REF=$ref,TRACK=$trackName/$usableName,VCF=$seuratVcf,RNABAM=$rnaInBam,DNABAM=$tumorBam,RUNDIR=$runDir,D=$d $pbsHome/medusa_alleleCount.pbs
+    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,OUT=$outFile,ALCOUNTPATH=$alPath,REF=$ref,TRACK=$trackName/$usableName,VCF=$seuratVcf,RNABAM=$rnaInBam,DNABAM=$tumorBam,RUNDIR=$runDir,D=$d $pbsHome/medusa_alleleCount.sh
     if [ $? -eq 0 ] ; then
         touch $trackName/$usableName.alleleCountInQueue
     else
