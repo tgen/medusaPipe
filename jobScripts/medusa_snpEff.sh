@@ -1,5 +1,4 @@
-##### Author: Ahmet Kurdoglu #####
-##### Parameterized PBS Script ####
+#!/usr/bin/env bash
 #PBS -S /bin/bash
 #SBATCH --job-name="medusa_snpEff"
 #SBATCH --time=0-50:00:00
