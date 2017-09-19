@@ -1,12 +1,9 @@
 #!/usr/bin/env bash
-#PBS -S /bin/bash
 #SBATCH --job-name="medusa_circos"
 #SBATCH --time=0-96:00:00
 #SBATCH --ntasks=1
 #SBATCH --mail-user=jetstream@tgen.org
 #SBATCH --mail-type=FAIL
-#SBATCH --output="/${D}/oeFiles/${PBS_JOBNAME}_${PBS_JOBID}.out"
-#SBATCH --error="/${D}/oeFiles/${PBS_JOBNAME}_${PBS_JOBID}.out"
 
 time=`date +%d-%m-%Y-%H-%M` 
 beginTime=`date +%s`

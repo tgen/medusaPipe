@@ -126,7 +126,7 @@ do
             fi
  
             echo "### Submitting $digarDir to queue for digarPost..."
-            qsub -A $debit -l nodes=1:ppn=8 -v DIGARPATH=$digarPath,ANN=$digarAnn,SAMTOOLSPATH=$samtoolsPath,BWAPATH=$bwaPath,GENEFILE=$listOfGenes,DIGARDIR=$digarDir,REF=$ref,BAM=$starBam,GTF=$gtf,RUNDIR=$runDir,D=$d $pbsHome/medusa_digarPost.pbs
+            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,DIGARPATH=$digarPath,ANN=$digarAnn,SAMTOOLSPATH=$samtoolsPath,BWAPATH=$bwaPath,GENEFILE=$listOfGenes,DIGARDIR=$digarDir,REF=$ref,BAM=$starBam,GTF=$gtf,RUNDIR=$runDir,D=$d $pbsHome/medusa_digarPost.pbs
             if [ $? -eq 0 ] ; then
                 touch $digarDir.digarPostInQueue
             else

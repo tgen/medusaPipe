@@ -1,12 +1,9 @@
 #!/usr/bin/env bash
-#PBS -S /bin/bash
 #SBATCH --job-name="medusa_IGLbc"
 #SBATCH --time=0-32:00:00
 #SBATCH --mail-user=jetstream@tgen.org
 #SBATCH --mail-type=FAIL
-#PBS -j oe
-#SBATCH --output="/${D}/oeFiles/${PBS_JOBNAME}_${PBS_JOBID}.out"
-#SBATCH --error="/${D}/oeFiles/${PBS_JOBNAME}_${PBS_JOBID}.err"
+
  
 module load R/2.15.2
 beginTime=`date +%s`

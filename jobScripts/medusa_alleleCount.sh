@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-#PBS -S /bin/bash
 #SBATCH --job-name="medusa_alleleCount"
 #SBATCH --time=0-48:00:00
 #SBATCH --mail-user=jetstream@tgen.org
 #SBATCH --mail-type=FAIL
-#PBS -j oe
-#SBATCH --output="/${D}/oeFiles/${PBS_JOBNAME}_${PBS_JOBID}.out"
-#SBATCH --error="/${D}/oeFiles/${PBS_JOBNAME}_${PBS_JOBID}.err"
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH --cpus-per-task 4
+
  
 cd ${RUNDIR}
 beginTime=`date +%s`

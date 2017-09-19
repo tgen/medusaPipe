@@ -93,7 +93,7 @@ do
         fi
 
         echo "### Submitting $topHatDir to queue for cuff links..."
-        qsub -A $debit -l nodes=1:ppn=$nCores -v PARAMS=${params},DIRNAME=$topHatDir,CUFFLINKSPATH=$cufflinksPath,REF=$ref,BAM=$accHitsBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_cuffLink.pbs
+        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PARAMS=${params},DIRNAME=$topHatDir,CUFFLINKSPATH=$cufflinksPath,REF=$ref,BAM=$accHitsBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_cuffLink.pbs
         if [ $? -eq 0 ] ; then
             touch $topHatDir.cuffLinkInQueue
         else
@@ -117,7 +117,7 @@ do
         echo "### Submitting $starDir to queue for cuff links..."
         if [[ $rnaStrand == "FIRST" ]] ; then
                         echo "##running stranded cufflinks case"
-            qsub -A $debit -l nodes=1:ppn=$nCores -v PARAMS=$params,DIRNAME=$starDir,CUFFLINKSPATH=$cufflinksPath,REF=$ref,BAM=$starBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_firstStrandedCuffLink.pbs
+            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PARAMS=$params,DIRNAME=$starDir,CUFFLINKSPATH=$cufflinksPath,REF=$ref,BAM=$starBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_firstStrandedCuffLink.pbs
             if [ $? -eq 0 ] ; then
                             touch $starDir.cuffLinkInQueue
                     else
@@ -126,7 +126,7 @@ do
                     sleep 2
         elif [[ $rnaStrand == "SECOND" ]] ; then
                         echo "##running second stranded cufflinks case"
-                        qsub -A $debit -l nodes=1:ppn=$nCores -v PARAMS=$params,DIRNAME=$starDir,CUFFLINKSPATH=$cufflinksPath,REF=$ref,BAM=$starBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_secondStrandedCuffLink.pbs
+                        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PARAMS=$params,DIRNAME=$starDir,CUFFLINKSPATH=$cufflinksPath,REF=$ref,BAM=$starBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_secondStrandedCuffLink.pbs
                         if [ $? -eq 0 ] ; then
                                 touch $starDir.cuffLinkInQueue
                         else
@@ -136,7 +136,7 @@ do
 
         else
             echo "running unstranded cufflinks case"
-            qsub -A $debit -l nodes=1:ppn=$nCores -v PARAMS=$params,DIRNAME=$starDir,CUFFLINKSPATH=$cufflinksPath,REF=$ref,BAM=$starBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_cuffLink.pbs
+            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,PARAMS=$params,DIRNAME=$starDir,CUFFLINKSPATH=$cufflinksPath,REF=$ref,BAM=$starBam,USEGTF=$usegtf,USEMASK=$usemask,CUFFLINKGTF=$gtf,CUFFLINKMASK=$gtfmask,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_cuffLink.pbs
             if [ $? -eq 0 ] ; then
                 touch $starDir.cuffLinkInQueue
             else

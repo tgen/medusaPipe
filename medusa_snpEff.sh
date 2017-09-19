@@ -87,7 +87,7 @@ do
         continue
     fi
     echo "### Submitting $trackName.seurat.vcf to queue for snpEff..."
-    qsub -A $debit -l nodes=1:ppn=$nCores -v SNPEFFPATH=$snpeffPath,VCF=$trackName.seurat.vcf,DBSNP=$dbsnp,DBVERSION=$snpeffdb,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_snpEff.pbs
+    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SNPEFFPATH=$snpeffPath,VCF=$trackName.seurat.vcf,DBSNP=$dbsnp,DBVERSION=$snpeffdb,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_snpEff.pbs
     if [ $? -eq 0 ] ; then
         touch $trackName.seurat.vcf.snpEffInQueue
     else
@@ -125,7 +125,7 @@ do
         continue
     fi
     echo "### Submitting $trackName.REVseurat.vcf to queue for snpEff..."
-    qsub -A $debit -l nodes=1:ppn=$nCores -v SNPEFFPATH=$snpeffPath,VCF=$trackName.REVseurat.vcf,DBSNP=$dbsnp,DBVERSION=$snpeffdb,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_snpEff.pbs
+    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SNPEFFPATH=$snpeffPath,VCF=$trackName.REVseurat.vcf,DBSNP=$dbsnp,DBVERSION=$snpeffdb,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_snpEff.pbs
     if [ $? -eq 0 ] ; then
         touch $trackName.REVseurat.vcf.snpEffInQueue
     else
@@ -162,7 +162,7 @@ do
         echo "### snpEff is already done, failed or inQueue for passed somatic snvs"
     else
         echo "### Submitting $vcfPre.passed.somatic.snvs.vcf to queue for snpEff..."
-        qsub -A $debit -l nodes=1:ppn=$nCores -v SNPEFFPATH=$snpeffPath,VCF=$vcfPre.strelka.passed.somatic.snvs.vcf,DBSNP=$dbsnp,DBVERSION=$snpeffdb,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_snpEff.pbs
+        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SNPEFFPATH=$snpeffPath,VCF=$vcfPre.strelka.passed.somatic.snvs.vcf,DBSNP=$dbsnp,DBVERSION=$snpeffdb,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_snpEff.pbs
         if [ $? -eq 0 ] ; then
             touch $vcfPre.strelka.passed.somatic.snvs.vcf.snpEffInQueue
         else
@@ -174,7 +174,7 @@ do
         echo "### snpEff is already done, failed or inQueue for all somatic snvs"
     else
         echo "### Submitting $vcfPre.all.somatic.snvs.vcf to queue for snpEff..."
-        qsub -A $debit -l nodes=1:ppn=$nCores -v SNPEFFPATH=$snpeffPath,VCF=$vcfPre.strelka.all.somatic.snvs.vcf,DBSNP=$dbsnp,DBVERSION=$snpeffdb,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_snpEff.pbs
+        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SNPEFFPATH=$snpeffPath,VCF=$vcfPre.strelka.all.somatic.snvs.vcf,DBSNP=$dbsnp,DBVERSION=$snpeffdb,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_snpEff.pbs
         if [ $? -eq 0 ] ; then
             touch $vcfPre.strelka.all.somatic.snvs.vcf.snpEffInQueue
         else
@@ -186,7 +186,7 @@ do
         echo "### snpEff is already done, failed or inQueue for passed somatic indels"
     else
         echo "### Submitting $vcfPre.passed.somatic.indels.vcf to queue for snpEff..."
-        qsub -A $debit -l nodes=1:ppn=$nCores -v SNPEFFPATH=$snpeffPath,VCF=$vcfPre.strelka.passed.somatic.indels.vcf,DBSNP=$dbsnp,DBVERSION=$snpeffdb,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_snpEff.pbs
+        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SNPEFFPATH=$snpeffPath,VCF=$vcfPre.strelka.passed.somatic.indels.vcf,DBSNP=$dbsnp,DBVERSION=$snpeffdb,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_snpEff.pbs
         if [ $? -eq 0 ] ; then
             touch $vcfPre.strelka.passed.somatic.indels.vcf.snpEffInQueue
         else
@@ -198,7 +198,7 @@ do
         echo "### snpEff is already done, failed or inQueue for all somatic indels"
     else
         echo "### Submitting $vcfPre.all.somatic.indels.vcf to queue for snpEff..."
-        qsub -A $debit -l nodes=1:ppn=$nCores -v SNPEFFPATH=$snpeffPath,VCF=$vcfPre.strelka.all.somatic.indels.vcf,DBSNP=$dbsnp,DBVERSION=$snpeffdb,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_snpEff.pbs
+        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SNPEFFPATH=$snpeffPath,VCF=$vcfPre.strelka.all.somatic.indels.vcf,DBSNP=$dbsnp,DBVERSION=$snpeffdb,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_snpEff.pbs
         if [ $? -eq 0 ] ; then
             touch $vcfPre.strelka.all.somatic.indels.vcf.snpEffInQueue
         else
@@ -237,7 +237,7 @@ do
         continue
     fi
     echo "### Submitting $vcf to queue for snpEff..."
-    qsub -A $debit -l nodes=1:ppn=$nCores -v SNPEFFPATH=$snpeffPath,VCF=$vcf,DBSNP=$dbsnp,DBVERSION=$snpeffdb,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_snpEff.pbs
+    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SNPEFFPATH=$snpeffPath,VCF=$vcf,DBSNP=$dbsnp,DBVERSION=$snpeffdb,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_snpEff.pbs
     if [ $? -eq 0 ] ; then
         touch $vcf.snpEffInQueue
     else
@@ -286,7 +286,7 @@ do
         continue
     fi
     echo "### Submitting $trackName.HC_All.vcf to queue for snpEff..."
-    qsub -A $debit -l nodes=1:ppn=$nCores -v SNPEFFPATH=$snpeffPath,VCF=$trackName.HC_All.vcf,DBSNP=$dbsnp,DBVERSION=$snpeffdb,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_snpEff.pbs
+    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SNPEFFPATH=$snpeffPath,VCF=$trackName.HC_All.vcf,DBSNP=$dbsnp,DBVERSION=$snpeffdb,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_snpEff.pbs
     if [ $? -eq 0 ] ; then
         touch $trackName.HC_All.vcf.snpEffInQueue
     else
@@ -324,7 +324,7 @@ do
                     echo "### snpEff already passed, in queue, or failed for $hcVcf"
                 else
                     echo "### Submitting for hc vcf for snpEff: $hcVcf"
-                    qsub -A $debit -l nodes=1:ppn=$nCores -v SNPEFFPATH=$snpeffPath,VCF=$hcVcf,DBSNP=$dbsnp,DBVERSION=$snpeffdb,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_snpEff.pbs
+                    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,SNPEFFPATH=$snpeffPath,VCF=$hcVcf,DBSNP=$dbsnp,DBVERSION=$snpeffdb,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_snpEff.pbs
                     if [ $? -eq 0 ] ; then
                         touch $hcVcf.snpEffInQueue
                     else

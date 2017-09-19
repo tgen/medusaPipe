@@ -137,8 +137,8 @@ do
         continue
     fi
     echo "### Submitting to queue to run strelka on $wd"
-    echo "qsub -A $debit -l nodes=1:ppn=$nCores -v ASSAY=$assay,STRELKAPATH=$strelkaPath,WD=$wd,REF=$ref,NXT1=$nxtStep1,NORMAL=$normalBamFile,TUMOR=$tumorBamFile,D=$d $pbsHome/medusa_strelka.pbs"
-    qsub -A $debit -l nodes=1:ppn=$nCores -v ASSAY=$assay,STRELKAPATH=$strelkaPath,WD=$wd,REF=$ref,NXT1=$nxtStep1,NORMAL=$normalBamFile,TUMOR=$tumorBamFile,D=$d $pbsHome/medusa_strelka.pbs
+    echo "sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,ASSAY=$assay,STRELKAPATH=$strelkaPath,WD=$wd,REF=$ref,NXT1=$nxtStep1,NORMAL=$normalBamFile,TUMOR=$tumorBamFile,D=$d $pbsHome/medusa_strelka.pbs"
+    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,ASSAY=$assay,STRELKAPATH=$strelkaPath,WD=$wd,REF=$ref,NXT1=$nxtStep1,NORMAL=$normalBamFile,TUMOR=$tumorBamFile,D=$d $pbsHome/medusa_strelka.pbs
     if [ $? -eq 0 ] ; then
         touch $wd.strelkaInQueue
     else

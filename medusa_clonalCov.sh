@@ -93,7 +93,7 @@ do
             ((qsubFails++))
         else
             echo "### Submitting to queue with $normalBamFile"
-            qsub -A $debit -l nodes=1:ppn=$nCores -v BAMFILE=$normalBamFile,OUTFILE=$normalBamFile.clc,CPATH=$clonalCovPath,SAMPATH=$samtoolsPath,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_clonalCov.pbs
+            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,BAMFILE=$normalBamFile,OUTFILE=$normalBamFile.clc,CPATH=$clonalCovPath,SAMPATH=$samtoolsPath,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_clonalCov.pbs
             if [ $? -eq 0 ] ; then
                 touch $normalBamFile.clonalCovInQueue
             else
@@ -110,7 +110,7 @@ do
             ((qsubFails++))
         else
             echo "### Submitting to queue with $tumorBamFile"
-            qsub -A $debit -l nodes=1:ppn=$nCores -v BAMFILE=$tumorBamFile,OUTFILE=$tumorBamFile.clc,CPATH=$clonalCovPath,SAMPATH=$samtoolsPath,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_clonalCov.pbs
+            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,BAMFILE=$tumorBamFile,OUTFILE=$tumorBamFile.clc,CPATH=$clonalCovPath,SAMPATH=$samtoolsPath,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_clonalCov.pbs
             if [ $? -eq 0 ] ; then
                 touch $tumorBamFile.clonalCovInQueue
             else

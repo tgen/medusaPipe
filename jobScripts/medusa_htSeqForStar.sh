@@ -1,12 +1,9 @@
 #!/usr/bin/env bash
-#PBS -S /bin/bash
 #SBATCH --job-name="medusa_htSeq4Star"
 #SBATCH --time=0-48:00:00
 #SBATCH --mail-user=jetstream@tgen.org
 #SBATCH --mail-type=FAIL
-#PBS -j oe
-#SBATCH --output="/${D}/oeFiles/${PBS_JOBNAME}_${PBS_JOBID}.out"
-#SBATCH --error="/${D}/oeFiles/${PBS_JOBNAME}_${PBS_JOBID}.err"
+
 
 module load python/2.7.3
 #module load HTSeq/0.5.3p9

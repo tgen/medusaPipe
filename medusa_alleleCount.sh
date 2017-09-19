@@ -36,12 +36,11 @@ if [ ! -e $configFile ] ; then
 else
     echo "### Config file found."
 fi
+
 recipe=`cat $configFile | grep "^RECIPE=" | cut -d= -f2 | head -1 | tr -d [:space:]`
 debit=`cat $configFile | grep "^DEBIT=" | cut -d= -f2 | head -1 | tr -d [:space:]`
 
 nCores=`grep @@${myName}_CORES= $constantsDir/$recipe | cut -d= -f2`
-
-
 ref=`grep "@@"$recipe"@@" $constants | grep @@REF= | cut -d= -f2`
 alPath=`grep "@@"$recipe"@@" $constants | grep @@ALPATH= | cut -d= -f2`
 rnaAligner=`grep "@@"$recipe"@@" $constants | grep @@RNAALIGNER= | cut -d= -f2`
@@ -54,7 +53,7 @@ d=`echo $runDir | cut -c 2-`
 
 skipLines=1
 qsubFails=0
-###
+
 for acLine in `cat $configFile | grep ^TRIPLET4ALLELECOUNT=`
 do
     if [ $alleleCount != "yes" ] ; then
@@ -141,7 +140,7 @@ do
         continue
     fi
     echo "### Submitting to queue for allele count..."
-    qsub -v OUT=$outFile,ALCOUNTPATH=$alPath,REF=$ref,TRACK=$trackName/$usableName,VCF=$seuratVcf,RNABAM=$rnaInBam,DNABAM=$tumorBam,RUNDIR=$runDir,D=$d $pbsHome/medusa_alleleCount.pbs
+    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,OUT=$outFile,ALCOUNTPATH=$alPath,REF=$ref,TRACK=$trackName/$usableName,VCF=$seuratVcf,RNABAM=$rnaInBam,DNABAM=$tumorBam,RUNDIR=$runDir,D=$d $pbsHome/medusa_alleleCount.pbs
     if [ $? -eq 0 ] ; then
         touch $trackName/$usableName.alleleCountInQueue
     else
@@ -158,6 +157,7 @@ if [ $qsubFails -eq 0 ] ; then
 else
 #qsub failed at some point, this runDir must stay in messages
     echo "### Failure in qsub. Not touching $thisStep"
+    exit 1
 fi
 
 time=`date +%d-%m-%Y-%H-%M`

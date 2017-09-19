@@ -44,7 +44,7 @@ ref=`grep "@@"$recipe"@@" $constants | grep @@REF= | cut -d= -f2`
 samtoolsPath=`grep "@@"$recipe"@@" $constants | grep @@SAMTOOLSPATH= | cut -d= -f2`
 bwaPath=`grep "@@"$recipe"@@" $constants | grep @@BWAPATH= | cut -d= -f2`
 faiFile="$ref.fai"
-nCores=8
+nCores=`grep @@dnaAlign.sh_CORES= $constantsDir/$recipe | cut -d= -f2`
 
 echo "### projName: $projName"
 echo "### confFile: $configFile"
@@ -118,7 +118,7 @@ do
                             bwamem) echo "### Submitting to qbwaMem to create $bamMiniName"
 
                                 rgTag="@RG\tID:${rdGrpID}\tSM:$samName\tPL:ILLUMINA\tLB:$libraID"
-                                qsub -A $debit -l nodes=1:ppn=$nCores -v D=$d,RGTAG=$rgTag,FASTQ1=$thisMiniFq,FASTQ2=$thisMiniR2,REF=$ref,BWAPATH=$bwaPath,SAMTOOLSPATH=$samtoolsPath,FAI=$faiFile,BAMPRE=$bamMiniPre,RUNDIR=$runDir,NXT1=$nxtStep1,NXT2=$nxtStep2,D=$d $pbsHome/medusa_bwaMem.pbs
+                                sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,D=$d,RGTAG=$rgTag,FASTQ1=$thisMiniFq,FASTQ2=$thisMiniR2,REF=$ref,BWAPATH=$bwaPath,SAMTOOLSPATH=$samtoolsPath,FAI=$faiFile,BAMPRE=$bamMiniPre,RUNDIR=$runDir,NXT1=$nxtStep1,NXT2=$nxtStep2,D=$d $pbsHome/medusa_bwaMem.pbs
                                 if [ $? -eq 0 ] ; then
                                     touch $bamMiniName.dnaAlignInQueue
                                 else

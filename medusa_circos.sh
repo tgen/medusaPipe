@@ -138,7 +138,7 @@ do
     cat $outDir/template_circos.part2.conf >> $outDir/template_circos.conf
 
     echo "### Submitting to queue with $normalBamFile"
-    qsub -A $debit -l nodes=1:ppn=$nCores -v OUTFILE=$circosSamples,CONF=$conf,OUTDIR=$outDir,SEURATVCF=$seuratVcf,COSMIC=$cosmicVcf,TRNVCF=$trnVcf,CNVTSV=$cnvsTSV,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_circos.pbs
+    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,OUTFILE=$circosSamples,CONF=$conf,OUTDIR=$outDir,SEURATVCF=$seuratVcf,COSMIC=$cosmicVcf,TRNVCF=$trnVcf,CNVTSV=$cnvsTSV,RUNDIR=$runDir,NXT1=$nxtStep1,D=$d $pbsHome/medusa_circos.pbs
     if [ $? -eq 0 ] ; then
         touch $circosSamples.circosInQueue
     else

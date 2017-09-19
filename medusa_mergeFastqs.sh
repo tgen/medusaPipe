@@ -130,7 +130,7 @@ do
                             echo "### Already passed, inQueue, or failed"
                         else
                             echo "### Ready to submit for read 1..."
-                            qsub -A $debit -l nodes=1:ppn=$nCores -v CNT=$read1Count,RUNDIR=$runDir,NTX1=$nxtStep1,NXT2=$nxtStep2,NXT3=$nxtStep3,FASTQLIST="$fastqList1",MERGEDFASTQ=$targetName,D=$d $pbsHome/medusa_mergeFastqs.pbs
+                            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,CNT=$read1Count,RUNDIR=$runDir,NTX1=$nxtStep1,NXT2=$nxtStep2,NXT3=$nxtStep3,FASTQLIST="$fastqList1",MERGEDFASTQ=$targetName,D=$d $pbsHome/medusa_mergeFastqs.pbs
                             if [ $? -eq 0 ] ; then
                                 touch $targetName.mergeFastqInQueue
                             else
@@ -142,7 +142,7 @@ do
                             echo "### Already passed, inQueue, or failed"
                         else
                             echo "### Ready to submit for read 2..."
-                            qsub -A $debit -l nodes=1:ppn=$nCores -v CNT=$read1Count,RUNDIR=$runDir,NXT1=$nxtStep1,NXT2=$nxtStep2,NXT3=$nxtStep3,FASTQLIST="$fastqList2",MERGEDFASTQ=$targR2Name,D=$d $pbsHome/medusa_mergeFastqs.pbs
+                            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,CNT=$read1Count,RUNDIR=$runDir,NXT1=$nxtStep1,NXT2=$nxtStep2,NXT3=$nxtStep3,FASTQLIST="$fastqList2",MERGEDFASTQ=$targR2Name,D=$d $pbsHome/medusa_mergeFastqs.pbs
                             if [ $? -eq 0 ] ; then
                                 touch $targR2Name.mergeFastqInQueue
                             else
