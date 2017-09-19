@@ -14,7 +14,7 @@
 
 thisStep="medusa_nextJob_splitFastqs.txt"
 nxtStep1="medusa_nextJob_dnaAlignParts.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`

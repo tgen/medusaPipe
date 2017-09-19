@@ -24,7 +24,7 @@ perf stat java -Xmx15g -jar ${PICARDPATH}/CalculateHsMetrics.jar \
     INPUT=${BAMFILE} \
     OUTPUT=${BAMFILE}.picHSMetrics \
     PER_TARGET_COVERAGE=${BAMFILE}.picStats.HsPerTargetCov \
-    TMP_DIR=/scratch/tgenjetstream/tmp/ \
+    TMP_DIR=${TMPDIR} \
     VALIDATION_STRINGENCY=SILENT > ${BAMFILE}.picHSMetricsOut 2> ${BAMFILE}.picardHS.perfOut
 if [ $? -eq 0 ] ; then
     mv ${BAMFILE}.picHSMetricsOut ${BAMFILE}.picHSMetricsPass

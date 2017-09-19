@@ -22,7 +22,7 @@ echo "### GATKPATH: ${GATKPATH}"
 echo "### SEURATPATH: ${SEURATPATH}"
 
 echo "### Seurat caller started for bams at $time."
-perf stat java -Djava.io.tmpdir=/scratch/tgenjetstream/tmp/ -jar -Xmx8g ${SEURATPATH}/Seurat.jar \
+perf stat java -Djava.io.tmpdir=${TMPDIR} -jar -Xmx8g ${SEURATPATH}/Seurat.jar \
 -T Seurat \
 -l INFO \
 -R ${REF} \

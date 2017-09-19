@@ -22,7 +22,7 @@ base=`basename ${SAM}`
 anotherName=${base/.proj.Aligned.out.sam}
 DIR=$(dirname "${SAM}")
 #echo "### TIME:$time starting htseq on ${BAM}"
-#perf stat java -Xmx15g -jar ${PICARDPATH}/SortSam.jar TMP_DIR=/scratch/tgenjetstream/tmp/ INPUT=${BAM} OUTPUT=${SAM} SORT_ORDER=queryname 2>${SAM}.picardSort.perfOut
+#perf stat java -Xmx15g -jar ${PICARDPATH}/SortSam.jar TMP_DIR=${TMPDIR} INPUT=${BAM} OUTPUT=${SAM} SORT_ORDER=queryname 2>${SAM}.picardSort.perfOut
 #echo "### Picard sort is done, now starting htseq"
 #echo "### First converting BAM to SAM"
 #perf stat ${SAMTOOLSPATH}/samtools view -h ${BAM} > ${SAM} 2> ${BAM}.bam2sam.perfOut

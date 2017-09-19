@@ -19,7 +19,7 @@ echo "### KNOWN: ${KNOWN}"
 echo "### BAMLIST: ${BAMLIST}"
 
 echo "### Haplotype caller started for multiple bams at $time."
-perf stat java -Djava.io.tmpdir=/scratch/tgenjetstream/tmp/ -jar -Xmx32g ${GATKPATH}/GenomeAnalysisTK.jar \
+perf stat java -Djava.io.tmpdir=${TMPDIR} -jar -Xmx32g ${GATKPATH}/GenomeAnalysisTK.jar \
 -l INFO \
 -R ${REF} \
 -T HaplotypeCaller \

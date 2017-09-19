@@ -43,7 +43,7 @@ if [ ${CNT} -eq 1 ] ; then #nothing really merged, only copied
         touch ${RUNDIR}/${NXT1}
     fi
 else #actually merged with picard
-    perf stat java -Xmx42g -jar ${PICARDPATH}/MergeSamFiles.jar ASSUME_SORTED=true USE_THREADING=true VALIDATION_STRINGENCY=SILENT TMP_DIR=/scratch/tgenjetstream/tmp OUTPUT=${MERGEDBAM} ${BAMLIST} 2> ${MERGEDBAM}.mergeBam.perfOut > ${MERGEDBAM}.mergeBamOut
+    perf stat java -Xmx42g -jar ${PICARDPATH}/MergeSamFiles.jar ASSUME_SORTED=true USE_THREADING=true VALIDATION_STRINGENCY=SILENT TMP_DIR=${TMPDIR} OUTPUT=${MERGEDBAM} ${BAMLIST} 2> ${MERGEDBAM}.mergeBam.perfOut > ${MERGEDBAM}.mergeBamOut
     if [ $? -ne 0 ] ; then #bad merge
         mv ${MERGEDBAM}.mergeBamOut ${MERGEDBAM}.mergeBamFail
     else #good merge

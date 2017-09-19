@@ -22,9 +22,9 @@ nxtStep5="medusa_nextJob_trn.txt"
 nxtStep6="medusa_nextJob_strelka.txt"
 nxtStep7="medusa_nextJob_snpSniff.txt"
 nxtStep8="medusa_nextJob_REVseurat.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 declare -a chrGroups=(1:11:17:21 2:10:16:22 3:9:15:18:MT 4:7:14:Y 5:X:13:20 6:8:12:19)

@@ -21,9 +21,9 @@ nxtStep2="medusa_nextJob_vcfMerger.txt"
 #nxtStep5="medusa_nextJob_deSeq.txt"
 #nxtStep6="medusa_nextJob_checkProjectComplete.txt"
 #nxtStep7="medusa_nextJob_samtoolsStats.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`

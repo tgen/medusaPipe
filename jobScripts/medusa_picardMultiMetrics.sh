@@ -17,7 +17,7 @@ cd ${DIR}
 echo "### Starting picard multi metrics"
 #perf stat java -Xmx15g -jar ${PICARDPATH}/CollectAlignmentSummaryMetrics.jar \
     #OUTPUT=${BAMFILE}.picMultiMetrics \
-perf stat java -Djava.io.tmpdir=/scratch/tgenjetstream/tmp/ -Xmx15g -jar ${PICARDPATH}/CollectMultipleMetrics.jar \
+perf stat java -Djava.io.tmpdir=${TMPDIR} -Xmx15g -jar ${PICARDPATH}/CollectMultipleMetrics.jar \
     INPUT=${BAMFILE} \
     REFERENCE_SEQUENCE=${REF} \
     PROGRAM=CollectInsertSizeMetrics \
@@ -25,7 +25,7 @@ perf stat java -Djava.io.tmpdir=/scratch/tgenjetstream/tmp/ -Xmx15g -jar ${PICAR
     PROGRAM=QualityScoreDistribution \
     PROGRAM=MeanQualityByCycle \
     OUTPUT=${BAMFILE}.picMultiMetrics \
-    TMP_DIR=/scratch/tgenjetstream/tmp/ \
+    TMP_DIR=${TMPDIR} \
     ASSUME_SORTED=true \
     VALIDATION_STRINGENCY=SILENT > ${BAMFILE}.picMultiMetricsOut 2> ${BAMFILE}.picardMulti.perfOut
 if [ $? -eq 0 ] ; then

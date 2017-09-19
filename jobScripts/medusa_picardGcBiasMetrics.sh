@@ -23,7 +23,7 @@ perf stat java -Xmx15g -jar ${PICARDPATH}/CollectGcBiasMetrics.jar \
     OUTPUT=${BAMFILE}.picGcBiasMetrics \
     CHART_OUTPUT=${BAMFILE}.picGcBiasMetrics.pdf \
     SUMMARY_OUTPUT=${BAMFILE}.picGcBiasMetrics.summary \
-    TMP_DIR=/scratch/tgenjetstream/tmp/ \
+    TMP_DIR=${TMPDIR} \
     ASSUME_SORTED=true \
     VALIDATION_STRINGENCY=SILENT > ${BAMFILE}.picGcBiasMetricsOut 2> ${BAMFILE}.picardGcBias.perfOut
 if [ $? -eq 0 ] ; then

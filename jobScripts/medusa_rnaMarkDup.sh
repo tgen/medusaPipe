@@ -14,7 +14,7 @@ echo "### BAMFILE: ${BAMFILE}"
 echo "### SAMTOOLSPATH: ${SAMTOOLSPATH}"
 
 echo "### Starting picard mark duplicates"
-perf stat java -Xmx22g -jar ${PICARDPATH}/MarkDuplicates.jar ASSUME_SORTED=true REMOVE_DUPLICATES=false VALIDATION_STRINGENCY=SILENT TMP_DIR=/scratch/tgenjetstream/tmp INPUT=${BAMFILE} OUTPUT=${OUTPUTBAM} METRICS_FILE=${BAMFILE}.picStats.MarkDupMetrics MAX_RECORDS_IN_RAM=18000000 CREATE_INDEX=true 2> ${BAMFILE}.markDups.perfOut > ${BAMFILE}.rnaMarkDupOut
+perf stat java -Xmx22g -jar ${PICARDPATH}/MarkDuplicates.jar ASSUME_SORTED=true REMOVE_DUPLICATES=false VALIDATION_STRINGENCY=SILENT TMP_DIR=${TMPDIR} INPUT=${BAMFILE} OUTPUT=${OUTPUTBAM} METRICS_FILE=${BAMFILE}.picStats.MarkDupMetrics MAX_RECORDS_IN_RAM=18000000 CREATE_INDEX=true 2> ${BAMFILE}.markDups.perfOut > ${BAMFILE}.rnaMarkDupOut
 if [ $? -eq 0 ] ; then
     mv ${BAMFILE}.rnaMarkDupOut ${BAMFILE}.rnaMarkDupPass
     #echo "Automatically removed by mark duplicates step to save on space" > ${BAMFILE}

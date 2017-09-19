@@ -14,9 +14,9 @@
 
 thisStep="medusa_nextJob_deSeq2.txt"
 nxtStep1="medusa_nextJob_postDeSeq2.txt"
-pbsHome="/home/tgenjetstream/medusa-pipe/jobScripts"
-constants="/home/tgenjetstream/central-pipe/constants/constants.txt"
-constantsDir="/home/tgenjetstream/central-pipe/constants"
+pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
+constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
+constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
 time=`date +%d-%m-%Y-%H-%M`
