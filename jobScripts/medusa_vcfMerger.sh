@@ -51,11 +51,11 @@ module load R/3.1.1
 
 SEURAT_BASENAME=`basename ${SEURAT_VCF} ".seurat.vcf"`
 
-cat ${SEURAT_VCF} | java -jar ${SNPSIFT}/SnpSift.jar filter "( TYPE='somatic_SNV' )" > ${MERGERDIR}/${SEURAT_BASENAME}_seurat_snv.vcf
-cat ${SEURAT_VCF} | java -jar ${SNPSIFT}/SnpSift.jar filter "(( TYPE='somatic_deletion' ) | ( TYPE='somatic_insertion' ))" > ${MERGERDIR}/${SEURAT_BASENAME}_seurat_indel.vcf
+cat ${SEURAT_VCF} | /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar ${SNPSIFT}/SnpSift.jar filter "( TYPE='somatic_SNV' )" > ${MERGERDIR}/${SEURAT_BASENAME}_seurat_snv.vcf
+cat ${SEURAT_VCF} | /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar ${SNPSIFT}/SnpSift.jar filter "(( TYPE='somatic_deletion' ) | ( TYPE='somatic_insertion' ))" > ${MERGERDIR}/${SEURAT_BASENAME}_seurat_indel.vcf
 #filter both the SNVs and the INDELS based on quality etc..
-cat ${MERGERDIR}/${SEURAT_BASENAME}_seurat_snv.vcf | java -jar ${SNPSIFT}/SnpSift.jar filter "(( QUAL >= 15 ) & ( DP1 >= 10 ) & ( DP2 >= 10 ) & ( AR1 <= 0.02 ) & ( AR2 >= 0.05 ))" > ${MERGERDIR}/${SEURAT_BASENAME}_seurat_snv_filt.vcf
-cat ${MERGERDIR}/${SEURAT_BASENAME}_seurat_indel.vcf | java -jar ${SNPSIFT}/SnpSift.jar filter "( QUAL >= 25)" > ${MERGERDIR}/${SEURAT_BASENAME}_seurat_indel_filt.vcf
+cat ${MERGERDIR}/${SEURAT_BASENAME}_seurat_snv.vcf | /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar ${SNPSIFT}/SnpSift.jar filter "(( QUAL >= 15 ) & ( DP1 >= 10 ) & ( DP2 >= 10 ) & ( AR1 <= 0.02 ) & ( AR2 >= 0.05 ))" > ${MERGERDIR}/${SEURAT_BASENAME}_seurat_snv_filt.vcf
+cat ${MERGERDIR}/${SEURAT_BASENAME}_seurat_indel.vcf | /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar ${SNPSIFT}/SnpSift.jar filter "( QUAL >= 25)" > ${MERGERDIR}/${SEURAT_BASENAME}_seurat_indel_filt.vcf
 SEURAT_SNV_PATH=${MERGERDIR}/${SEURAT_BASENAME}_seurat_snv_filt.vcf
 SEURAT_INDEL_PATH=${MERGERDIR}/${SEURAT_BASENAME}_seurat_indel_filt.vcf
 
@@ -76,23 +76,23 @@ then
     # Filter the MUTECT calls
     echo "Found expected genotype order - Proceeding with filtering"
     #filtering with a bed file if no matched normal
-    cat ${MUTECT_VCF} | java -jar ${SNPSIFT}/SnpSift.jar filter "(( FILTER = 'PASS') & ( GEN[1].FA <= 0.02 ) & ( GEN[0].FA >= 0.05 ))" > ${MERGERDIR}/${MUTECT_BASENAME}_mutect_snv_filt.vcf
+    cat ${MUTECT_VCF} | /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar ${SNPSIFT}/SnpSift.jar filter "(( FILTER = 'PASS') & ( GEN[1].FA <= 0.02 ) & ( GEN[0].FA >= 0.05 ))" > ${MERGERDIR}/${MUTECT_BASENAME}_mutect_snv_filt.vcf
 elif [ "${FIRST_GENOTYPE_COLUMN}" == "${CONTROL}" ] || [[ $FIRST_GENOTYPE_COLUMN == *N ]] 
 then
     # Reorder the genotype columns and then filter
     echo "Found the wrong genotype order - Reordering genotype columns and then Proceeding with filtering"
     ##Filtering with a bed file if nor matched normal
-    awk '{ FS = "\t" ; OFS = "\t" ; print $1, $2, $3, $4, $5, $6, $7, $8, $9, $11, $10}' ${MUTECT_VCF} | java -jar ${SNPSIFT}/SnpSift.jar filter "(( FILTER = 'PASS') & ( GEN[1].FA <= 0.02 ) & ( GEN[0].FA >= 0.05 ))" > ${MERGERDIR}/${MUTECT_BASENAME}_mutect_snv_filt.vcf
+    awk '{ FS = "\t" ; OFS = "\t" ; print $1, $2, $3, $4, $5, $6, $7, $8, $9, $11, $10}' ${MUTECT_VCF} | /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar ${SNPSIFT}/SnpSift.jar filter "(( FILTER = 'PASS') & ( GEN[1].FA <= 0.02 ) & ( GEN[0].FA >= 0.05 ))" > ${MERGERDIR}/${MUTECT_BASENAME}_mutect_snv_filt.vcf
 else
     #This should not happen
     echo "ERROR - The mutect vcf did not contain the tumor or the control listed first.  Something is wrong here."
     #echo "ERROR - PLEASE LOOK WE DID NOT FIND A T or C, what the hell!"
         # Filter the MUTECT calls
         #echo "Found expected genotype order - Proceeding with filtering"
-        #cat ${MUTECT_VCF} | java -jar ${SNPSIFT}/SnpSift.jar filter "(( FILTER = 'PASS') & ( GEN[1].FA <= 0.02 ) & ( GEN[0].FA >= 0.05 ))" > ${MERGERDIR}/${MUTECT_BASENAME}_mutect_snv_filt.vcf
+        #cat ${MUTECT_VCF} | /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar ${SNPSIFT}/SnpSift.jar filter "(( FILTER = 'PASS') & ( GEN[1].FA <= 0.02 ) & ( GEN[0].FA >= 0.05 ))" > ${MERGERDIR}/${MUTECT_BASENAME}_mutect_snv_filt.vcf
     #for controls listed first
     #echo "Found the wrong genotype order - Reordering genotype columns and then Proceeding with filtering"
-    #awk '{ FS = "\t" ; OFS = "\t" ; print $1, $2, $3, $4, $5, $6, $7, $8, $9, $11, $10}' ${MUTECT_VCF} | java -jar ${SNPSIFT}/SnpSift.jar filter "(( FILTER = 'PASS') & ( GEN[1].FA <= 0.02 ) & ( GEN[0].FA >= 0.05 ))" > ${MERGERDIR}/${MUTECT_BASENAME}_mutect_snv_filt.vcf
+    #awk '{ FS = "\t" ; OFS = "\t" ; print $1, $2, $3, $4, $5, $6, $7, $8, $9, $11, $10}' ${MUTECT_VCF} | /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar ${SNPSIFT}/SnpSift.jar filter "(( FILTER = 'PASS') & ( GEN[1].FA <= 0.02 ) & ( GEN[0].FA >= 0.05 ))" > ${MERGERDIR}/${MUTECT_BASENAME}_mutect_snv_filt.vcf
 
 fi
 
@@ -144,7 +144,7 @@ echo "..."
  echo "Removing unwanted INFO keys"
  echo "..."
 
-perf stat java -jar ${SNPSIFT}/SnpSift.jar rmInfo ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.vcf \
+perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar ${SNPSIFT}/SnpSift.jar rmInfo ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.vcf \
     SEURAT_DNA_ALT_ALLELE_FORWARD_FRACTION \
     SEURAT_DNA_ALT_ALLELE_FORWARD \
     SEURAT_DNA_ALT_ALLELE_REVERSE_FRACTION \
@@ -169,7 +169,7 @@ echo "..."
 #then
 if [ "${ASSAYID}" == "Exome" ] ; then
 
-    perf stat cat ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.vcf | java -jar ${SNPSIFT}/SnpSift.jar intervals ${BEDFILE} > ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.vcf 2> ${MERGERDIR}/${SEURAT_BASENAME}.vcftargetRegions.perfOut
+    perf stat cat ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.vcf | /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar ${SNPSIFT}/SnpSift.jar intervals ${BEDFILE} > ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.vcf 2> ${MERGERDIR}/${SEURAT_BASENAME}.vcftargetRegions.perfOut
     if [ $? -ne 0 ] ; then
                 echo "### vcf merger failed filtering to target regions"
             mv ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerInQueue ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerFail
@@ -182,7 +182,7 @@ fi
 
 #elif [ "${EXOME_TYPE}" == "S5U" ]
 #then
-#    cat ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.vcf | java -jar ${SNPSIFT} intervals ${S5U_BED} > ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.vcf
+#    cat ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.vcf | /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar ${SNPSIFT} intervals ${S5U_BED} > ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.vcf
 #fi
 
 echo "Finished Filtering Calls to Targets"
@@ -193,7 +193,7 @@ echo "..."
 #Cleanup VCF for testing to remove seurat indels
 #grep -v "SEURAT_TYPE=somatic_deletion" ${SEURAT_BASENAME}.merge.sort.clean.f2t.vcf | grep -v "SEURAT_TYPE=somatic_insertion" > ${SEURAT_BASENAME}.merge.sort.clean.f2t2.vcf
 
-perf stat java -Xmx24g -jar ${GATK}/GenomeAnalysisTK.jar -R ${REF} \
+perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx24g -jar ${GATK}/GenomeAnalysisTK.jar -R ${REF} \
     -T VariantAnnotator \
     -nt 4 \
     -o ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.vcf \
@@ -217,7 +217,7 @@ if [ -z "${RNABAM}" ] ; then
     echo "allele count was not requested for this pair"
 #    cat ${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.vcf > ${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.rna.vcf
     ## add dbNSFP annotaions
-    perf stat java -jar ${SNPSIFT}/SnpSift.jar dbnsfp \
+    perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar ${SNPSIFT}/SnpSift.jar dbnsfp \
         -v ${DBNSFP} \
         -a \
         -f Interpro_domain,Polyphen2_HVAR_pred,GERP++_NR,GERP++_RS,LRT_score,MutationTaster_score,MutationAssessor_score,FATHMM_score,Polyphen2_HVAR_score,SIFT_score,Polyphen2_HDIV_score \
@@ -229,8 +229,8 @@ if [ -z "${RNABAM}" ] ; then
         fi
 
     # add snpEFF annotations
-    java -Xmx4G -jar ${SNPEFFPATH}/snpEff.jar -canon -c ${SNPEFFPATH}/snpEff.config -v -noLog -lof ${DBVERSION} ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.vcf > ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.se74lofcan.vcf
-    java -Xmx4G -jar ${SNPEFFPATH}/snpEff.jar -c ${SNPEFFPATH}/snpEff.config -v -noLog -lof ${DBVERSION} ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.vcf > ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.se74lof.vcf
+    /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx4G -jar ${SNPEFFPATH}/snpEff.jar -canon -c ${SNPEFFPATH}/snpEff.config -v -noLog -lof ${DBVERSION} ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.vcf > ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.se74lofcan.vcf
+    /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx4G -jar ${SNPEFFPATH}/snpEff.jar -c ${SNPEFFPATH}/snpEff.config -v -noLog -lof ${DBVERSION} ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.vcf > ${MERGERDIR}/${SEURAT_BASENAME}.merge.sort.clean.f2t.ann.dbnsfp.se74lof.vcf
         if [ $? -ne 0 ] ; then
                 echo "### vcf merger failed at snpEff annotation stage"
                 mv ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerInQueue ${MERGERDIR}/${SEURAT_BASENAME}.vcfMergerFail

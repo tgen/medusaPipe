@@ -15,9 +15,9 @@ echo "### PICARDPATH: ${PICARDPATH}"
 
 cd ${DIR}
 echo "### Starting picard gc bias metrics"
-#perf stat java -Xmx15g -jar ${PICARDPATH}/CollectAlignmentSummaryMetrics.jar \
+#perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx15g -jar ${PICARDPATH}/CollectAlignmentSummaryMetrics.jar \
     #OUTPUT=${BAMFILE}.picGcBiasMetrics \
-perf stat java -Xmx15g -jar ${PICARDPATH}/CollectGcBiasMetrics.jar \
+perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx15g -jar ${PICARDPATH}/CollectGcBiasMetrics.jar \
     REFERENCE_SEQUENCE=${REF} \
     INPUT=${BAMFILE} \
     OUTPUT=${BAMFILE}.picGcBiasMetrics \

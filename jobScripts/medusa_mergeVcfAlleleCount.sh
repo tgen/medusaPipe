@@ -162,7 +162,7 @@ echo "Finished Creating RNA Pileup"
 # Tabulate pileup with varscan - using VERY minimal criteria
 echo "Calculate RNA genotypes"
 echo ...
-perf stat java -jar ${VARSCAN}/VarScan.v2.3.7.jar mpileup2cns ${MERGERDIR}/${BASENAME}.RNA.pileup \
+perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar ${VARSCAN}/VarScan.v2.3.7.jar mpileup2cns ${MERGERDIR}/${BASENAME}.RNA.pileup \
     --min-coverage 1 \
     --min-reads2 1 \
     --min-var-freq 0.02 \
@@ -182,7 +182,7 @@ cd $MERGERDIR
 cp ${MERGERDIR}/${BASENAME}.RNA.calls.varscan.vcf varscan.vcf
 
 # Convert the VCF to at table
-perf stat java -jar ${SNPSIFT}/SnpSift.jar extractFields varscan.vcf CHROM POS REF ALT GEN[0].SDP GEN[0].RD GEN[0].AD > ${MERGERDIR}/${BASENAME}.RNA.calls.varscan.pre.table 2> ${MERGERDIR}/${BASENAME}.RNA.calls.varscan.table.perfOut
+perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar ${SNPSIFT}/SnpSift.jar extractFields varscan.vcf CHROM POS REF ALT GEN[0].SDP GEN[0].RD GEN[0].AD > ${MERGERDIR}/${BASENAME}.RNA.calls.varscan.pre.table 2> ${MERGERDIR}/${BASENAME}.RNA.calls.varscan.table.perfOut
 if [ $? -ne 0 ] ; then
         echo "### vcf merger allele count failed at converting to a table stage"
         mv ${MERGERDIR}/${BASENAME}.vcfMergerACInQueue ${MERGERDIR}/${BASENAME}.vcfMergerACFail
@@ -304,7 +304,7 @@ if [ $? -ne 0 ] ; then
 fi
 
 # add RNA values to merged calls
-java -jar ${SNPSIFT}/SnpSift.jar annotate ${MERGERDIR}/${BASENAME}.RNA.calls.sorted.vcf ${MERGERDIR}/${BASENAME}.merge.sort.clean.f2t.ann.vcf > ${MERGERDIR}/${BASENAME}.merge.sort.clean.f2t.ann.rna.vcf
+/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar ${SNPSIFT}/SnpSift.jar annotate ${MERGERDIR}/${BASENAME}.RNA.calls.sorted.vcf ${MERGERDIR}/${BASENAME}.merge.sort.clean.f2t.ann.vcf > ${MERGERDIR}/${BASENAME}.merge.sort.clean.f2t.ann.rna.vcf
 if [ $? -ne 0 ] ; then
         echo "### vcf merger allele count failed at add RNA values stage"
         mv ${MERGERDIR}/${BASENAME}.vcfMergerACInQueue ${MERGERDIR}/${BASENAME}.vcfMergerACFail
@@ -320,7 +320,7 @@ echo "Finished Adding RNA Calls to VCF"
 #
 ## add dbNSFP annotaions
 
- perf stat java -jar ${SNPSIFT}/SnpSift.jar dbnsfp \
+ perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar ${SNPSIFT}/SnpSift.jar dbnsfp \
                 -v ${DBNSFP} \
                 -a \
                 -f Interpro_domain,Polyphen2_HVAR_pred,GERP++_NR,GERP++_RS,LRT_score,MutationTaster_score,MutationAssessor_score,FATHMM_score,Polyphen2_HVAR_score,SIFT_score,Polyphen2_HDIV_score \
@@ -332,8 +332,8 @@ echo "Finished Adding RNA Calls to VCF"
         fi
 
 # add snpEFF annotations
-java -Xmx4G -jar ${SNPEFFPATH}/snpEff.jar -canon -c ${SNPEFFPATH}/snpEff.config -v -noLog -lof ${DBVERSION} ${MERGERDIR}/${BASENAME}.merge.sort.clean.f2t.ann.rna.dbnsfp.vcf > ${MERGERDIR}/${BASENAME}.merge.sort.clean.f2t.ann.rna.dbnsfp.se74lofcan.vcf
-java -Xmx4G -jar ${SNPEFFPATH}/snpEff.jar -c ${SNPEFFPATH}/snpEff.config -v -noLog -lof ${DBVERSION} ${MERGERDIR}/${BASENAME}.merge.sort.clean.f2t.ann.rna.dbnsfp.vcf > ${MERGERDIR}/${BASENAME}.merge.sort.clean.f2t.ann.rna.dbnsfp.se74lof.vcf
+/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx4G -jar ${SNPEFFPATH}/snpEff.jar -canon -c ${SNPEFFPATH}/snpEff.config -v -noLog -lof ${DBVERSION} ${MERGERDIR}/${BASENAME}.merge.sort.clean.f2t.ann.rna.dbnsfp.vcf > ${MERGERDIR}/${BASENAME}.merge.sort.clean.f2t.ann.rna.dbnsfp.se74lofcan.vcf
+/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx4G -jar ${SNPEFFPATH}/snpEff.jar -c ${SNPEFFPATH}/snpEff.config -v -noLog -lof ${DBVERSION} ${MERGERDIR}/${BASENAME}.merge.sort.clean.f2t.ann.rna.dbnsfp.vcf > ${MERGERDIR}/${BASENAME}.merge.sort.clean.f2t.ann.rna.dbnsfp.se74lof.vcf
 if [ $? -ne 0 ] ; then
 echo "### vcf merger failed at snpEff annotation stage"
 mv ${MERGERDIR}/${BASENAME}.vcfMergerACInQueue ${MERGERDIR}/${BASENAME}.vcfMergerACFail

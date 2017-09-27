@@ -31,7 +31,7 @@ cd ${WORKDIR}
     echo "### Step 1, target creator..."
     test=0
     if [ $test -eq 0 ] ; then
-    perf stat java -Xmx15g -Djava.io.tmpdir=${TMPDIR} \
+    perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx15g -Djava.io.tmpdir=${TMPDIR} \
         -jar ${GATKPATH}/GenomeAnalysisTK.jar \
         ${BAMLIST} \
         -R ${REF} \
@@ -50,7 +50,7 @@ cd ${WORKDIR}
     fi
 #fi
     echo "### Starting step 2, indel realignment"
-    perf stat java -Xmx42g -Djava.io.tmpdir=${TMPDIR} \
+    perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx42g -Djava.io.tmpdir=${TMPDIR} \
         -jar ${GATKPATH}/GenomeAnalysisTK.jar \
         -T IndelRealigner \
         ${BAMLIST} \

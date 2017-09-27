@@ -23,7 +23,7 @@ outName=${BAM/.bam}
 
 echo "### Starting snp sniffer on ${BAM}"
 echo "### Starting -genotype step"
-perf stat java -jar ${SNPSNIFFERPATH}/snpSnifferV5.jar -genotype ${REF} ${BAM} 2> ${BAM}.snpSniffGen.perfOut
+perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar ${SNPSNIFFERPATH}/snpSnifferV5.jar -genotype ${REF} ${BAM} 2> ${BAM}.snpSniffGen.perfOut
 if [ $? -eq 0 ] ; then
     touch ${BAM}.snpSniffPass
     mv ${outName}_flt.vcf ${OUTVCF}
@@ -34,7 +34,7 @@ else
 fi
 echo "### Ending -genotype step"
 #echo "### Starting -add step"
-#perf stat java -jar ${SNPSNIFFERPATH}/snpSnifferV5.jar -add $vcf $dbIni 2> ${BAM}.snpSniffAdd.perfOut
+#perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar ${SNPSNIFFERPATH}/snpSnifferV5.jar -add $vcf $dbIni 2> ${BAM}.snpSniffAdd.perfOut
 #if [ $? -ne 0 ] ; then
 #    echo "### Snp sniffer failed at add stage"
 #    touch ${BAM}.snpSniffFail

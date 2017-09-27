@@ -123,8 +123,8 @@ echo "### Bam size: $bsize"
 echo "### Getting insert size metrics with picard"
 module load R/2.14.1
 statsOutName=${tempBamPrefix/.proj}
-java -jar ${PICARDPATH}/CollectInsertSizeMetrics.jar INPUT=$tempBamPrefix.bam OUTPUT=$statsOutName.bwa.transcriptome.picInsertMetrics.txt HISTOGRAM_FILE=$statsOutName.bwa.transcriptome.picInsertMetrics.pdf VALIDATION_STRINGENCY=SILENT TMP_DIR=${DIR} LEVEL=ALL_READS 2>&1
-#java -jar ${PICARDPATH}/CollectInsertSizeMetrics.jar INPUT=$tempBamPrefix.bam OUTPUT=$tempBamPrefix.bam.picInsertMetrics.txt HISTOGRAM_FILE=$tempBamPrefix.bam.picInsertMetrics.pdf VALIDATION_STRINGENCY=SILENT TMP_DIR=${DIR} LEVEL=ALL_READS 2>&1
+/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar ${PICARDPATH}/CollectInsertSizeMetrics.jar INPUT=$tempBamPrefix.bam OUTPUT=$statsOutName.bwa.transcriptome.picInsertMetrics.txt HISTOGRAM_FILE=$statsOutName.bwa.transcriptome.picInsertMetrics.pdf VALIDATION_STRINGENCY=SILENT TMP_DIR=${DIR} LEVEL=ALL_READS 2>&1
+#/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar ${PICARDPATH}/CollectInsertSizeMetrics.jar INPUT=$tempBamPrefix.bam OUTPUT=$tempBamPrefix.bam.picInsertMetrics.txt HISTOGRAM_FILE=$tempBamPrefix.bam.picInsertMetrics.pdf VALIDATION_STRINGENCY=SILENT TMP_DIR=${DIR} LEVEL=ALL_READS 2>&1
 echo "### End of getting insert size section"
 #
 echo "### Calculating combined read length"

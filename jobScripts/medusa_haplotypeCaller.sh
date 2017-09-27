@@ -20,7 +20,7 @@ echo "### KNOWN: ${KNOWN}"
 echo "### BAMLIST: ${BAMLIST}"
 
 echo "### Haplotype caller started for multiple bams at $time."
-perf stat java -Djava.io.tmpdir=${TMPDIR} -jar -Xmx32g ${GATKPATH}/GenomeAnalysisTK.jar \
+perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Djava.io.tmpdir=${TMPDIR} -jar -Xmx32g ${GATKPATH}/GenomeAnalysisTK.jar \
 -l INFO \
 -R ${REF} \
 -L ${CHRLIST}/Step${STEP}.list \
@@ -54,8 +54,8 @@ if [ ${PROGRESS} -eq ${STEPCOUNT} ]
 then
     echo HapCaller_${STEP}.Done
     #Concatenate VCF with GATK
-     java -cp ${GATKPATH}/GenomeAnalysisTK.jar org.broadinstitute.sting.tools.CatVariants -R ${REF} $vcfList -out ${TRK}.HC_All.vcf -assumeSorted
-    #java -cp ${GATKPATH}/GenomeAnalysisTK.jar org.broadinstitute.sting.tools.CatVariants \
+     /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -cp ${GATKPATH}/GenomeAnalysisTK.jar org.broadinstitute.sting.tools.CatVariants -R ${REF} $vcfList -out ${TRK}.HC_All.vcf -assumeSorted
+    #/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -cp ${GATKPATH}/GenomeAnalysisTK.jar org.broadinstitute.sting.tools.CatVariants \
     #    -R ${REF} \
     #    -V ${TRK}_Step1.HC.vcf \
     #    -V ${TRK}_Step2.HC.vcf \

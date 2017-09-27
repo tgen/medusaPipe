@@ -31,7 +31,7 @@ do
     echo "### Starting indel realigning of file ${BAMLIST}"
     intervals=${INTS/.intervals/.chr$thisChr.intervals}
     echo "### Step 1, target creator..."
-    perf stat java -Xmx2g -Djava.io.tmpdir=${TMPDIR} \
+    perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx2g -Djava.io.tmpdir=${TMPDIR} \
         -jar ${GATKPATH}/GenomeAnalysisTK.jar \
         ${BAMLIST} \
         -R ${REF} \
@@ -59,7 +59,7 @@ do
     echo "### This is chr $thisChr, from group ${GRPNAME}, loop index is $i" >> ${TRK}.jointIROut.chr$thisChr
     echo "### Starting indel realigning of file ${BAMLIST}"
     echo "### Starting step 2, indel realignment"
-    perf stat java -Xmx16g -Djava.io.tmpdir=${TMPDIR} \
+    perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx16g -Djava.io.tmpdir=${TMPDIR} \
         -jar ${GATKPATH}/GenomeAnalysisTK.jar \
         -T IndelRealigner \
         ${BAMLIST} \

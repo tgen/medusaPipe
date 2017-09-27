@@ -15,9 +15,9 @@ echo "### PICARDPATH: ${PICARDPATH}"
 
 cd ${DIR}
 echo "### Starting picard multi metrics"
-#perf stat java -Xmx15g -jar ${PICARDPATH}/CollectAlignmentSummaryMetrics.jar \
+#perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx15g -jar ${PICARDPATH}/CollectAlignmentSummaryMetrics.jar \
     #OUTPUT=${BAMFILE}.picMultiMetrics \
-perf stat java -Djava.io.tmpdir=${TMPDIR} -Xmx15g -jar ${PICARDPATH}/CollectMultipleMetrics.jar \
+perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Djava.io.tmpdir=${TMPDIR} -Xmx15g -jar ${PICARDPATH}/CollectMultipleMetrics.jar \
     INPUT=${BAMFILE} \
     REFERENCE_SEQUENCE=${REF} \
     PROGRAM=CollectInsertSizeMetrics \

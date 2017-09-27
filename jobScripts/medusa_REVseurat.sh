@@ -22,7 +22,7 @@ echo "### GATKPATH: ${GATKPATH}"
 echo "### SEURATPATH: ${SEURATPATH}"
 
 echo "### Seurat caller started for bams at $time."
-perf stat java -Djava.io.tmpdir=${TMPDIR} -jar -Xmx8g ${SEURATPATH}/Seurat.jar \
+perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Djava.io.tmpdir=${TMPDIR} -jar -Xmx8g ${SEURATPATH}/Seurat.jar \
 -T Seurat \
 -l INFO \
 -R ${REF} \
@@ -70,8 +70,8 @@ if [ ${PROGRESS} -eq ${STEPCOUNT} ]
 then
     echo SeuratCaller_${STEP}.Done
     #Concatenate VCF with GATK
-     java -cp ${GATKPATH}/GenomeAnalysisTK.jar org.broadinstitute.sting.tools.CatVariants -R ${REF} $vcfList -out ${TRK}.REVseurat.vcf -assumeSorted
-     #java -cp ${GATKPATH}/GenomeAnalysisTK.jar org.broadinstitute.sting.tools.CatVariants \
+     /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -cp ${GATKPATH}/GenomeAnalysisTK.jar org.broadinstitute.sting.tools.CatVariants -R ${REF} $vcfList -out ${TRK}.REVseurat.vcf -assumeSorted
+     #/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -cp ${GATKPATH}/GenomeAnalysisTK.jar org.broadinstitute.sting.tools.CatVariants \
     #    -R ${REF} \
     #    -V ${TRK}_Step1.Seurat.vcf \
     #    -V ${TRK}_Step2.Seurat.vcf \

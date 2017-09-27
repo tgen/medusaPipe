@@ -22,7 +22,7 @@ snpEffTxt=${OUT/.vcf/.snpEff.txt}
 summaryOut=${OUT/.vcf/.snpEff.summary_html}
     ##-hgvs \
     ##-hgvs \
-java -Xmx6g -jar ${SNPEFFPATH}/snpEff.jar eff \
+/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx6g -jar ${SNPEFFPATH}/snpEff.jar eff \
     -v \
     -i vcf \
     -o txt \
@@ -31,7 +31,7 @@ java -Xmx6g -jar ${SNPEFFPATH}/snpEff.jar eff \
     -c ${SNPEFFPATH}/snpEff.config \
     ${DBVERSION} \
     ${VCF} > $snpEffTxt
-java -Xmx6g -jar ${SNPEFFPATH}/snpEff.jar eff \
+/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx6g -jar ${SNPEFFPATH}/snpEff.jar eff \
     -v \
     -i vcf \
     -o vcf \
@@ -46,7 +46,7 @@ if [ $? -ne 0 ] ; then
 else
     echo "snpEff first part complete." >> ${VCF}.snpEffOut
     echo "snpEff second part (snpSift) starting." >> ${VCF}.snpEffOut
-    java -Xmx6g -jar ${SNPEFFPATH}/SnpSift.jar annotate \
+    /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx6g -jar ${SNPEFFPATH}/SnpSift.jar annotate \
     ${DBSNP} \
     $snpEffInt > $snpEffOut
     if [ $? -eq 0 ] ; then

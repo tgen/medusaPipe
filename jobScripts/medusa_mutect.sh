@@ -23,7 +23,7 @@ echo "### TUMOR: ${TUMOR}"
 echo "### NORMAL: ${NORMAL}"
 echo "### MUTECTPATH: ${MUTECTPATH}"
 
-/usr/lib/jvm/java-1.6.0/bin/java -Djava.io.tmpdir=${TMPDIR} -Xmx4G -jar ${MUTECTPATH}/muTect-1.1.4.jar \
+/usr/lib/jvm/java-1.6.0/bin/java  -Djava.io.tmpdir=${TMPDIR} -Xmx4G -jar ${MUTECTPATH}/muTect-1.1.4.jar \
     --analysis_type MuTect \
     --reference_sequence ${REF} \
     --intervals ${CHRLIST}/Step${STEP}.list \
@@ -68,8 +68,8 @@ if [ ${PROGRESS} -eq ${STEPCOUNT} ]
 then
     echo MuTect_${STEP}.Done
     #Concatenate VCF with GATK
-    java -cp ${GATKPATH}/GenomeAnalysisTK.jar org.broadinstitute.sting.tools.CatVariants -R ${REF} $vcfList -out ${OUTPUT}_MuTect_All.vcf -assumeSorted
-    #java -cp ${GATKPATH}/GenomeAnalysisTK.jar org.broadinstitute.sting.tools.CatVariants \
+    /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -cp ${GATKPATH}/GenomeAnalysisTK.jar org.broadinstitute.sting.tools.CatVariants -R ${REF} $vcfList -out ${OUTPUT}_MuTect_All.vcf -assumeSorted
+    #/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -cp ${GATKPATH}/GenomeAnalysisTK.jar org.broadinstitute.sting.tools.CatVariants \
     #    -R ${REF} \
     #    -V ${OUTPUT}_Step1_MuTect.vcf \
     #    -V ${OUTPUT}_Step2_MuTect.vcf \

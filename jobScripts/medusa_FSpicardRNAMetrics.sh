@@ -15,7 +15,7 @@ echo "### BAMFILE: ${BAMFILE}"
 echo "### PICARDPATH: ${PICARDPATH}"
 
 echo "### Starting first stranded picard rna metrics"
-perf stat java -Xmx15g -Djava.io.tmpdir=${TMPDIR} -jar ${PICARDPATH}/CollectRnaSeqMetrics.jar \
+perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx15g -Djava.io.tmpdir=${TMPDIR} -jar ${PICARDPATH}/CollectRnaSeqMetrics.jar \
     REF_FLAT=${REFFLAT} \
     REFERENCE_SEQUENCE=${REF} \
     RIBOSOMAL_INTERVALS=${RIBINTS} \

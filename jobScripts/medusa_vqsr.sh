@@ -46,7 +46,7 @@ echo "### Dynamically set maxGaussian to $maxGaussian and percent bad variant to
 
 #--percentBadVariants $badVariant \
 #--maxGaussians $maxGaussian \
-perf stat java -jar -Xmx4g ${GATKPATH}/GenomeAnalysisTK.jar \
+perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar -Xmx4g ${GATKPATH}/GenomeAnalysisTK.jar \
 -R ${REF} \
 -T VariantRecalibrator \
 -input ${VCF} \
@@ -64,7 +64,7 @@ if [ $? -ne 0 ] ; then
     rm -f ${VCF}.vqsrInQueue
     exit 1
 fi
-perf stat java -jar -Xmx4g ${GATKPATH}/GenomeAnalysisTK.jar \
+perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar -Xmx4g ${GATKPATH}/GenomeAnalysisTK.jar \
 -R ${REF} \
 -T ApplyRecalibration \
 --ts_filter_level 99.0 \

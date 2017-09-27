@@ -17,7 +17,7 @@ echo "### TARGETS: ${TARGETS}"
 
 cd ${DIR}
 echo "### Starting picard rna metrics"
-perf stat java -Xmx15g -jar ${PICARDPATH}/CalculateHsMetrics.jar \
+perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx15g -jar ${PICARDPATH}/CalculateHsMetrics.jar \
     REFERENCE_SEQUENCE=${REF} \
     BAIT_INTERVALS=${BAITS} \
     TARGET_INTERVALS=${TARGETS} \

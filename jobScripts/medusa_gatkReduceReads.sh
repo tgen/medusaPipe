@@ -16,7 +16,7 @@ echo "### GATKPATH: ${GATKPATH}"
 echo "### BAMFILE: ${BAMFILE}"
 
 echo "### Reduce reads started for bams at $time."
-perf stat java -Djava.io.tmpdir=${TMPDIR} -jar -Xmx32g ${GATKPATH}/GenomeAnalysisTK.jar \
+perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Djava.io.tmpdir=${TMPDIR} -jar -Xmx32g ${GATKPATH}/GenomeAnalysisTK.jar \
 -R ${REF} \
 -T ReduceReads \
 -I ${BAMFILE} \

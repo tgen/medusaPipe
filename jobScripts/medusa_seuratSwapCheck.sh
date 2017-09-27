@@ -29,10 +29,10 @@ if [ $ASSAY == "Exome" ] ; then
     $cleanFile="$1.clean.vcf";
     $snpeffFile="$1.clean.snpeff.vcf";
     $finalFile="$1.snpeff.final.vcf";
-    $run=`java -jar $snpEffPath/SnpSift.jar rmInfo $file EFF > $cleanFile`;
-     print "Command Run: java -jar $snpEffPath/SnpSift.jar rmInfo $file EFF to $cleanFile\n";
-    $run=`java -Xmx4G -jar $snpEffPath/snpEff.jar -c $snpEffPath/snpEff.config -no-downstream  -no-intergenic -no-intron -no-upstream -canon -hgvs GRCh37.74 -o vcf $cleanFile > $snpeffFile`;
-    $run=`cat $snpeffFile | java -jar $snpEffPath/SnpSift.jar filter "(AR2 > 0.05 ) & (AR1 < 0.02) & (DP2 > $threshold) & (DP1 > $threshold) & (QUAL > 15) & (FILTER = 'PASS')" | java -jar $snpEffPath/SnpSift.jar intervals $intervals | java -jar $snpEffPath/SnpSift.jar filter "EFF[*].BIOTYPE = 'protein_coding'" > $finalFile`;
+    $run=`/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar $snpEffPath/SnpSift.jar rmInfo $file EFF > $cleanFile`;
+     print "Command Run: /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar $snpEffPath/SnpSift.jar rmInfo $file EFF to $cleanFile\n";
+    $run=`/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx4G -jar $snpEffPath/snpEff.jar -c $snpEffPath/snpEff.config -no-downstream  -no-intergenic -no-intron -no-upstream -canon -hgvs GRCh37.74 -o vcf $cleanFile > $snpeffFile`;
+    $run=`cat $snpeffFile | /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar $snpEffPath/SnpSift.jar filter "(AR2 > 0.05 ) & (AR1 < 0.02) & (DP2 > $threshold) & (DP1 > $threshold) & (QUAL > 15) & (FILTER = 'PASS')" | /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar $snpEffPath/SnpSift.jar intervals $intervals | /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar $snpEffPath/SnpSift.jar filter "EFF[*].BIOTYPE = 'protein_coding'" > $finalFile`;
     $run=`rm $cleanFile`;
     $run=`rm $snpeffFile`;
        
@@ -40,8 +40,8 @@ elif [ $ASSAY == "Genome" ] ; then
     $cleanFile="$1.clean.vcf";
     $snpeffFile="$1.clean.snpeff.vcf";
     $finalFile="$1.snpeff.final.vcf";
-    $run=`java -jar $snpEffPath/SnpSift.jar rmInfo $file EFF > $cleanFile`;
-    $run=`java -Xmx4G -jar $snpEffPath/snpEff.jar -c $snpEffPath/snpEff.config -no-downstream  -no-intergenic -no-intron -no-upstream -canon -hgvs GRCh37.74 -o vcf $cleanFile > $snpeffFile`;
+    $run=`/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar $snpEffPath/SnpSift.jar rmInfo $file EFF > $cleanFile`;
+    $run=`/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx4G -jar $snpEffPath/snpEff.jar -c $snpEffPath/snpEff.config -no-downstream  -no-intergenic -no-intron -no-upstream -canon -hgvs GRCh37.74 -o vcf $cleanFile > $snpeffFile`;
     $run = `mv  $snpeffFile $finalFile`;
     $run=`rm $cleanFile`;
     $run=`rm $snpeffFile`;
@@ -56,7 +56,7 @@ snpEffTxt=${OUT/.vcf/.snpEff.txt}
 summaryOut=${OUT/.vcf/.snpEff.summary_html}
     ##-hgvs \
     ##-hgvs \
-java -Xmx6g -jar ${SNPEFFPATH}/snpEff.jar eff \
+/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx6g -jar ${SNPEFFPATH}/snpEff.jar eff \
     -v \
     -i vcf \
     -o txt \
@@ -64,7 +64,7 @@ java -Xmx6g -jar ${SNPEFFPATH}/snpEff.jar eff \
     -c ${SNPEFFPATH}/snpEff.config \
     ${DBVERSION} \
     ${VCF} > $snpEffTxt
-java -Xmx6g -jar ${SNPEFFPATH}/snpEff.jar eff \
+/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx6g -jar ${SNPEFFPATH}/snpEff.jar eff \
     -v \
     -i vcf \
     -o vcf \
@@ -78,7 +78,7 @@ if [ $? -ne 0 ] ; then
 else
     echo "snpEff first part complete." >> ${VCF}.snpEffOut
     echo "snpEff second part (snpSift) starting." >> ${VCF}.snpEffOut
-    java -Xmx6g -jar ${SNPEFFPATH}/SnpSift.jar annotate \
+    /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx6g -jar ${SNPEFFPATH}/SnpSift.jar annotate \
     ${DBSNP} \
     $snpEffInt > $snpEffOut
     if [ $? -eq 0 ] ; then

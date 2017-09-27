@@ -14,7 +14,7 @@ echo "### SUMSTATSPATH: ${SUMSTATSPATH}"
 echo "### NXT1: ${NXT1}"
 
 echo "Summary stats starting for ${RUNDIR} at $time."
-perf stat java -jar ${SUMSTATSPATH}/parseDirforStats_JK.jar ${RUNDIR} ${SUMSTATSPATH}/Stats_v3.txt ${SUMSTATSPATH}/TGENAssayCodes.txt > ${RUNDIR}/summaryStatsOut 2> ${RUNDIR}/summaryStat.perfOut
+perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -jar ${SUMSTATSPATH}/parseDirforStats_JK.jar ${RUNDIR} ${SUMSTATSPATH}/Stats_v3.txt ${SUMSTATSPATH}/TGENAssayCodes.txt > ${RUNDIR}/summaryStatsOut 2> ${RUNDIR}/summaryStat.perfOut
 if [ $? -eq 0 ] ; then
     mv ${RUNDIR}/summaryStatsOut ${RUNDIR}/summaryStatsPass
     touch ${RUNDIR}/${NXT1}

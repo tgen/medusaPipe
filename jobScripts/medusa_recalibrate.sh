@@ -15,7 +15,7 @@ echo "### GATK: ${GATKPATH}"
 echo "### KNOWN: ${KNOWN}"
 echo "gatk base recalibration started on $machine"
 
-perf stat java -Xmx44g -jar ${GATKPATH}/GenomeAnalysisTK.jar \
+perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx44g -jar ${GATKPATH}/GenomeAnalysisTK.jar \
         -T BaseRecalibrator \
         -nct 8 \
         -l INFO \
@@ -35,7 +35,7 @@ if [ $? -ne 0 ] ; then
     exit 1
 fi
 echo "gatk base recalibration print reads stage started"
-perf stat java -Xmx44g -jar ${GATKPATH}/GenomeAnalysisTK.jar \
+perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx44g -jar ${GATKPATH}/GenomeAnalysisTK.jar \
         -l INFO \
         -nct 8 \
         -R ${REF} \
