@@ -112,7 +112,7 @@ do
         continue
     fi
     echo "### Submitting $usableName to queue for joint Uni Gen on Reduced Bams..."
-    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,GATKPATH=$gatkPath,TRK=$trackName,KNOWN=$snps,BAMLIST="'$sampleList'",REF=$ref,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_unifiedGenotyper.sh
+    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,GATKPATH=$gatkPath,TRK=$trackName,KNOWN=$snps,BAMLIST="$sampleList",REF=$ref,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_unifiedGenotyper.sh
     if [ $? -eq 0 ] ; then
         touch $trackName.ugInQueue
     else
@@ -120,48 +120,7 @@ do
     fi
     sleep 2
 done
-#for sampleLine in `cat $configFile | grep ^SAMPLE=`
-#do
-#    echo "sample is $sampleLine"
-#    kitName=`echo $sampleLine | cut -d= -f2 | cut -d, -f1`
-#    samName=`echo $sampleLine | cut -d= -f2 | cut -d, -f2`
-#    assayID=`echo $sampleLine | cut -d= -f2 | cut -d, -f3`
-#    libraID=`echo $sampleLine | cut -d= -f2 | cut -d, -f4`
-#    echo "### What I have: Kit: $kitName, sample: $samName, assay: $assayID, libraID: $libraID"
-#    if [ "$assayID" != "RNA" ] ; then
-#        echo "### Assay ID is $assayID. Must be genome or exome."
-#        pcDir=$runDir/$kitName/$samName
-#        inBam=$runDir/$kitName/$samName/$samName.proj.bam
-#        mdBam=$runDir/$kitName/$samName/$samName.proj.md.bam
-#        jrBam=$runDir/$kitName/$samName/$samName.proj.md.jr.bam
-#        jrRequested=`cat $configFile | grep '^DNAPAIR=\|^DNAFAMI=' | grep $samName | wc -l`
-#        if [ $jrRequested -gt 0 ] ; then
-#            echo "### Uni Gen on Reduced Bams will not operate on a single bam because Joint IR is requested for $samName"
-#        else
-#            echo "### Uni Gen on Reduced Bams will run on single bam because Joint IR is NOT requested for $samName"
-#            if [[ ! -e $inBam.mdPass || ! -e $mdBam ]] ; then
-#                echo "### Either mdPass or the bam itself is missing for $mdBam"
-#                ((qsubFails++))
-#            else
-#                if [[ -e $mdBam.ugPass || -e $mdBam.ugInQueue || -e $mdBam.ugFail ]] ; then
-#                    echo "### Uni Gen on Reduced Bams already passed, in queue, or failed for $mdBam"
-#                else
-#                    echo "### Submitting for single bam Uni Gen on Reduced Bams: $mdBam"
-#                    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,GATKPATH=$gatkPath,TRK=$mdBam,KNOWN=$snps,BAMLIST=$mdBam,REF=$ref,NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_unifiedGenotyperSingle.sh
-#                    if [ $? -eq 0 ] ; then
-#                        touch $mdBam.ugInQueue
-#                    else
-#                        ((qsubFails++))
-#                    fi
-#                    sleep 2
-#                fi
-#            fi
-#        fi
-#    else
-#        echo "### Assay ID is $assayID. Must be RNA."
-#        #code for calling AS metrics on tophat bams here
-#    fi
-#done
+
 if [ $qsubFails -eq 0 ] ; then
 #all jobs submitted succesffully, remove this dir from messages
     echo "### I should remove $thisStep from $runDir."

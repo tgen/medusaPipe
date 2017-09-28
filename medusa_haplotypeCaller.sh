@@ -127,24 +127,14 @@ do
             continue
         fi
 
-        #if [[ $recipe == "choc01"  ]] ; then
-                 #       echo Starting Haplotype caller Step${STEP}
-                  #      sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,GATKPATH=$gatkPath,STEPCOUNT=$STEP_COUNT,TRK=$trackName,KNOWN=$snps,BAMLIST="'$sampleList'",TRK=$trackName,CHRLIST=$chrList,REF=$ref,STEP="chr${STEP}",NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_haplotypeCaller.sh
-                   #     if [ $? -eq 0 ] ; then
-                    #            touch ${trackName}_Step${STEP}.hcInQueue
-                     #   else
-                      #          ((qsubFails++))
-                       # fi
+        echo Starting Haplotype caller Step${STEP}
+        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,GATKPATH=$gatkPath,STEPCOUNT=$STEP_COUNT,TRK=$trackName,KNOWN=$snps,BAMLIST="$sampleList",TRK=$trackName,CHRLIST=$chrList,REF=$ref,STEP=${STEP},NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_haplotypeCaller.sh
+        if [ $? -eq 0 ] ; then
+            touch ${trackName}_Step${STEP}.hcInQueue
+        else
+            ((qsubFails++))
+        fi
 
-        #else
-            echo Starting Haplotype caller Step${STEP}
-            sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,GATKPATH=$gatkPath,STEPCOUNT=$STEP_COUNT,TRK=$trackName,KNOWN=$snps,BAMLIST="'$sampleList'",TRK=$trackName,CHRLIST=$chrList,REF=$ref,STEP=${STEP},NXT1=$nxtStep1,RUNDIR=$runDir,D=$d $pbsHome/medusa_haplotypeCaller.sh
-            if [ $? -eq 0 ] ; then
-                touch ${trackName}_Step${STEP}.hcInQueue
-            else
-                ((qsubFails++))
-            fi
-        #fi
         sleep 2
     done
 done
