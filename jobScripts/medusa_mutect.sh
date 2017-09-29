@@ -24,7 +24,7 @@ echo "### NORMAL: ${NORMAL}"
 echo "### MUTECTPATH: ${MUTECTPATH}"
 
 echo "Full command:"
-echo "/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Djava.io.tmpdir=${TMPDIR} -Xmx4G -jar ${MUTECTPATH}/muTect-1.1.4.jar \
+echo "/home/tgenref/pecan/bin/java/jdk1.6.0_45/bin/java -Djava.io.tmpdir=${TMPDIR} -Xmx4G -jar ${MUTECTPATH}/muTect-1.1.4.jar \
     --analysis_type MuTect \
     --reference_sequence ${REF} \
     --intervals ${CHRLIST}/Step${STEP}.list \
@@ -48,7 +48,7 @@ echo "/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -
     --normal_depth_file ${OUTPUT}_Step${STEP}_MuTect_NormalDepth.wig \
     --vcf ${OUTPUT}_Step${STEP}_MuTect.vcf > ${OUTPUT}_Step${STEP}.mutectOut 2> ${OUTPUT}_Step${STEP}.mutect.perfOut"
 
- /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Djava.io.tmpdir=${TMPDIR} -Xmx4G -jar ${MUTECTPATH}/muTect-1.1.4.jar \
+/home/tgenref/pecan/bin/java/jdk1.6.0_45/bin/java -Djava.io.tmpdir=${TMPDIR} -Xmx4G -jar ${MUTECTPATH}/muTect-1.1.4.jar \
     --analysis_type MuTect \
     --reference_sequence ${REF} \
     --intervals ${CHRLIST}/Step${STEP}.list \
