@@ -41,7 +41,7 @@ ${STRELKAPATH}/bin/configureStrelkaWorkflow.pl \
     --normal=${NORMAL} \
     --tumor=${TUMOR} \
     --ref=${REF} \
-    --config=config.ini --output-dir=./myAnalysis
+    --config ./config.ini --output-dir=./myAnalysis
 if [ $? -ne 0 ] ; then
     touch ${WD}.strelkaFail
     rm -f ${WD}.strelkaInQueue
