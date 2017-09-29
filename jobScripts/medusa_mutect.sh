@@ -23,6 +23,31 @@ echo "### TUMOR: ${TUMOR}"
 echo "### NORMAL: ${NORMAL}"
 echo "### MUTECTPATH: ${MUTECTPATH}"
 
+echo "Full command:"
+echo "/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Djava.io.tmpdir=${TMPDIR} -Xmx4G -jar ${MUTECTPATH}/muTect-1.1.4.jar \
+    --analysis_type MuTect \
+    --reference_sequence ${REF} \
+    --intervals ${CHRLIST}/Step${STEP}.list \
+    --cosmic ${COSMIC_VCF} \
+    --dbsnp ${SNPS} \
+    --input_file:normal ${NORMAL} \
+    --input_file:tumor ${TUMOR} \
+    --fraction_contamination 0.02 \
+    --minimum_mutation_cell_fraction 0.0 \
+    --minimum_normal_allele_fraction 0.0 \
+    --min_qscore 5 \
+    --gap_events_threshold 3 \
+    --heavily_clipped_read_fraction 0.3 \
+    --required_maximum_alt_allele_mapping_quality_score 20 \
+    --max_alt_alleles_in_normal_count 2 \
+    --max_alt_alleles_in_normal_qscore_sum 20 \
+    --max_alt_allele_in_normal_fraction 0.03 \
+    --out ${OUTPUT}_Step${STEP}_MuTectStats.out \
+    --coverage_file ${OUTPUT}_Step${STEP}_MuTect_Cov.wig \
+    --tumor_depth_file ${OUTPUT}_Step${STEP}_MuTect_TumorDepth.wig \
+    --normal_depth_file ${OUTPUT}_Step${STEP}_MuTect_NormalDepth.wig \
+    --vcf ${OUTPUT}_Step${STEP}_MuTect.vcf > ${OUTPUT}_Step${STEP}.mutectOut 2> ${OUTPUT}_Step${STEP}.mutect.perfOut"
+
  /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Djava.io.tmpdir=${TMPDIR} -Xmx4G -jar ${MUTECTPATH}/muTect-1.1.4.jar \
     --analysis_type MuTect \
     --reference_sequence ${REF} \
@@ -46,6 +71,7 @@ echo "### MUTECTPATH: ${MUTECTPATH}"
     --tumor_depth_file ${OUTPUT}_Step${STEP}_MuTect_TumorDepth.wig \
     --normal_depth_file ${OUTPUT}_Step${STEP}_MuTect_NormalDepth.wig \
     --vcf ${OUTPUT}_Step${STEP}_MuTect.vcf > ${OUTPUT}_Step${STEP}.mutectOut 2> ${OUTPUT}_Step${STEP}.mutect.perfOut
+
 if [ $? -eq 0 ] ; then
     echo "${STEP} Completed" >> ${OUTPUT}_MuTect_Status.txt
     PROGRESS=`wc -l ${OUTPUT}_MuTect_Status.txt | awk '{print $1}'`
