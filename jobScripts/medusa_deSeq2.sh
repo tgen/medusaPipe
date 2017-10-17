@@ -9,7 +9,7 @@ time=`date +%d-%m-%Y-%H-%M`
 beginTime=`date +%s`
 machine=`hostname`
 
-module add R/3.1.1
+module add R/3.2.1
 
 echo "### NODE: $machine"
 echo "### RUNDIR: ${RUNDIR}"
@@ -24,8 +24,9 @@ newName=`basename ${DIRNAME}`
 newName=${newName/.dsDir/}
 
 echo "### Starting DESeq3.R"
-echo "perf stat /packages/R/3.1.1/bin/Rscript --vanilla ${DESEQ2PATH}/DESeq_v2.R ${NORMLIST} ${TUMORLIST} 2> ${DIRNAME}.deSeq2.perfOut"
-perf stat /packages/R/3.1.1/bin/Rscript --vanilla ${DESEQ2PATH}/DESeq_v2.R ${NORMLIST} ${TUMORLIST} 2> ${DIRNAME}.deSeq2.perfOut
+echo "perf stat Rscript --vanilla ${DESEQ2PATH}/DESeq_v2.R ${NORMLIST} ${TUMORLIST} 2> ${DIRNAME}.deSeq2.perfOut"
+perf stat Rscript --vanilla ${DESEQ2PATH}/DESeq_v2.R ${NORMLIST} ${TUMORLIST} 2> ${DIRNAME}.deSeq2.perfOut
+
 if [ $? -eq 0 ] ; then
     touch ${DIRNAME}.deSeq2Pass
     #echo "running this cmd to rename: mv ${DIRNAME}/DESeq_results.txt ${DIRNAME}/$newName.DESeq_results.txt"
@@ -37,6 +38,7 @@ if [ $? -eq 0 ] ; then
 else
     touch ${DIRNAME}.deSeq2Fail
 fi
+
 rm -f ${DIRNAME}/masterNor.txt
 rm -f ${DIRNAME}/masterTum.txt
 rm -f ${DIRNAME}/CountsTable.txt
