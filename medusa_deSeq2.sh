@@ -222,7 +222,7 @@ do
             mkdir -p $deSeqDir
         fi
         echo "### Submitting $normlList2-VS-$tumorList2 to queue for deSeq..."
-        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,DESEQ2PATH=$deseq2Path,RUNDIR=$runDir,DIRNAME=$deSeqDir,GTF=$gtf,NORMLIST="'"$normlList"'",TUMORLIST="'"$tumorList"'",REF=$ref,NXT1=$nxtStep1,D=$d $pbsHome/medusa_deSeq2.sh
+        sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,DESEQ2PATH=$deseq2Path,RUNDIR=$runDir,DIRNAME=$deSeqDir,GTF=$gtf,NORMLIST="$normlList",TUMORLIST="$tumorList",REF=$ref,NXT1=$nxtStep1,D=$d $pbsHome/medusa_deSeq2.sh
         if [ $? -eq 0 ] ; then
             touch $deSeqDir.deSeq2InQueue
         else
