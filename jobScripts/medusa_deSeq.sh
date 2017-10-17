@@ -4,7 +4,6 @@
 #SBATCH --mail-user=jetstream@tgen.org
 #SBATCH --mail-type=FAIL
 
- 
 time=`date +%d-%m-%Y-%H-%M` 
 beginTime=`date +%s`
 machine=`hostname`
@@ -20,9 +19,11 @@ cd ${DIRNAME}
 newName=`basename ${DIRNAME}`
 newName=${newName/.dsDir/}
 
+module load R/3.2.1
+
 echo "### Starting DESeq3.R"
-echo "perf stat /packages/R/2.15.2/bin/Rscript --vanilla ${DESEQPATH}/DESeq3.R ${NORMLIST} ${TUMORLIST} 2> ${DIRNAME}.deSeq.perfOut"
-perf stat /packages/R/2.15.2/bin/Rscript --vanilla ${DESEQPATH}/DESeq3.R ${NORMLIST} ${TUMORLIST} 2> ${DIRNAME}.deSeq.perfOut
+echo "perf stat Rscript --vanilla ${DESEQPATH}/DESeq3.R ${NORMLIST} ${TUMORLIST} 2> ${DIRNAME}.deSeq.perfOut"
+perf stat Rscript --vanilla ${DESEQPATH}/DESeq3.R ${NORMLIST} ${TUMORLIST} 2> ${DIRNAME}.deSeq.perfOut
 if [ $? -eq 0 ] ; then
     touch ${DIRNAME}.deSeqPass
     #echo "running this cmd to rename: mv ${DIRNAME}/DESeq_results.txt ${DIRNAME}/$newName.DESeq_results.txt"
