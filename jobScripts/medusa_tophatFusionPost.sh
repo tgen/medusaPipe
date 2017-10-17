@@ -16,11 +16,22 @@ echo "### DIR: ${DIR}"
 echo "### INDEXBASE: ${INDEXBASE}"
 echo "### 2VCFPATH: ${THFUSION2VCFPATH}"
 
+module load samtools
+module load bowtie
+
 newName=`basename ${DIR}`
 newName=${newName/.topHatFusionDir}
 echo "TIME:$time starting tophat fusion post on ${DIR} with indexbase of ${INDEXBASE}"
-#tophat-fusion-post -p 8 --num-fusion-reads 1 --num-fusion-pairs 2 --num-fusion-both 5 ~/references/bowtie/Homo_sapiens.GRCh37.6*
-#tophat-fusion-post -p 8 --num-fusion-reads 1 --num-fusion-pairs 2 --num-fusion-both 5 ${BOWTIE1_INDEX} 
+echo "${TOPHAT2PATH}/tophat-fusion-post \
+    -p 16 \
+    --num-fusion-reads 3 \
+    --num-fusion-pairs 2 \
+    --num-fusion-both 5 \
+    --skip-read-dist \
+    --fusion-read-mismatches 3 \
+    ${INDEXBASE} > ${DIR}.thFPostOut
+"
+
 perf stat ${TOPHAT2PATH}/tophat-fusion-post -p 16 --num-fusion-reads 3 --num-fusion-pairs 2 --num-fusion-both 5 --skip-read-dist --fusion-read-mismatches 3 ${INDEXBASE} > ${DIR}.thFPostOut 2> ${DIR}.thFPost.perfOut
 if [ $? -eq 0 ] ; then
     echo "success."
