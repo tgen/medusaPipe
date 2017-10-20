@@ -26,7 +26,7 @@ newName=`basename ${DIRNAME}`
 newName=${newName/_cdDir/}
 
 BAM1=`sed "s/\s/,/g" <(echo $BAM1)`
-BAM2=`sed "s/\s/,/g" <(echo $BAM1)`
+BAM2=`sed "s/\s/,/g" <(echo $BAM2)`
 
 perf stat ${CUFFDIFFPATH}/cuffdiff -p 16 -N -M ${MASK} -b ${REF} --library-type fr-firststrand -L Control,Tumor ${GTF} ${BAM1} ${BAM2} 2> ${DIRNAME}.cuffDiff.perfOut
 if [ $? -eq 0 ] ; then
