@@ -28,7 +28,7 @@ if [ $findCount -ge 3 ] ; then
     exit 1
 fi
 
-for messageFile in `find $topProjDir -maxdepth 2 -name [m-M]edusa_nextJob_*txt`
+for messageFile in `find $topProjDir -maxdepth 2 -name "[m-M]edusa_nextJob_*txt"`
 do
     projDir=`dirname $messageFile`
     msgName=`basename $messageFile`
@@ -139,7 +139,7 @@ do
         sleep 1
         ;;
     medusa_nextJob_checkProjectComplete.txt)    echo "### Will check if project complete for $projDir"
-        nohup $scriptsHome/medusa_checkProjectComplete.sh $projDir >> $projDir/logs/medusa_checkProjectCompleteLOG.txt 2>&1 &
+        nohup $scriptsHome/medusa_checkProjectComplete.sh $projDir > $projDir/logs/medusa_checkProjectCompleteLOG.txt 2>&1 &
         sleep 1
         ;;
     medusa_nextJob_summaryStats.txt)    echo "### Will run summary stats for $projDir"
