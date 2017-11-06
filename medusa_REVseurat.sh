@@ -44,18 +44,19 @@ else
 fi
 recipe=`cat $configFile | grep "^RECIPE=" | cut -d= -f2 | head -1 | tr -d [:space:]`
 debit=`cat $configFile | grep "^DEBIT=" | cut -d= -f2 | head -1 | tr -d [:space:]`
-
 nCores=`grep @@${myName}_CORES= $constantsDir/$recipe | cut -d= -f2`
-
-
 ref=`grep "@@"$recipe"@@" $constants | grep @@REF= | cut -d= -f2`
 rnaAligner=`grep "@@"$recipe"@@" $constants | grep @@RNAALIGNER= | cut -d= -f2`
 seuratPath=`grep @@"$recipe"@@ $constants | grep @@SEURATPATH= | cut -d= -f2`
 chrList=`grep @@"$recipe"@@ $constants | grep @@CHRLIST= | cut -d= -f2`
 gatkPath=`grep @@"$recipe"@@ $constants | grep @@GATKPATH= | cut -d= -f2`
 
+echo "### myName: $myName"
 echo "### projName: $projName"
 echo "### confFile: $configFile"
+echo "### recipe: $recipe"
+echo "### nCores: $nCores"
+
 d=`echo $runDir | cut -c 2-`
 
 qsubFails=0
@@ -116,6 +117,7 @@ do
         fi
 
         echo Starting Seurat caller Step${STEP}
+        echo "sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,STEPCOUNT=$STEP_COUNT,GATKPATH=$gatkPath,SEURATPATH=$seuratPath,NXT1=$nxtStep1,NXT2=$nxtStep2,TRK=$trackName,CHRLIST=$chrList,REF=$ref,STEP=${STEP},NORMAL=$normalBamFile,TUMOR=$tumorBamFile,RUNDIR=$runDir,D=$d $pbsHome/medusa_REVseurat.sh"
         sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,STEPCOUNT=$STEP_COUNT,GATKPATH=$gatkPath,SEURATPATH=$seuratPath,NXT1=$nxtStep1,NXT2=$nxtStep2,TRK=$trackName,CHRLIST=$chrList,REF=$ref,STEP=${STEP},NORMAL=$normalBamFile,TUMOR=$tumorBamFile,RUNDIR=$runDir,D=$d $pbsHome/medusa_REVseurat.sh
         if [ $? -eq 0 ] ; then
             touch ${trackName}_Step${STEP}.REVseuratInQueue
