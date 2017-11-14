@@ -4,7 +4,6 @@
 #SBATCH --mail-user=jetstream@tgen.org
 #SBATCH --mail-type=FAIL
 
- 
 beginTime=`date +%s`
 machine=`hostname`
 echo "### NODE: $machine"
@@ -24,7 +23,7 @@ echo "### NORMAL: ${NORMAL}"
 echo "### MUTECTPATH: ${MUTECTPATH}"
 
 echo "Full command:"
-echo "/home/tgenref/pecan/bin/java/jdk1.6.0_45/bin/java -Djava.io.tmpdir=${TMPDIR} -Xmx4G -jar ${MUTECTPATH}/muTect-1.1.4.jar \
+echo "/home/tgenref/binaries/java/jdk1.6.0_45/bin/java -Djava.io.tmpdir=${TMPDIR} -Xmx4G -jar ${MUTECTPATH}/muTect-1.1.4.jar \
     --analysis_type MuTect \
     --reference_sequence ${REF} \
     --intervals ${CHRLIST}/Step${STEP}.list \
@@ -48,7 +47,7 @@ echo "/home/tgenref/pecan/bin/java/jdk1.6.0_45/bin/java -Djava.io.tmpdir=${TMPDI
     --normal_depth_file ${OUTPUT}_Step${STEP}_MuTect_NormalDepth.wig \
     --vcf ${OUTPUT}_Step${STEP}_MuTect.vcf > ${OUTPUT}_Step${STEP}.mutectOut 2> ${OUTPUT}_Step${STEP}.mutect.perfOut"
 
-/home/tgenref/pecan/bin/java/jdk1.6.0_45/bin/java -Djava.io.tmpdir=${TMPDIR} -Xmx4G -jar ${MUTECTPATH}/muTect-1.1.4.jar \
+/home/tgenref/binaries/java/jdk1.6.0_45/bin/java -Djava.io.tmpdir=${TMPDIR} -Xmx4G -jar ${MUTECTPATH}/muTect-1.1.4.jar \
     --analysis_type MuTect \
     --reference_sequence ${REF} \
     --intervals ${CHRLIST}/Step${STEP}.list \
@@ -93,8 +92,9 @@ done
 if [ ${PROGRESS} -eq ${STEPCOUNT} ]
 then
     echo MuTect_${STEP}.Done
+    module load java/1.7.0_80
     #Concatenate VCF with GATK
-    /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -cp ${GATKPATH}/GenomeAnalysisTK.jar org.broadinstitute.sting.tools.CatVariants -R ${REF} $vcfList -out ${OUTPUT}_MuTect_All.vcf -assumeSorted
+    java -cp ${GATKPATH}/GenomeAnalysisTK.jar org.broadinstitute.sting.tools.CatVariants -R ${REF} $vcfList -out ${OUTPUT}_MuTect_All.vcf -assumeSorted
     #/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -cp ${GATKPATH}/GenomeAnalysisTK.jar org.broadinstitute.sting.tools.CatVariants \
     #    -R ${REF} \
     #    -V ${OUTPUT}_Step1_MuTect.vcf \

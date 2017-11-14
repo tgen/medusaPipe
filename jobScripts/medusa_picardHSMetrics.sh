@@ -17,6 +17,16 @@ echo "### TARGETS: ${TARGETS}"
 
 cd ${DIR}
 echo "### Starting picard rna metrics"
+echo "perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx15g -jar ${PICARDPATH}/CalculateHsMetrics.jar \
+    REFERENCE_SEQUENCE=${REF} \
+    BAIT_INTERVALS=${BAITS} \
+    TARGET_INTERVALS=${TARGETS} \
+    INPUT=${BAMFILE} \
+    OUTPUT=${BAMFILE}.picHSMetrics \
+    PER_TARGET_COVERAGE=${BAMFILE}.picStats.HsPerTargetCov \
+    TMP_DIR=${TMPDIR} \
+    VALIDATION_STRINGENCY=SILENT > ${BAMFILE}.picHSMetricsOut 2> ${BAMFILE}.picardHS.perfOut
+"
 perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx15g -jar ${PICARDPATH}/CalculateHsMetrics.jar \
     REFERENCE_SEQUENCE=${REF} \
     BAIT_INTERVALS=${BAITS} \
