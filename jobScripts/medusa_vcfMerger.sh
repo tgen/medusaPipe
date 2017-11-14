@@ -8,8 +8,6 @@
 beginTime=`date +%s`
 machine=`hostname`
 echo "### NODE: $machine"
-#echo "### DBVERSION: ${DBVERSION}"
-#echo "### VCF: ${VCF}"
 echo "### SNPSIFT: ${SNPSIFT}"
 echo "### RUNDIR: ${RUNDIR}"
 echo "### NXT1: ${NXT1}"
