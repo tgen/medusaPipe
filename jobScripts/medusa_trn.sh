@@ -32,7 +32,7 @@ else
 
     if [ "${ASSAY}" == "Genome" ] ; then
     echo "Running as a Genome trn"
-    perf stat ${TRNPATH}/tgen_somaticSV_0.40.pl \
+    perf stat ${TRNPATH}/tgen_somaticSV_0.50.pl \
         T=${TUMOR} \
         R=${NORMAL} \
         O=${OUTFILE} \
@@ -41,7 +41,7 @@ else
 
     elif [ "${ASSAY}" == "Exome" ] ; then
     echo "Running as Exome trn"
-    perf stat ${TRNPATH}/tgen_somaticSV_0.40.pl \
+    perf stat ${TRNPATH}/tgen_somaticSV_0.50.pl \
         T=${TUMOR} \
         R=${NORMAL} \
         O=${OUTFILE} \
