@@ -21,6 +21,8 @@ constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
 constantsDir="${JETSTREAM_HOME}/centralPipe/constants/"
 myName=`basename $0 | cut -d_ -f2`
 
+module load ImageMagick/7.0.5
+
 time=`date +%d-%m-%Y-%H-%M`
 echo "Starting $0 at $time"
 if [ "$1" == "" ] ; then
