@@ -35,7 +35,7 @@ echo "${TOPHAT2PATH}/tophat-fusion-post \
     ${INDEXBASE} > ${DIR}.thFPostOut
 "
 
-perf stat ${TOPHAT2PATH}/tophat-fusion-post -p 16 --num-fusion-reads 3 --num-fusion-pairs 2 --num-fusion-both 5 --skip-read-dist --fusion-read-mismatches 3 ${INDEXBASE} > ${DIR}.thFPostOut 2> ${DIR}.thFPost.perfOut
+perf stat ${TOPHAT2PATH}/tophat-fusion-post -p 4 --num-fusion-reads 3 --num-fusion-pairs 2 --num-fusion-both 5 --skip-read-dist --fusion-read-mismatches 3 ${INDEXBASE} > ${DIR}.thFPostOut 2> ${DIR}.thFPost.perfOut
 if [ $? -eq 0 ] ; then
     echo "success."
     echo "renaming..."
