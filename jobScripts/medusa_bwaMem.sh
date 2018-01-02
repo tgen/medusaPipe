@@ -4,6 +4,7 @@
 #SBATCH --mail-user=jetstream@tgen.org
 #SBATCH --mail-type=FAIL
 
+set -o pipefail
 
 time=`date +%d-%m-%Y-%H-%M` 
 beginTime=`date +%s`
