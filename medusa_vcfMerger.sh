@@ -106,9 +106,16 @@ do
         echo "allele count not requested for this DNAPAIR"
     else
         rnaSample=`echo $alleleCount | cut -d, -f3`
-        rnaBam=`find $runDir -name "${rnaSample}.proj.Aligned.out.sorted.md.bam" | head -1`
         echo "allele count is requested for $sampleNames"
         echo "the matching rnaSample is $rnaSample"
+
+        rnaBam=`find $runDir -name "${rnaSample}.proj.Aligned.out.sorted.md.bam" | head -1`
+
+        if [[ -z ${rnaBam} ]]; then
+            echo "RNA Bam not found yet: ${rnaBam} - qsub fail"
+            ((qsubFails++))
+            continue
+        fi
     fi
 
     for eachSample in ${sampleNames//,/ }
