@@ -127,7 +127,7 @@ do
         continue
     fi
     echo "### Submitting to queue with $normalBamFile"
-    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,ASSAY=$assay,BEDFILE=$bedFile,GTF=$gtf,NORMAL=$normalBamFile,TUMOR=$tumorBamFile,OUTFILE=$trnDatFile,TRNPATH=$trnPath,SAMPATH=$samtoolsPath,RUNDIR=$runDir,RECIPE=$recipe,NXT1=$nxtStep1,D=$d $pbsHome/medusa_trn.sh
+    sbatch -n 1 -N 1 --cpus-per-task $nCores --mem-per-cpu 6000 --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,ASSAY=$assay,BEDFILE=$bedFile,GTF=$gtf,NORMAL=$normalBamFile,TUMOR=$tumorBamFile,OUTFILE=$trnDatFile,TRNPATH=$trnPath,SAMPATH=$samtoolsPath,RUNDIR=$runDir,RECIPE=$recipe,NXT1=$nxtStep1,D=$d $pbsHome/medusa_trn.sh
     if [ $? -eq 0 ] ; then
         touch $trnDatFile.trnInQueue
     else
