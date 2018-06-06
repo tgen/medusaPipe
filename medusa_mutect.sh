@@ -155,7 +155,7 @@ do
         else
             ((qsubFails++))
         fi
-        sleep 2
+       
     done
 done
 

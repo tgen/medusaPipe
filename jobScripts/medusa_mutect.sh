@@ -95,43 +95,16 @@ then
     echo MuTect_${STEP}.Done
     module load java/1.7.0_80
     #Concatenate VCF with GATK
-    java -cp ${GATKPATH}/GenomeAnalysisTK.jar org.broadinstitute.sting.tools.CatVariants -R ${REF} $vcfList -out ${OUTPUT}_MuTect_All.vcf -assumeSorted
-    #/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -cp ${GATKPATH}/GenomeAnalysisTK.jar org.broadinstitute.sting.tools.CatVariants \
-    #    -R ${REF} \
-    #    -V ${OUTPUT}_Step1_MuTect.vcf \
-    #    -V ${OUTPUT}_Step2_MuTect.vcf \
-    #    -V ${OUTPUT}_Step3_MuTect.vcf \
-    #    -V ${OUTPUT}_Step4_MuTect.vcf \
-    #    -V ${OUTPUT}_Step5_MuTect.vcf \
-    #    -V ${OUTPUT}_Step6_MuTect.vcf \
-    #    -V ${OUTPUT}_Step7_MuTect.vcf \
-    #    -V ${OUTPUT}_Step8_MuTect.vcf \
-    #    -V ${OUTPUT}_Step9_MuTect.vcf \
-    #    -V ${OUTPUT}_Step10_MuTect.vcf \
-    #    -V ${OUTPUT}_Step11_MuTect.vcf \
-    #    -V ${OUTPUT}_Step12_MuTect.vcf \
-    #    -V ${OUTPUT}_Step13_MuTect.vcf \
-    #    -V ${OUTPUT}_Step14_MuTect.vcf \
-    #    -V ${OUTPUT}_Step15_MuTect.vcf \
-    #    -V ${OUTPUT}_Step16_MuTect.vcf \
-    #    -V ${OUTPUT}_Step17_MuTect.vcf \
-    #    -V ${OUTPUT}_Step18_MuTect.vcf \
-    #    -V ${OUTPUT}_Step19_MuTect.vcf \
-    #    -V ${OUTPUT}_Step20_MuTect.vcf \
-    #    -V ${OUTPUT}_Step21_MuTect.vcf \
-    #    -V ${OUTPUT}_Step22_MuTect.vcf \
-    #    -V ${OUTPUT}_Step23_MuTect.vcf \
-    #    -V ${OUTPUT}_Step24_MuTect.vcf \
-    #    -out ${OUTPUT}_MuTect_All.vcf \
-    #    -assumeSorted
-        if [ $? -eq 0 ] ; then
-            touch ${OUTPUT}.mutectPass
-            touch ${RUNDIR}/${NXT1}
-            touch ${RUNDIR}/${NXT2}
-        else
-            touch ${OUTPUT}.mutectFail
-        fi
-        mv ${OUTPUT}_MuTect_Status.txt ${OUTPUT}_MuTect_Status.txt.used
+    CATVARS_CMD="java -cp ${GATKPATH}/GenomeAnalysisTK.jar org.broadinstitute.sting.tools.CatVariants -R ${REF} $vcfList -out ${OUTPUT}_MuTect_All.vcf -assumeSorted"
+    sbatch -c 1 --mem 24000 --output ${OUTPUT}_CatVariants.log --wait --wrap "${CATVARS_CMD}"
+    if [ $? -eq 0 ] ; then
+        touch ${OUTPUT}.mutectPass
+        touch ${RUNDIR}/${NXT1}
+        touch ${RUNDIR}/${NXT2}
+    else
+        touch ${OUTPUT}.mutectFail
+    fi
+    mv ${OUTPUT}_MuTect_Status.txt ${OUTPUT}_MuTect_Status.txt.used
 else
     echo
     echo MuTect_${STEP}.Done
