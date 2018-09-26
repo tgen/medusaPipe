@@ -14,7 +14,6 @@
 
 thisStep="medusa_nextJob_finalize.txt"
 nxtStep1="central_nextJob_saveToIsilon.txt"
-nxtStep2="central_nextJob_saveStats.txt"
 nxtStep3="central_nextJob_saveToReport.txt"
 pbsHome="${JETSTREAM_HOME}/medusaPipe/jobScripts"
 constants="${JETSTREAM_HOME}/centralPipe/constants/constants.txt"
