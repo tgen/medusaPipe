@@ -14,7 +14,7 @@ echo "### SAMTOOLSPATH: ${SAMTOOLSPATH}"
 
 echo "### Starting picard mark duplicates"
 #echo "faking it" > ${BAMFILE}.mdOut
-perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx22g -jar ${PICARDPATH}/MarkDuplicates.jar ASSUME_SORTED=true REMOVE_DUPLICATES=false VALIDATION_STRINGENCY=SILENT TMP_DIR=${TMPDIR} INPUT=${BAMFILE} OUTPUT=${OUTPUTBAM} METRICS_FILE=${BAMFILE}.picStats.MarkDupMetrics MAX_RECORDS_IN_RAM=18000000 CREATE_INDEX=true 2> ${BAMFILE}.markDups.perfOut > ${BAMFILE}.mdOut
+perf stat /usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.3.el7.x86_64/jre/bin/java -Xmx30g -jar ${PICARDPATH}/MarkDuplicates.jar ASSUME_SORTED=true REMOVE_DUPLICATES=false VALIDATION_STRINGENCY=SILENT TMP_DIR=${TMPDIR} INPUT=${BAMFILE} OUTPUT=${OUTPUTBAM} METRICS_FILE=${BAMFILE}.picStats.MarkDupMetrics MAX_RECORDS_IN_RAM=18000000 CREATE_INDEX=true 2> ${BAMFILE}.markDups.perfOut > ${BAMFILE}.mdOut
 if [ $? -eq 0 ] ; then
     mv ${BAMFILE}.mdOut ${BAMFILE}.mdPass
     echo "Automatically removed by mark duplicates step to save on space" > ${BAMFILE}
