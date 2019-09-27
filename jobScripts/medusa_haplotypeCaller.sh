@@ -3,7 +3,7 @@
 #SBATCH --time=0-45:00:00
 #SBATCH --mail-user=jetstream@tgen.org
 #SBATCH --mail-type=FAIL
-
+#SBATCH --mem-per-cpu 4096
 
 time=`date +%d-%m-%Y-%H-%M`
 beginTime=`date +%s`

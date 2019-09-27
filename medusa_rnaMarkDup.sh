@@ -110,7 +110,7 @@ do
         mkdir $runDir/stats
     fi
     echo "### Submitting $rnaBam to queue for RNA Mark Dups..."
-    sbatch -n 1 -N 1 --cpus-per-task $nCores --mem-per-cpu 4G --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,REF=$ref,OUTPUTBAM=$mdBam,REFFLAT=$refFlat,RIBINTS=$ribInts,PICARDPATH=$picardPath,BAMFILE=$rnaBam,RUNDIR=$runDir,NXT1=$nxtStep1,NXT2=$nxtStep2,NXT3=$nxtStep3,NXT4=$nxtStep4,D=$d $pbsHome/medusa_rnaMarkDup.sh
+    sbatch -n 1 -N 1 --cpus-per-task $nCores --output $runDir/oeFiles/%x-slurm-%j.out --export ALL,REF=$ref,OUTPUTBAM=$mdBam,REFFLAT=$refFlat,RIBINTS=$ribInts,PICARDPATH=$picardPath,BAMFILE=$rnaBam,RUNDIR=$runDir,NXT1=$nxtStep1,NXT2=$nxtStep2,NXT3=$nxtStep3,NXT4=$nxtStep4,D=$d $pbsHome/medusa_rnaMarkDup.sh
     if [ $? -eq 0 ] ; then
         touch $rnaBam.rnaMarkDupInQueue
     else

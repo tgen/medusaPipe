@@ -3,7 +3,7 @@
 #SBATCH --time=0-96:00:00
 #SBATCH --mail-user=jetstream@tgen.org
 #SBATCH --mail-type=FAIL
-
+#SBATCH --mem-per-cpu 4096
 
 module load python/2.7.3
 #module load HTSeq/0.5.3p9
